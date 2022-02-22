@@ -1,0 +1,99 @@
+PODS:
+  - Alamofire (5.5.0)
+  - Charts (3.6.0):
+    - Charts/Core (= 3.6.0)
+  - Charts/Core (3.6.0)
+  - Differentiator (5.0.0)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxGesture (4.0.3):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxKeyboard (2.0.0):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
+  - RxTest (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxViewController (2.0.0):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - SnapKit (5.0.1)
+  - SpreadsheetView (0.9.1)
+  - Starscream (4.0.4)
+  - SwiftLint (0.45.1)
+  - Then (2.7.0)
+  - XLPagerTabStrip (9.0.0)
+
+DEPENDENCIES:
+  - Charts
+  - Moya
+  - RxCocoa
+  - RxDataSources
+  - RxGesture
+  - RxKeyboard
+  - RxSwift
+  - RxTest
+  - RxViewController
+  - SnapKit
+  - SpreadsheetView
+  - Starscream
+  - SwiftLint
+  - Then
+  - XLPagerTabStrip
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Charts
+    - Differentiator
+    - Moya
+    - RxCocoa
+    - RxDataSources
+    - RxGesture
+    - RxKeyboard
+    - RxRelay
+    - RxSwift
+    - RxTest
+    - RxViewController
+    - SnapKit
+    - SpreadsheetView
+    - Starscream
+    - SwiftLint
+    - Then
+    - XLPagerTabStrip
+
+SPEC CHECKSUMS:
+  Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
+  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxGesture: abadd243fc36db74df43dfc893829ddde94f1a3d
+  RxKeyboard: 4f5863f43b4ff0cbb2a20b94688d6b80c8a43c14
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
+  RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SpreadsheetView: 688dbd19f2b355df0eb09e486266fd913a013449
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+  SwiftLint: 06ac37e4d38c7068e0935bb30cda95f093bec761
+  Then: acfe0be7e98221c6204e12f8161459606d5d822d
+  XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
+
+PODFILE CHECKSUM: c04d3db1c561bf89010444db9d86c3665fb33bd3
+
+COCOAPODS: 1.11.2

@@ -1,0 +1,36 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '13.0'
+
+target 'BithumbProject' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+  inhibit_all_warnings!
+
+  # Pods for BithumbProject
+  
+  pod 'SwiftLint'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'RxGesture'
+  pod 'RxDataSources'
+  pod 'RxKeyboard'
+  pod 'RxViewController'
+  pod 'Moya'
+  pod 'Starscream'
+  pod 'SnapKit'
+  pod 'Then'
+  pod 'Charts'
+  pod 'SpreadsheetView'
+  pod 'XLPagerTabStrip'
+
+  target 'BithumbProjectTests' do
+    inherit! :search_paths
+    # Pods for testing
+    pod 'RxTest'
+  end
+
+  target 'BithumbProjectUITests' do
+    # Pods for testing
+  end
+
+end

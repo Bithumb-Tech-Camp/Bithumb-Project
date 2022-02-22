@@ -1,0 +1,841 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFC8027C5266E0033B759 /* AppDelegate.swift */; };
+		1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFC8227C5266E0033B759 /* SceneDelegate.swift */; };
+		1CDFFC8527C5266E0033B759 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFC8427C5266E0033B759 /* ViewController.swift */; };
+		1CDFFC8A27C5266F0033B759 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CDFFC8927C5266F0033B759 /* Assets.xcassets */; };
+		1CDFFC8D27C5266F0033B759 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CDFFC8B27C5266F0033B759 /* LaunchScreen.storyboard */; };
+		1CDFFC9827C5266F0033B759 /* BithumbProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFC9727C5266F0033B759 /* BithumbProjectTests.swift */; };
+		1CDFFCA227C5266F0033B759 /* BithumbProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFCA127C5266F0033B759 /* BithumbProjectUITests.swift */; };
+		1CDFFCA427C5266F0033B759 /* BithumbProjectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFCA327C5266F0033B759 /* BithumbProjectUITestsLaunchTests.swift */; };
+		1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFCBA27C52F7F0033B759 /* Constant.swift */; };
+		1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFCBC27C533ED0033B759 /* ViewModelType.swift */; };
+		2A92A7ECB0838843A92AC2AD /* Pods_BithumbProjectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18428F2A50A0AD57949D9ADA /* Pods_BithumbProjectTests.framework */; };
+		532B1ABC85F8AEA9FE9A0449 /* Pods_BithumbProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58A31623DBD441C2DF5D935B /* Pods_BithumbProject.framework */; };
+		7377C65BC5D4352A6E8ACB80 /* Pods_BithumbProject_BithumbProjectUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 248E52B21DD25FF26025A40A /* Pods_BithumbProject_BithumbProjectUITests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1CDFFC9427C5266F0033B759 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1CDFFC7527C5266E0033B759 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1CDFFC7C27C5266E0033B759;
+			remoteInfo = BithumbProject;
+		};
+		1CDFFC9E27C5266F0033B759 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1CDFFC7527C5266E0033B759 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1CDFFC7C27C5266E0033B759;
+			remoteInfo = BithumbProject;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		18428F2A50A0AD57949D9ADA /* Pods_BithumbProjectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProjectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CDFFC7D27C5266E0033B759 /* BithumbProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BithumbProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CDFFC8027C5266E0033B759 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1CDFFC8227C5266E0033B759 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		1CDFFC8427C5266E0033B759 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1CDFFC8927C5266F0033B759 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1CDFFC8C27C5266F0033B759 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1CDFFC8E27C5266F0033B759 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CDFFC9327C5266F0033B759 /* BithumbProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BithumbProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CDFFC9727C5266F0033B759 /* BithumbProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbProjectTests.swift; sourceTree = "<group>"; };
+		1CDFFC9D27C5266F0033B759 /* BithumbProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BithumbProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CDFFCA127C5266F0033B759 /* BithumbProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbProjectUITests.swift; sourceTree = "<group>"; };
+		1CDFFCA327C5266F0033B759 /* BithumbProjectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BithumbProjectUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1CDFFCBA27C52F7F0033B759 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		1CDFFCBC27C533ED0033B759 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		248E52B21DD25FF26025A40A /* Pods_BithumbProject_BithumbProjectUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProject_BithumbProjectUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C0DF3FC129104ABB573CD1B /* Pods-BithumbProjectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.release.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.release.xcconfig"; sourceTree = "<group>"; };
+		58A31623DBD441C2DF5D935B /* Pods_BithumbProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F5F699AD92EA317CFC92076 /* Pods-BithumbProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProject.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProject/Pods-BithumbProject.debug.xcconfig"; sourceTree = "<group>"; };
+		7FF56111C81F2CE9E65E7FAF /* Pods-BithumbProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProject.release.xcconfig"; path = "Target Support Files/Pods-BithumbProject/Pods-BithumbProject.release.xcconfig"; sourceTree = "<group>"; };
+		8472A3EC69D000B483B44461 /* Pods-BithumbProject-BithumbProjectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProject-BithumbProjectUITests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProject-BithumbProjectUITests/Pods-BithumbProject-BithumbProjectUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		AD01A659BE97D625AB9E8875 /* Pods-BithumbProject-BithumbProjectUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProject-BithumbProjectUITests.release.xcconfig"; path = "Target Support Files/Pods-BithumbProject-BithumbProjectUITests/Pods-BithumbProject-BithumbProjectUITests.release.xcconfig"; sourceTree = "<group>"; };
+		ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1CDFFC7A27C5266E0033B759 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532B1ABC85F8AEA9FE9A0449 /* Pods_BithumbProject.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1CDFFC9027C5266F0033B759 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A92A7ECB0838843A92AC2AD /* Pods_BithumbProjectTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1CDFFC9A27C5266F0033B759 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7377C65BC5D4352A6E8ACB80 /* Pods_BithumbProject_BithumbProjectUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1CDFFC7427C5266E0033B759 = {
+			isa = PBXGroup;
+			children = (
+				1CDFFC7F27C5266E0033B759 /* BithumbProject */,
+				1CDFFC9627C5266F0033B759 /* BithumbProjectTests */,
+				1CDFFCA027C5266F0033B759 /* BithumbProjectUITests */,
+				1CDFFC7E27C5266E0033B759 /* Products */,
+				40AEDF9F48379F9D550D0205 /* Pods */,
+				F3FB7FFF813F1FAEACF90A39 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		1CDFFC7E27C5266E0033B759 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1CDFFC7D27C5266E0033B759 /* BithumbProject.app */,
+				1CDFFC9327C5266F0033B759 /* BithumbProjectTests.xctest */,
+				1CDFFC9D27C5266F0033B759 /* BithumbProjectUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1CDFFC7F27C5266E0033B759 /* BithumbProject */ = {
+			isa = PBXGroup;
+			children = (
+				1CDFFCB127C52D580033B759 /* Resources */,
+				1CDFFCB027C52D530033B759 /* Sources */,
+			);
+			path = BithumbProject;
+			sourceTree = "<group>";
+		};
+		1CDFFC9627C5266F0033B759 /* BithumbProjectTests */ = {
+			isa = PBXGroup;
+			children = (
+				1CDFFC9727C5266F0033B759 /* BithumbProjectTests.swift */,
+			);
+			path = BithumbProjectTests;
+			sourceTree = "<group>";
+		};
+		1CDFFCA027C5266F0033B759 /* BithumbProjectUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1CDFFCA127C5266F0033B759 /* BithumbProjectUITests.swift */,
+				1CDFFCA327C5266F0033B759 /* BithumbProjectUITestsLaunchTests.swift */,
+			);
+			path = BithumbProjectUITests;
+			sourceTree = "<group>";
+		};
+		1CDFFCB027C52D530033B759 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				1CDFFCB227C52D8D0033B759 /* Application */,
+				1CDFFCB327C52D970033B759 /* Models */,
+				1CDFFCB427C52DCB0033B759 /* Repositories */,
+				1CDFFCB527C52DDB0033B759 /* Services */,
+				1CDFFCB727C52E150033B759 /* Views */,
+				1CDFFCB627C52E0D0033B759 /* ViewModels */,
+				1CDFFCB827C52E1B0033B759 /* Utils */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		1CDFFCB127C52D580033B759 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1CDFFC8927C5266F0033B759 /* Assets.xcassets */,
+				1CDFFC8B27C5266F0033B759 /* LaunchScreen.storyboard */,
+				1CDFFC8E27C5266F0033B759 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1CDFFCB227C52D8D0033B759 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				1CDFFC8027C5266E0033B759 /* AppDelegate.swift */,
+				1CDFFC8227C5266E0033B759 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		1CDFFCB327C52D970033B759 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1CDFFCB427C52DCB0033B759 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		1CDFFCB527C52DDB0033B759 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1CDFFCB627C52E0D0033B759 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		1CDFFCB727C52E150033B759 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1CDFFC8427C5266E0033B759 /* ViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1CDFFCB827C52E1B0033B759 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1CDFFCBA27C52F7F0033B759 /* Constant.swift */,
+				1CDFFCBC27C533ED0033B759 /* ViewModelType.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		40AEDF9F48379F9D550D0205 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5F5F699AD92EA317CFC92076 /* Pods-BithumbProject.debug.xcconfig */,
+				7FF56111C81F2CE9E65E7FAF /* Pods-BithumbProject.release.xcconfig */,
+				8472A3EC69D000B483B44461 /* Pods-BithumbProject-BithumbProjectUITests.debug.xcconfig */,
+				AD01A659BE97D625AB9E8875 /* Pods-BithumbProject-BithumbProjectUITests.release.xcconfig */,
+				ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */,
+				2C0DF3FC129104ABB573CD1B /* Pods-BithumbProjectTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F3FB7FFF813F1FAEACF90A39 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				58A31623DBD441C2DF5D935B /* Pods_BithumbProject.framework */,
+				248E52B21DD25FF26025A40A /* Pods_BithumbProject_BithumbProjectUITests.framework */,
+				18428F2A50A0AD57949D9ADA /* Pods_BithumbProjectTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1CDFFC7C27C5266E0033B759 /* BithumbProject */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1CDFFCA727C5266F0033B759 /* Build configuration list for PBXNativeTarget "BithumbProject" */;
+			buildPhases = (
+				BBC67E43F4302CF4A432D90D /* [CP] Check Pods Manifest.lock */,
+				1CDFFC7927C5266E0033B759 /* Sources */,
+				1CDFFC7A27C5266E0033B759 /* Frameworks */,
+				1CDFFC7B27C5266E0033B759 /* Resources */,
+				111E5E40CC9092E3D56F71BF /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BithumbProject;
+			productName = BithumbProject;
+			productReference = 1CDFFC7D27C5266E0033B759 /* BithumbProject.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1CDFFC9227C5266F0033B759 /* BithumbProjectTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1CDFFCAA27C5266F0033B759 /* Build configuration list for PBXNativeTarget "BithumbProjectTests" */;
+			buildPhases = (
+				A1821842556F6D4659349E3F /* [CP] Check Pods Manifest.lock */,
+				1CDFFC8F27C5266F0033B759 /* Sources */,
+				1CDFFC9027C5266F0033B759 /* Frameworks */,
+				1CDFFC9127C5266F0033B759 /* Resources */,
+				6CCBFD81BFC96B9AE78673A8 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1CDFFC9527C5266F0033B759 /* PBXTargetDependency */,
+			);
+			name = BithumbProjectTests;
+			productName = BithumbProjectTests;
+			productReference = 1CDFFC9327C5266F0033B759 /* BithumbProjectTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1CDFFC9C27C5266F0033B759 /* BithumbProjectUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1CDFFCAD27C5266F0033B759 /* Build configuration list for PBXNativeTarget "BithumbProjectUITests" */;
+			buildPhases = (
+				76682CC8D410407ECB55FE82 /* [CP] Check Pods Manifest.lock */,
+				1CDFFC9927C5266F0033B759 /* Sources */,
+				1CDFFC9A27C5266F0033B759 /* Frameworks */,
+				1CDFFC9B27C5266F0033B759 /* Resources */,
+				80AC741F860B583CE03D7D6F /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1CDFFC9F27C5266F0033B759 /* PBXTargetDependency */,
+			);
+			name = BithumbProjectUITests;
+			productName = BithumbProjectUITests;
+			productReference = 1CDFFC9D27C5266F0033B759 /* BithumbProjectUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1CDFFC7527C5266E0033B759 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					1CDFFC7C27C5266E0033B759 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					1CDFFC9227C5266F0033B759 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 1CDFFC7C27C5266E0033B759;
+					};
+					1CDFFC9C27C5266F0033B759 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 1CDFFC7C27C5266E0033B759;
+					};
+				};
+			};
+			buildConfigurationList = 1CDFFC7827C5266E0033B759 /* Build configuration list for PBXProject "BithumbProject" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1CDFFC7427C5266E0033B759;
+			productRefGroup = 1CDFFC7E27C5266E0033B759 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1CDFFC7C27C5266E0033B759 /* BithumbProject */,
+				1CDFFC9227C5266F0033B759 /* BithumbProjectTests */,
+				1CDFFC9C27C5266F0033B759 /* BithumbProjectUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1CDFFC7B27C5266E0033B759 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CDFFC8D27C5266F0033B759 /* LaunchScreen.storyboard in Resources */,
+				1CDFFC8A27C5266F0033B759 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1CDFFC9127C5266F0033B759 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1CDFFC9B27C5266F0033B759 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		111E5E40CC9092E3D56F71BF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BithumbProject/Pods-BithumbProject-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BithumbProject/Pods-BithumbProject-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BithumbProject/Pods-BithumbProject-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6CCBFD81BFC96B9AE78673A8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		76682CC8D410407ECB55FE82 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BithumbProject-BithumbProjectUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		80AC741F860B583CE03D7D6F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BithumbProject-BithumbProjectUITests/Pods-BithumbProject-BithumbProjectUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BithumbProject-BithumbProjectUITests/Pods-BithumbProject-BithumbProjectUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BithumbProject-BithumbProjectUITests/Pods-BithumbProject-BithumbProjectUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A1821842556F6D4659349E3F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BithumbProjectTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BBC67E43F4302CF4A432D90D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BithumbProject-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1CDFFC7927C5266E0033B759 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CDFFC8527C5266E0033B759 /* ViewController.swift in Sources */,
+				1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */,
+				1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */,
+				1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */,
+				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1CDFFC8F27C5266F0033B759 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CDFFC9827C5266F0033B759 /* BithumbProjectTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1CDFFC9927C5266F0033B759 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CDFFCA427C5266F0033B759 /* BithumbProjectUITestsLaunchTests.swift in Sources */,
+				1CDFFCA227C5266F0033B759 /* BithumbProjectUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1CDFFC9527C5266F0033B759 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1CDFFC7C27C5266E0033B759 /* BithumbProject */;
+			targetProxy = 1CDFFC9427C5266F0033B759 /* PBXContainerItemProxy */;
+		};
+		1CDFFC9F27C5266F0033B759 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1CDFFC7C27C5266E0033B759 /* BithumbProject */;
+			targetProxy = 1CDFFC9E27C5266F0033B759 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1CDFFC8B27C5266F0033B759 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1CDFFC8C27C5266F0033B759 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1CDFFCA527C5266F0033B759 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1CDFFCA627C5266F0033B759 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1CDFFCA827C5266F0033B759 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F5F699AD92EA317CFC92076 /* Pods-BithumbProject.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BithumbProject/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = haeseok.BithumbProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1CDFFCA927C5266F0033B759 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7FF56111C81F2CE9E65E7FAF /* Pods-BithumbProject.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BithumbProject/Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = haeseok.BithumbProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1CDFFCAB27C5266F0033B759 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = haeseok.BithumbProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BithumbProject.app/BithumbProject";
+			};
+			name = Debug;
+		};
+		1CDFFCAC27C5266F0033B759 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C0DF3FC129104ABB573CD1B /* Pods-BithumbProjectTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = haeseok.BithumbProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BithumbProject.app/BithumbProject";
+			};
+			name = Release;
+		};
+		1CDFFCAE27C5266F0033B759 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8472A3EC69D000B483B44461 /* Pods-BithumbProject-BithumbProjectUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = haeseok.BithumbProjectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BithumbProject;
+			};
+			name = Debug;
+		};
+		1CDFFCAF27C5266F0033B759 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD01A659BE97D625AB9E8875 /* Pods-BithumbProject-BithumbProjectUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = haeseok.BithumbProjectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BithumbProject;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1CDFFC7827C5266E0033B759 /* Build configuration list for PBXProject "BithumbProject" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1CDFFCA527C5266F0033B759 /* Debug */,
+				1CDFFCA627C5266F0033B759 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1CDFFCA727C5266F0033B759 /* Build configuration list for PBXNativeTarget "BithumbProject" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1CDFFCA827C5266F0033B759 /* Debug */,
+				1CDFFCA927C5266F0033B759 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1CDFFCAA27C5266F0033B759 /* Build configuration list for PBXNativeTarget "BithumbProjectTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1CDFFCAB27C5266F0033B759 /* Debug */,
+				1CDFFCAC27C5266F0033B759 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1CDFFCAD27C5266F0033B759 /* Build configuration list for PBXNativeTarget "BithumbProjectUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1CDFFCAE27C5266F0033B759 /* Debug */,
+				1CDFFCAF27C5266F0033B759 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1CDFFC7527C5266E0033B759 /* Project object */;
+}
