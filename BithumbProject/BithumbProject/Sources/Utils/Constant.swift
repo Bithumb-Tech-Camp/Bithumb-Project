@@ -46,6 +46,13 @@ enum Constant {
     }
     
     enum URL {
+        static let baseURL = "https://api.bithumb.com/public"
         
+    }
+    
+    enum Path {
+        static let tickerPath = "/ticket"
+        static let assetsStatusPath = "/assetsstatus"
+        static let candleStickPath = "/candlestick"
     }
 }

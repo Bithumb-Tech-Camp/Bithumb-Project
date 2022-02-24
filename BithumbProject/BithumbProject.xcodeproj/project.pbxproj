@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03852B3127C7D8A700B9E80A /* BithumbHTTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03852B2F27C7D8A700B9E80A /* BithumbHTTPService.swift */; };
+		03852B3227C7D8A700B9E80A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03852B3027C7D8A700B9E80A /* NetworkManager.swift */; };
 		1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFC8027C5266E0033B759 /* AppDelegate.swift */; };
 		1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFC8227C5266E0033B759 /* SceneDelegate.swift */; };
 		1CDFFC8527C5266E0033B759 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFC8427C5266E0033B759 /* ViewController.swift */; };
@@ -47,6 +49,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03852B2F27C7D8A700B9E80A /* BithumbHTTPService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BithumbHTTPService.swift; sourceTree = "<group>"; };
+		03852B3027C7D8A700B9E80A /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		18428F2A50A0AD57949D9ADA /* Pods_BithumbProjectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProjectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CDFFC7D27C5266E0033B759 /* BithumbProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BithumbProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CDFFC8027C5266E0033B759 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +111,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03852B2E27C7D84F00B9E80A /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				03852B2F27C7D8A700B9E80A /* BithumbHTTPService.swift */,
+				03852B3027C7D8A700B9E80A /* NetworkManager.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
 		1CDFFC7427C5266E0033B759 = {
 			isa = PBXGroup;
 			children = (
@@ -160,7 +173,7 @@
 			children = (
 				E592A91B27C672E8008BE814 /* Models */,
 				1CDFFCB227C52D8D0033B759 /* Application */,
-				1CDFFCB427C52DCB0033B759 /* Repositories */,
+				03852B2E27C7D84F00B9E80A /* Repositories */,
 				1CDFFCB527C52DDB0033B759 /* Services */,
 				1CDFFCB727C52E150033B759 /* Views */,
 				1CDFFCB627C52E0D0033B759 /* ViewModels */,
@@ -186,13 +199,6 @@
 				1CDFFC8227C5266E0033B759 /* SceneDelegate.swift */,
 			);
 			path = Application;
-			sourceTree = "<group>";
-		};
-		1CDFFCB427C52DCB0033B759 /* Repositories */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Repositories;
 			sourceTree = "<group>";
 		};
 		1CDFFCB527C52DDB0033B759 /* Services */ = {
@@ -519,6 +525,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03852B3127C7D8A700B9E80A /* BithumbHTTPService.swift in Sources */,
 				1CDFFC8527C5266E0033B759 /* ViewController.swift in Sources */,
 				1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */,
 				E592A92B27C67E8C008BE814 /* RealtimeTransaction.swift in Sources */,
@@ -528,6 +535,7 @@
 				1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */,
 				E592A92127C678E3008BE814 /* AssetsStatus.swift in Sources */,
 				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
+				03852B3227C7D8A700B9E80A /* NetworkManager.swift in Sources */,
 				E592A91D27C67303008BE814 /* APIResponse.swift in Sources */,
 				E592A92327C67984008BE814 /* RealtimeTicker.swift in Sources */,
 				E592A92727C67BA9008BE814 /* Candlestick.swift in Sources */,
