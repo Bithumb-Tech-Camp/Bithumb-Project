@@ -11,7 +11,7 @@ import Moya
 
 enum BithumbHTTPService {
     case ticker(_ orderCurrency: String)
-    case assetsStatus(_ orderCurrency: String)
+    case assetsStatus(_ orderCurrency: String = "All")
     case candleStick(_ orderCurrency: String, _ chartIntervals: String)
 }
 

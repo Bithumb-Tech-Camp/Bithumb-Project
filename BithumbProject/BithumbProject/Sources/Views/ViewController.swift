@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class MyViewModel: ViewModelType {
     
@@ -26,16 +28,18 @@ class MyViewModel: ViewModelType {
     }
 }
 
-final class ViewController: UIViewController, ViewModelBindable {
+final class ViewController: UIViewController {
     
-    var viewModel: MyViewModel!
+    let httpManager = HTTPManager()
+    var disposeBag: DisposeBag = DisposeBag()
     
-    func bindViewModel() {
-        
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        httpManager.requestCoinList()
+            .subscribe(onNext: { coinList in
+                print(coinList)
+            })
+            .disposed(by: self.disposeBag)
     }
 }
 
