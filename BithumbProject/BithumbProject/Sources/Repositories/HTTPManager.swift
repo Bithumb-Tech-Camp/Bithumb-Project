@@ -65,7 +65,7 @@ final class HTTPManager {
         }
     }
     
-    func requestTicker(_ query: OrderCurrency) -> Observable<Ticker?> {
+    func requestTicker(_ query: OrderCurrency) -> Observable<Ticker> {
         return Observable.create { [weak self] observer in
             guard let self = self else {
                 return Disposables.create()
@@ -75,7 +75,11 @@ final class HTTPManager {
                 case .success(let response):
                     do {
                         let httpResponse = try JSONDecoder().decode(HTTPResponse<Ticker>.self, from: response.data)
-                        observer.onNext(httpResponse.data)
+                        guard let ticker = httpResponse.data else {
+                            observer.onError(NetworkError.jsonError)
+                            return
+                        }
+                        observer.onNext(ticker)
                         observer.onCompleted()
                     } catch {
                         observer.onError(error)
