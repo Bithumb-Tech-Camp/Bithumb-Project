@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct RealtimeTransaction {
+struct RealtimeTransaction: Codable {
+    var list: [RealtimeTransactionItem]?
+}
+
+struct RealtimeTransactionItem: Codable {
     var symbol: String?
     var buySellCategory: String?
     var contractPrice: String
