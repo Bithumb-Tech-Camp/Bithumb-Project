@@ -24,7 +24,7 @@ enum TickType: String {
     case mid = "MID"
 }
 
-final class WebSocketManager: BithumbWebSocketService {
+final class WebSocketManager: WebSocketService {
     
     private var disposeBag: DisposeBag = DisposeBag()
     
@@ -83,9 +83,7 @@ final class WebSocketManager: BithumbWebSocketService {
         }
     }
     
-    func requestRealtimeOrderbook(
-        symbols: [String] = ["BTC_KRW"]
-    ) -> Observable<RealtimeOrderBook> {
+    func requestRealtimeOrderbook(symbols: [String] = ["BTC_KRW"]) -> Observable<RealtimeOrderBook> {
         Observable.create {[weak self] observer in
             guard let self = self else {
                 return Disposables.create()
@@ -136,9 +134,7 @@ final class WebSocketManager: BithumbWebSocketService {
         }
     }
     
-    func requestRealtimeTransaction(
-        symbols: [String] = ["BTC_KRW"]
-    ) -> Observable<RealtimeTransaction> {
+    func requestRealtimeTransaction(symbols: [String] = ["BTC_KRW"]) -> Observable<RealtimeTransaction> {
         Observable.create {[weak self] observer in
             guard let self = self else {
                 return Disposables.create()
