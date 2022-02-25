@@ -8,10 +8,10 @@
 import Foundation
 
 struct Candlestick {
-    var standardTime: Int?      //기준시간
-    var openPrice: String?      //시가
-    var closePrice: String?     //종가
-    var lowPrice: String?       //저가
-    var highPrice: String?      //고가
-    var transactionVolume: String?  //거래량
+    var standardTime: Int?
+    var openPrice: String?
+    var closePrice: String?
+    var lowPrice: String?
+    var highPrice: String?
+    var transactionVolume: String?
 }
