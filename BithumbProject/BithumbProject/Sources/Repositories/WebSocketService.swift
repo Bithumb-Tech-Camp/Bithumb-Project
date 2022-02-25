@@ -60,15 +60,15 @@ extension WebSocketService: WebSocketDelegate {
             subject.onNext(WebSocketEvent.text(string))
         case .binary(let data):
             subject.onNext(WebSocketEvent.binary(data))
-        case .pong(_):
+        case .pong:
             return
-        case .ping(_):
+        case .ping:
             return
         case .error(let error):
             subject.onNext(WebSocketEvent.error(error))
-        case .viabilityChanged(_):
+        case .viabilityChanged:
             return
-        case .reconnectSuggested(_):
+        case .reconnectSuggested:
             return
         case .cancelled:
             return

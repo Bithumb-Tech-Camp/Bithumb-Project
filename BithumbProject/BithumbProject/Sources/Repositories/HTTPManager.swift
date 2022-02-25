@@ -2,7 +2,7 @@
 //  HTTPManager.swift
 //  BithumbProject
 //
-//  Created by 박형석 on 2022/02/24.
+// Created by 박형석 on 2022/02/24.
 //
 
 import Foundation
@@ -17,7 +17,7 @@ final class HTTPManager {
         self.provider = provider
     }
     
-    func requestAssetsStatusList() -> Observable<[String:AssetsStatus]> {
+    func requestAssetsStatusList() -> Observable<[String: AssetsStatus]> {
         return Observable.create { [weak self] observer in
             guard let self = self else {
                 return Disposables.create()
@@ -26,7 +26,7 @@ final class HTTPManager {
                 switch result {
                 case .success(let response):
                     do {
-                        let assetsStatusList = try JSONDecoder().decode(HTTPResponse<[String:AssetsStatus]>.self, from: response.data)
+                        let assetsStatusList = try JSONDecoder().decode(HTTPResponse<[String: AssetsStatus]>.self, from: response.data)
                         guard let data = assetsStatusList.data else { return }
                         observer.onNext(data)
                         observer.onCompleted()
@@ -50,7 +50,7 @@ final class HTTPManager {
                 switch result {
                 case .success(let response):
                     do {
-                        let httpResponse = try JSONDecoder().decode(HTTPResponse<[String:AssetsStatus]>.self, from: response.data)
+                        let httpResponse = try JSONDecoder().decode(HTTPResponse<[String: AssetsStatus]>.self, from: response.data)
                         let coinList = httpResponse.data?.keys.map { Coin(name: $0) } ?? []
                         observer.onNext(coinList)
                         observer.onCompleted()

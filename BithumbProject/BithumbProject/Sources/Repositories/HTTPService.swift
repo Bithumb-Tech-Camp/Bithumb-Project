@@ -41,7 +41,7 @@ extension HTTPService: TargetType {
         return .requestPlain
     }
     
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         return [
             "ContentType": "application/json"
         ]
