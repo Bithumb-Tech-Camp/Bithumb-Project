@@ -38,4 +38,3 @@ final class ViewController: UIViewController, ViewModelBindable {
         super.viewDidLoad()
     }
 }
-

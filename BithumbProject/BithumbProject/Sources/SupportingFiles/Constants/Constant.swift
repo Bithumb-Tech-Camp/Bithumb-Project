@@ -47,5 +47,12 @@ enum Constant {
     
     enum URL {
         static let webSocketBaseURL = "wss://pubwss.bithumb.com/pub/ws"
+        static let httpBaseURL = "https://api.bithumb.com/public"
+    }
+
+    enum Path {
+        static let tickerPath = "/ticker"
+        static let assetsStatusPath = "/assetsstatus"
+        static let candleStickPath = "/candlestick"
     }
 }

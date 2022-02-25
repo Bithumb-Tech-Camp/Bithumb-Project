@@ -44,7 +44,7 @@ final class WebSocketManager: WebSocketService {
             self.response
                 .subscribe(onNext: { event in
                     switch event {
-                    case .connected(_):
+                    case .connected:
                         do {
                             let data = try JSONSerialization.data(withJSONObject: json, options: [])
                             self.webSocket?.write(data: data)
@@ -68,14 +68,8 @@ final class WebSocketManager: WebSocketService {
                         if let error = error {
                             observer.onError(error)
                         }
-                    case .disconnected(_, _),
-                        .binary(_),
-                        .pong(_),
-                        .ping(_),
-                        .viabilityChanged(_),
-                        .reconnectSuggested(_),
-                        .cancelled:
-                        return
+                    default:
+                        break
                     }
                 })
                 .disposed(by: self.disposeBag)
@@ -95,7 +89,7 @@ final class WebSocketManager: WebSocketService {
             self.response
                 .subscribe(onNext: { event in
                     switch event {
-                    case .connected(_):
+                    case .connected:
                         do {
                             let data = try JSONSerialization.data(withJSONObject: json, options: [])
                             self.webSocket?.write(data: data)
@@ -119,14 +113,8 @@ final class WebSocketManager: WebSocketService {
                         if let error = error {
                             observer.onError(error)
                         }
-                    case .disconnected(_, _),
-                        .binary(_),
-                        .pong(_),
-                        .ping(_),
-                        .viabilityChanged(_),
-                        .reconnectSuggested(_),
-                        .cancelled:
-                        return
+                    default:
+                        break
                     }
                 })
                 .disposed(by: self.disposeBag)
@@ -146,7 +134,7 @@ final class WebSocketManager: WebSocketService {
             self.response
                 .subscribe(onNext: { event in
                     switch event {
-                    case .connected(_):
+                    case .connected:
                         do {
                             let data = try JSONSerialization.data(withJSONObject: json, options: [])
                             self.webSocket?.write(data: data)
@@ -171,14 +159,8 @@ final class WebSocketManager: WebSocketService {
                         if let error = error {
                             observer.onError(error)
                         }
-                    case .disconnected(_, _),
-                        .binary(_),
-                        .pong(_),
-                        .ping(_),
-                        .viabilityChanged(_),
-                        .reconnectSuggested(_),
-                        .cancelled:
-                        return
+                    default:
+                        break
                     }
                 })
                 .disposed(by: self.disposeBag)
