@@ -77,6 +77,7 @@ final class HTTPManager {
                         let httpResponse = try JSONDecoder().decode(HTTPResponse<Ticker>.self, from: response.data)
                         guard let ticker = httpResponse.data else {
                             observer.onError(NetworkError.jsonError)
+                            return
                         }
                         observer.onNext(ticker)
                         observer.onCompleted()
