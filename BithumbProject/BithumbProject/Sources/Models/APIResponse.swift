@@ -13,7 +13,8 @@ struct HTTPResponse<T: Codable>: Codable {
     var message: String?
 }
 
-struct NetworkResponce<T: Codable>: Codable {
+struct WebSocketResponse<T: Codable>: Codable {
+    var status: String?
     var type: String?
     var content: T?
     var resmsg: String?

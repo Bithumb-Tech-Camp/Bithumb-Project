@@ -9,7 +9,7 @@ import Foundation
 
 struct RealtimeOrderBook: Codable {
     var list: [RealtimeOrderbookDepth]?
-    var datetime: Int?
+    var datetime: String?
 }
 
 struct RealtimeOrderbookDepth: Codable {
@@ -17,5 +17,5 @@ struct RealtimeOrderbookDepth: Codable {
     var orderType: String?
     var price: String?
     var quantity: String?
-    var total: String
+    var total: String?
 }
