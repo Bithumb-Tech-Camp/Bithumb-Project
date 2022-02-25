@@ -46,10 +46,7 @@ final class WebSocketManager: BithumbWebSocketService {
                     switch event {
                     case .connected(_):
                         do {
-                            let data = try JSONSerialization.data(
-                                withJSONObject: json,
-                                options: []
-                            )
+                            let data = try JSONSerialization.data(withJSONObject: json, options: [])
                             self.webSocket?.write(data: data)
                         } catch {
                             observer.onError(NetworkError.unknown)
@@ -57,10 +54,7 @@ final class WebSocketManager: BithumbWebSocketService {
                     case .text(let string):
                         do {
                             if let data = string.data(using: .utf8) {
-                                let json = try JSONDecoder().decode(
-                                    WebSocketResponse<RealtimeTicker>.self,
-                                    from: data
-                                )
+                                let json = try JSONDecoder().decode(WebSocketResponse<RealtimeTicker>.self, from: data)
                                 if let content = json.content {
                                     observer.onNext(content)
                                 } else {
@@ -105,10 +99,7 @@ final class WebSocketManager: BithumbWebSocketService {
                     switch event {
                     case .connected(_):
                         do {
-                            let data = try JSONSerialization.data(
-                                withJSONObject: json,
-                                options: []
-                            )
+                            let data = try JSONSerialization.data(withJSONObject: json, options: [])
                             self.webSocket?.write(data: data)
                         } catch {
                             observer.onError(NetworkError.unknown)
@@ -116,10 +107,7 @@ final class WebSocketManager: BithumbWebSocketService {
                     case .text(let string):
                         do {
                             if let data = string.data(using: .utf8) {
-                                let json = try JSONDecoder().decode(
-                                    WebSocketResponse<RealtimeOrderBook>.self,
-                                    from: data
-                                )
+                                let json = try JSONDecoder().decode(WebSocketResponse<RealtimeOrderBook>.self, from: data)
                                 if let content = json.content {
                                     observer.onNext(content)
                                 } else {
@@ -164,10 +152,7 @@ final class WebSocketManager: BithumbWebSocketService {
                     switch event {
                     case .connected(_):
                         do {
-                            let data = try JSONSerialization.data(
-                                withJSONObject: json,
-                                options: []
-                            )
+                            let data = try JSONSerialization.data(withJSONObject: json, options: [])
                             self.webSocket?.write(data: data)
                         } catch {
                             observer.onError(NetworkError.unknown)
@@ -176,10 +161,7 @@ final class WebSocketManager: BithumbWebSocketService {
                         do {
                             print(string)
                             if let data = string.data(using: .utf8) {
-                                let json = try JSONDecoder().decode(
-                                    WebSocketResponse<RealtimeTransaction>.self,
-                                    from: data
-                                )
+                                let json = try JSONDecoder().decode(WebSocketResponse<RealtimeTransaction>.self, from: data)
                                 if let content = json.content {
                                     observer.onNext(content)
                                 } else {
