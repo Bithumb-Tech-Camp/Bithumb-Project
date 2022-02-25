@@ -1,0 +1,35 @@
+disabled_rules:
+    - colon
+
+identifier_name:
+    min_length: # min_length에서
+        warning: 1
+        error: 1 # 에러만 적용
+    max_length: # max_length에서 warning: 40 #40글자 넘으면
+        warning: 600
+    excluded: # 제외할 문자열 목록 사용
+        - id
+        - URL
+        - GlobalAPIKey
+        
+empty_enum_arguments: false
+
+trailing_whitespace:
+    ignores_empty_lines: true
+
+line_length:
+    warning: 500
+    error: 1000
+    
+function_body_length:
+    warning: 200
+    error: 300
+    
+type_body_length:
+    warning: 400
+    error: 500
+
+excluded:
+- Pods
+
+

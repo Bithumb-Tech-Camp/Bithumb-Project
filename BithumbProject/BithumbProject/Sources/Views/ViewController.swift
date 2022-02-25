@@ -7,35 +7,16 @@
 
 import UIKit
 
-class MyViewModel: ViewModelType {
-    
-    var input: Input
-    var output: Output
-    
-    struct Input {
-        
-    }
-    
-    struct Output {
-        
-    }
-    
-    init() {
-        self.input = Input()
-        self.output = Output()
-    }
-}
+import Moya
+import RxSwift
+import RxCocoa
 
-final class ViewController: UIViewController, ViewModelBindable {
+final class ViewController: UIViewController {
     
-    var viewModel: MyViewModel!
-    
-    func bindViewModel() {
-        
-    }
+    var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
 }
-
