@@ -46,6 +46,6 @@ enum Constant {
     }
     
     enum URL {
-        
+        static let webSocketBaseURL = "wss://pubwss.bithumb.com/pub/ws"
     }
 }
