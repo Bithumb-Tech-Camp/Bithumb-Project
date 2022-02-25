@@ -16,7 +16,7 @@ protocol WebSocketServiceType {
     func disconnect()
 }
 
-class BithumbWebSocketService: WebSocketServiceType {
+class WebSocketService: WebSocketServiceType {
     
     var webSocket: WebSocket?
     private let subject = PublishSubject<WebSocketEvent>()
@@ -49,7 +49,7 @@ class BithumbWebSocketService: WebSocketServiceType {
     }
 }
 
-extension BithumbWebSocketService: WebSocketDelegate {
+extension WebSocketService: WebSocketDelegate {
     func didReceive(event: WebSocketEvent, client: WebSocket) {
         switch event {
         case .connected(let headers):
