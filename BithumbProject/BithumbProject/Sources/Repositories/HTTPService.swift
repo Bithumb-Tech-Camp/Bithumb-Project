@@ -1,5 +1,5 @@
 //
-//  BithumbHTTPService.swift
+//  HTTPService.swift
 //  BithumbProject
 //
 //  Created by 박형석 on 2022/02/24.
@@ -9,13 +9,15 @@ import Foundation
 
 import Moya
 
-enum BithumbHTTPService {
-    case ticker(_ orderCurrency: String)
-    case assetsStatus(_ orderCurrency: String = "All")
-    case candleStick(_ orderCurrency: String, _ chartIntervals: String)
+typealias OrderCurrency = String
+
+enum HTTPService {
+    case ticker(_ orderCurrency: OrderCurrency)
+    case assetsStatus(_ orderCurrency: OrderCurrency = "All")
+    case candleStick(_ orderCurrency: OrderCurrency, _ chartIntervals: String)
 }
 
-extension BithumbHTTPService: TargetType {
+extension HTTPService: TargetType {
     var baseURL: URL {
         return URL(string: Constant.URL.baseURL)!
     }
