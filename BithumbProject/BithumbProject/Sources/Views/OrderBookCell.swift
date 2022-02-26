@@ -17,6 +17,12 @@ class OrderBookCell: Cell {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        contentView.backgroundColor = .white
+        self.label.text = ""
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         

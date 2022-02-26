@@ -37,6 +37,7 @@
 		E592A92B27C67E8C008BE814 /* RealtimeTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */; };
 		E592A93327C9340F008BE814 /* OrderBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93227C9340F008BE814 /* OrderBookViewController.swift */; };
 		E592A93727C94741008BE814 /* OrderBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93627C94741008BE814 /* OrderBookCell.swift */; };
+		E592A93D27CA1FE8008BE814 /* OrderBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93C27CA1FE8008BE814 /* OrderBookViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeTransaction.swift; sourceTree = "<group>"; };
 		E592A93227C9340F008BE814 /* OrderBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookViewController.swift; sourceTree = "<group>"; };
 		E592A93627C94741008BE814 /* OrderBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookCell.swift; sourceTree = "<group>"; };
+		E592A93C27CA1FE8008BE814 /* OrderBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookViewModel.swift; sourceTree = "<group>"; };
 		ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */,
+				E592A93C27CA1FE8008BE814 /* OrderBookViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				1C9CFDFA27C75FCB00647FCE /* WebSocketService.swift in Sources */,
 				03D6C6BE27C91F620028A7E0 /* Coin.swift in Sources */,
 				1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */,
+				E592A93D27CA1FE8008BE814 /* OrderBookViewModel.swift in Sources */,
 				E592A92B27C67E8C008BE814 /* RealtimeTransaction.swift in Sources */,
 				E592A92927C67D61008BE814 /* RealtimeOrderBook.swift in Sources */,
 				03D6C6BA27C91DE70028A7E0 /* HTTPService.swift in Sources */,

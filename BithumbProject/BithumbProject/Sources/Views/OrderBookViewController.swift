@@ -9,10 +9,11 @@ import Foundation
 import UIKit
 import RxSwift
 import SpreadsheetView
+import RxDataSources
 
 class OrderBookViewController: UIViewController {
     var disposeBag = DisposeBag()
-//    let viewModel = OrderBookViewModel()
+    let viewModel = OrderBookViewModel()
 //    let baseView = OrderBookView()
     
     let spreadSheetView = SpreadsheetView()
@@ -32,6 +33,10 @@ class OrderBookViewController: UIViewController {
         spreadSheetView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets.zero)
         }
+        
+        self.viewModel.output.dummyData
+            
+        
     }
 }
 
