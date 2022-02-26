@@ -17,6 +17,8 @@ class OrderBookViewController: UIViewController {
 //    let baseView = OrderBookView()
     
     let spreadSheetView = SpreadsheetView()
+    var bidList: [BidAsk] = []  // 매수
+    var askList: [BidAsk] = []  // 매도
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +36,20 @@ class OrderBookViewController: UIViewController {
             $0.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets.zero)
         }
         
-        self.viewModel.output.dummyData
-            
+        self.viewModel.output.bidList
+            .subscribe(onNext: { bidList in
+                self.bidList = bidList
+                self.spreadSheetView.reloadData()
+            })
+            .disposed(by: disposeBag)
         
+        self.viewModel.output.askList
+            .subscribe(onNext: { askList in
+                self.askList = askList
+                self.spreadSheetView.reloadData()
+            })
+            .disposed(by: disposeBag)
+            
     }
 }
 
@@ -71,31 +84,31 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookCell.self), for: indexPath) as? OrderBookCell
-        
-        if indexPath.column ==  0 && indexPath.row < 30 {
-            cell?.label.text = "0.12345"
-            cell?.label.textAlignment = .right
-            cell?.contentView.backgroundColor = .blue
-        }
-        
-        if indexPath.column ==  1 {
-            if indexPath.row < 30 {
-                cell?.label.text = "45,678,912"
-                cell?.label.textAlignment = .center
+        if !self.askList.isEmpty && !self.bidList.isEmpty {
+            if indexPath.column ==  0 && indexPath.row < 30 {
+                cell?.label.text = self.askList[indexPath.row].quantity
+                cell?.label.textAlignment = .right
                 cell?.contentView.backgroundColor = .blue
-            } else {
-                cell?.label.text = "45,678,912"
-                cell?.label.textAlignment = .center
+            }
+            
+            if indexPath.column ==  1 {
+                if indexPath.row < 30 {
+                    cell?.label.text = self.askList[indexPath.row].price
+                    cell?.label.textAlignment = .center
+                    cell?.contentView.backgroundColor = .blue
+                } else {
+                    cell?.label.text = self.bidList[indexPath.row-30].price
+                    cell?.label.textAlignment = .center
+                    cell?.contentView.backgroundColor = .red
+                }
+            }
+            
+            if indexPath.column ==  2 && indexPath.row >= 30 {
+                cell?.label.text = self.bidList[indexPath.row-30].quantity
+                cell?.label.textAlignment = .left
                 cell?.contentView.backgroundColor = .red
             }
         }
-        
-        if indexPath.column ==  2 && indexPath.row >= 30 {
-            cell?.label.text = "0.12345"
-            cell?.label.textAlignment = .left
-            cell?.contentView.backgroundColor = .red
-        }
-        
         return cell
     }
 }

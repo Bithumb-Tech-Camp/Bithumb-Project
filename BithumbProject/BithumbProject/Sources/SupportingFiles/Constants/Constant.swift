@@ -54,5 +54,6 @@ enum Constant {
         static let tickerPath = "/ticker"
         static let assetsStatusPath = "/assetsstatus"
         static let candleStickPath = "/candlestick"
+        static let orderBookPath = "/orderbook"
     }
 }
