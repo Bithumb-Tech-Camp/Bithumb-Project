@@ -35,6 +35,8 @@
 		E592A92727C67BA9008BE814 /* Candlestick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A92627C67BA9008BE814 /* Candlestick.swift */; };
 		E592A92927C67D61008BE814 /* RealtimeOrderBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A92827C67D61008BE814 /* RealtimeOrderBook.swift */; };
 		E592A92B27C67E8C008BE814 /* RealtimeTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */; };
+		E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93E27CA81E1008BE814 /* OrderBook.swift */; };
+		E592A94127CA8381008BE814 /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A94027CA8381008BE814 /* TransactionHistory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,8 @@
 		E592A92627C67BA9008BE814 /* Candlestick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Candlestick.swift; sourceTree = "<group>"; };
 		E592A92827C67D61008BE814 /* RealtimeOrderBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeOrderBook.swift; sourceTree = "<group>"; };
 		E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeTransaction.swift; sourceTree = "<group>"; };
+		E592A93E27CA81E1008BE814 /* OrderBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBook.swift; sourceTree = "<group>"; };
+		E592A94027CA8381008BE814 /* TransactionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistory.swift; sourceTree = "<group>"; };
 		ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -297,6 +301,8 @@
 				E592A92827C67D61008BE814 /* RealtimeOrderBook.swift */,
 				E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */,
 				03D6C6BD27C91F620028A7E0 /* Coin.swift */,
+				E592A93E27CA81E1008BE814 /* OrderBook.swift */,
+				E592A94027CA8381008BE814 /* TransactionHistory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -595,6 +601,7 @@
 				E592A92927C67D61008BE814 /* RealtimeOrderBook.swift in Sources */,
 				03D6C6BA27C91DE70028A7E0 /* HTTPService.swift in Sources */,
 				E592A91F27C6764E008BE814 /* Ticker.swift in Sources */,
+				E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */,
 				1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */,
 				1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */,
 				E592A92127C678E3008BE814 /* AssetsStatus.swift in Sources */,
@@ -605,6 +612,7 @@
 				1C9CFE2E27C7E0CC00647FCE /* WebSocketManager.swift in Sources */,
 				E592A92727C67BA9008BE814 /* Candlestick.swift in Sources */,
 				03E19BFD27C9297F00F36A46 /* CoinListViewModel.swift in Sources */,
+				E592A94127CA8381008BE814 /* TransactionHistory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
