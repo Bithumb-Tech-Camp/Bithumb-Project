@@ -9,15 +9,15 @@ import Foundation
 
 struct OrderBook: Codable {
     var timestamp: String?
-    var order_currency: String?
-    var payment_currency: String?
+    var orderCurrency: String?
+    var paymentCurrency: String?
     var bids: [BidAsk]?
     var asks: [BidAsk]?
     
     enum CodingKeys: String, CodingKey {
         case timestamp
-        case order_currency = "orderCurrency"
-        case payment_currency = "paymentCurrency"
+        case orderCurrency = "order_currency"
+        case paymentCurrency = "payment_currency"
         case bids
         case asks
     }
