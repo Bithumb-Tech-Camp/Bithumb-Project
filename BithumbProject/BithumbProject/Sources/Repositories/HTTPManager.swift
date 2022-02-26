@@ -3,7 +3,7 @@
 //  BithumbProject
 //
 // Created by 박형석 on 2022/02/24.
-//
+// Updated by Davy on 2022/02/27.
 
 import Foundation
 
@@ -17,17 +17,17 @@ final class HTTPManager {
         self.provider = provider
     }
     
-    func requestAssetsStatusList() -> Observable<[String: AssetsStatus]> {
+    func request<T: Codable>(httpServiceType: HTTPService, model: T.Type) -> Observable<T> {
         return Observable.create { [weak self] observer in
             guard let self = self else {
                 return Disposables.create()
             }
-            self.provider.request(.assetsStatus()) { result in
+            self.provider.request(httpServiceType) { result in
                 switch result {
                 case .success(let response):
                     do {
-                        let assetsStatusList = try JSONDecoder().decode(HTTPResponse<[String: AssetsStatus]>.self, from: response.data)
-                        guard let data = assetsStatusList.data else { return }
+                        let decodeResponse = try JSONDecoder().decode(HTTPResponse<T>.self, from: response.data)
+                        guard let data = decodeResponse.data else { return }
                         observer.onNext(data)
                         observer.onCompleted()
                     } catch {
@@ -53,33 +53,6 @@ final class HTTPManager {
                         let httpResponse = try JSONDecoder().decode(HTTPResponse<[String: AssetsStatus]>.self, from: response.data)
                         let coinList = httpResponse.data?.keys.map { Coin(name: $0) } ?? []
                         observer.onNext(coinList)
-                        observer.onCompleted()
-                    } catch {
-                        observer.onError(error)
-                    }
-                case .failure(let error):
-                    observer.onError(error)
-                }
-            }
-            return Disposables.create()
-        }
-    }
-    
-    func requestTicker(_ query: OrderCurrency) -> Observable<Ticker> {
-        return Observable.create { [weak self] observer in
-            guard let self = self else {
-                return Disposables.create()
-            }
-            self.provider.request(.ticker(query)) { result in
-                switch result {
-                case .success(let response):
-                    do {
-                        let httpResponse = try JSONDecoder().decode(HTTPResponse<Ticker>.self, from: response.data)
-                        guard let ticker = httpResponse.data else {
-                            observer.onError(NetworkError.jsonError)
-                            return
-                        }
-                        observer.onNext(ticker)
                         observer.onCompleted()
                     } catch {
                         observer.onError(error)
