@@ -19,6 +19,7 @@ class OrderBookViewController: UIViewController {
     let spreadSheetView = SpreadsheetView()
     var bidList: [BidAsk] = []  // 매수
     var askList: [BidAsk] = []  // 매도
+    var tickerData: Ticker = Ticker()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,7 @@ class OrderBookViewController: UIViewController {
         self.spreadSheetView.dataSource = self
         
         self.spreadSheetView.register(OrderBookCell.self, forCellWithReuseIdentifier: String(describing: OrderBookCell.self))
+        self.spreadSheetView.register(OrderBookTickerCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTickerCell.self))
         
         view.addSubview(self.spreadSheetView)
         spreadSheetView.snp.makeConstraints {
@@ -46,6 +48,13 @@ class OrderBookViewController: UIViewController {
         self.viewModel.output.askList
             .subscribe(onNext: { askList in
                 self.askList = askList
+                self.spreadSheetView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        self.viewModel.output.tickerData
+            .subscribe(onNext: { ticker in
+                self.tickerData = ticker
                 self.spreadSheetView.reloadData()
             })
             .disposed(by: disposeBag)
@@ -83,6 +92,18 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
+        if indexPath.row == 0 && indexPath.column == 2 {
+            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookTickerCell.self), for: indexPath) as? OrderBookTickerCell
+            cell?.lowPriceLabel.content = self.tickerData.minPrice
+            cell?.highPriceLabel.content = self.tickerData.maxPrice
+            cell?.openPriceLabel.content = self.tickerData.openingPrice
+            cell?.prevClosePriceLabel.content = self.tickerData.prevClosingPrice
+            cell?.accTradeValueLabel.content = self.tickerData.accTradeValue
+            cell?.unitsTradedLabel.content = self.tickerData.unitsTraded
+            cell?.accTradeValue24HLabel.content = self.tickerData.accTradeValue24H
+            cell?.unitsTraded24HLabel.content = self.tickerData.unitsTraded24H
+            return cell
+        }
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookCell.self), for: indexPath) as? OrderBookCell
         if !self.askList.isEmpty && !self.bidList.isEmpty {
             if indexPath.column ==  0 && indexPath.row < 30 {

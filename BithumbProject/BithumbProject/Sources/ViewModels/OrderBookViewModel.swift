@@ -21,6 +21,7 @@ final class OrderBookViewModel: ViewModelType {
         let bidList = PublishRelay<[BidAsk]>()
         let askList = PublishRelay<[BidAsk]>()
         let realtimeOrderBookData = PublishRelay<RealtimeOrderBook>()
+        let tickerData = PublishRelay<Ticker>()
     }
     
     struct Output {
@@ -28,6 +29,7 @@ final class OrderBookViewModel: ViewModelType {
         let bidList = BehaviorRelay<[BidAsk]>(value: [])
         let askList = BehaviorRelay<[BidAsk]>(value: [])
         let realtimeOrderBookData = BehaviorRelay<RealtimeOrderBook>(value: RealtimeOrderBook())
+        let tickerData = BehaviorRelay<Ticker>(value: Ticker())
     }
     
     init() {
@@ -52,6 +54,10 @@ final class OrderBookViewModel: ViewModelType {
         
         input.realtimeOrderBookData
             .bind(to: output.realtimeOrderBookData)
+            .disposed(by: disposeBag)
+        
+        input.tickerData
+            .bind(to: output.tickerData)
             .disposed(by: disposeBag)
         
         httpManager.request(httpServiceType: .orderBook("BTC"), model: OrderBook.self)
@@ -88,6 +94,10 @@ final class OrderBookViewModel: ViewModelType {
             .map { self.reflectRealtimeData(previousList: $0.value, realtimeList: $1) }
             .map { $0.sorted { $0.price ?? "" > $1.price ?? "" }}
             .bind(to: input.askList)
+            .disposed(by: disposeBag)
+        
+        httpManager.request(httpServiceType: .ticker("BTC"), model: Ticker.self)
+            .bind(to: input.tickerData)
             .disposed(by: disposeBag)
     }
     
