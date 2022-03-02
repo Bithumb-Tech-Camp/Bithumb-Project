@@ -15,6 +15,7 @@ target 'BithumbProject' do
   pod 'RxDataSources'
   pod 'RxKeyboard'
   pod 'RxViewController'
+  pod 'RxOptional'
   pod 'Moya'
   pod 'Starscream'
   pod 'SnapKit'
