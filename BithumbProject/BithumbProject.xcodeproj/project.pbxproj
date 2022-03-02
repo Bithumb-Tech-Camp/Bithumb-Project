@@ -12,6 +12,11 @@
 		03D6C6BE27C91F620028A7E0 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D6C6BD27C91F620028A7E0 /* Coin.swift */; };
 		03E19BFD27C9297F00F36A46 /* CoinListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */; };
 		03E19BFF27C9299D00F36A46 /* CoinListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */; };
+		1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */; };
+		1C33CF9B27CF364F007E91F0 /* CoinDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */; };
+		1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */; };
+		1C33CF9F27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9E27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift */; };
+		1C33CFA127CF9F80007E91F0 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CFA027CF9F80007E91F0 /* ChartViewController.swift */; };
 		1C9CFDFA27C75FCB00647FCE /* WebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CFDF927C75FCB00647FCE /* WebSocketService.swift */; };
 		1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CFE2627C7C85D00647FCE /* String+Extension.swift */; };
 		1C9CFE2A27C7C8F200647FCE /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CFE2927C7C8F200647FCE /* NetworkError.swift */; };
@@ -61,6 +66,11 @@
 		03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListViewModel.swift; sourceTree = "<group>"; };
 		03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListViewController.swift; sourceTree = "<group>"; };
 		18428F2A50A0AD57949D9ADA /* Pods_BithumbProjectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProjectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailViewController.swift; sourceTree = "<group>"; };
+		1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailViewModel.swift; sourceTree = "<group>"; };
+		1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		1C33CF9E27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailButtonBarPagerViewController.swift; sourceTree = "<group>"; };
+		1C33CFA027CF9F80007E91F0 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		1C9CFDF927C75FCB00647FCE /* WebSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketService.swift; sourceTree = "<group>"; };
 		1C9CFE2627C7C85D00647FCE /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		1C9CFE2927C7C8F200647FCE /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -127,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */,
+				1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -135,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				1C9CFE2627C7C85D00647FCE /* String+Extension.swift */,
+				1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -258,6 +270,9 @@
 			isa = PBXGroup;
 			children = (
 				03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */,
+				1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */,
+				1C33CF9E27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift */,
+				1C33CFA027CF9F80007E91F0 /* ChartViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -293,10 +308,10 @@
 				E592A91E27C6764E008BE814 /* Ticker.swift */,
 				E592A92027C678E3008BE814 /* AssetsStatus.swift */,
 				E592A92627C67BA9008BE814 /* Candlestick.swift */,
+				03D6C6BD27C91F620028A7E0 /* Coin.swift */,
 				E592A92227C67984008BE814 /* RealtimeTicker.swift */,
 				E592A92827C67D61008BE814 /* RealtimeOrderBook.swift */,
 				E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */,
-				03D6C6BD27C91F620028A7E0 /* Coin.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -597,9 +612,14 @@
 				E592A91F27C6764E008BE814 /* Ticker.swift in Sources */,
 				1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */,
 				1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */,
+				1C33CF9B27CF364F007E91F0 /* CoinDetailViewModel.swift in Sources */,
 				E592A92127C678E3008BE814 /* AssetsStatus.swift in Sources */,
+				1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */,
 				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
 				03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */,
+				1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */,
+				1C33CF9F27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift in Sources */,
+				1C33CFA127CF9F80007E91F0 /* ChartViewController.swift in Sources */,
 				E592A91D27C67303008BE814 /* APIResponse.swift in Sources */,
 				E592A92327C67984008BE814 /* RealtimeTicker.swift in Sources */,
 				1C9CFE2E27C7E0CC00647FCE /* WebSocketManager.swift in Sources */,
@@ -776,6 +796,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3885XCJRT2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BithumbProject/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -803,6 +824,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3885XCJRT2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BithumbProject/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
