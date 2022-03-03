@@ -50,11 +50,11 @@ final class CoinListButtonBarPagerViewController: ButtonBarPagerTabStripViewCont
     func bindViewModel() {
         self.changeRateSettingButton.rx.tap
             .bind(onNext: {
-                let changeRateViewController = ChangeRateSettingViewController()
+                var changeRateViewController = ChangeRateSettingViewController()
+                changeRateViewController.bind(viewModel: self.viewModel)
                 self.presentPanModal(changeRateViewController)
             })
             .disposed(by: disposeBag)
-        
     }
     
     private func setupViews() {
@@ -75,7 +75,7 @@ final class CoinListButtonBarPagerViewController: ButtonBarPagerTabStripViewCont
         
         self.buttonBarPagerView.snp.makeConstraints { make in
             make.height.equalTo(40)
-            make.width.equalTo(200)
+            make.width.equalTo(220)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading)
         }

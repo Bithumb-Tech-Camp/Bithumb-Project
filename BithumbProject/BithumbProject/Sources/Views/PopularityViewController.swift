@@ -13,7 +13,7 @@ class PopularityViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBlue
+        self.view.backgroundColor = .label
     }
 }
 

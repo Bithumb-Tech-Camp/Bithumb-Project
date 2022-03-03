@@ -65,5 +65,7 @@ class CoinListViewController: UIViewController, ViewModelBindable {
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.titleView = self.coinSearchBar
         self.navigationItem.rightBarButtonItems = [self.cafeBarButton, self.alarmBarButton]
+        self.navigationController?.navigationBar.backgroundColor = .systemBackground
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
 }

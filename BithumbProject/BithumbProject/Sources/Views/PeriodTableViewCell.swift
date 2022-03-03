@@ -17,12 +17,12 @@ class PeriodTableViewCell: UITableViewCell {
     
     private let periodLabel = UILabel().then {
         $0.text = "어제대비"
-        $0.font = UIFont.systemFont(ofSize: 20, weight: .light)
+        $0.font = UIFont.systemFont(ofSize: 17, weight: .light)
         $0.textColor = .black
     }
     
-    private let checkImage = UIImageView().then {
-        $0.image = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 20))
+    let checkImage = UIImageView().then {
+        $0.image = nil
         $0.tintColor = .systemRed
     }
 
@@ -42,18 +42,18 @@ class PeriodTableViewCell: UITableViewCell {
         
         self.periodLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(30)
         }
         
         self.checkImage.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(30)
         }
     }
 }
 
 extension PeriodTableViewCell {
-    func rendering(_ changeRate: ChangeRate) {
-        
+    func rendering(_ changeRatePeriod: ChangeRatePeriod) {
+        self.periodLabel.text = changeRatePeriod.rawValue
     }
 }
