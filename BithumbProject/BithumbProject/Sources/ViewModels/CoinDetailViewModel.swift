@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
 final class CoinDetailViewModel: ViewModelType {
     
@@ -16,10 +17,11 @@ final class CoinDetailViewModel: ViewModelType {
     }
     
     struct Output {
-        let realtimeClosePriceText: BehaviorSubject<String> = BehaviorSubject<String>(value: "")
-        let realtimeChangeAmountText: BehaviorSubject<String> = BehaviorSubject<String>(value: "")
-        let realtimeChangeRateText: BehaviorSubject<String> = BehaviorSubject<String>(value: "")
-        let realtimeUpDown: BehaviorSubject<UpDown> = BehaviorSubject<UpDown>(value: .up)
+        let realtimeClosePriceText: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
+        let realtimeChangeAmountText: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
+        let realtimeChangeRateText: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
+        let realtimeUpDown: BehaviorRelay<UpDown> = BehaviorRelay<UpDown>(value: .up)
+        let error: PublishRelay<NSError> = PublishRelay<NSError>()
     }
     
     let input: Input
