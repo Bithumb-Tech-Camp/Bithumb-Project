@@ -9,10 +9,13 @@ import Foundation
 
 import Then
 import XLPagerTabStrip
+import RxSwift
+import RxCocoa
+import PanModal
 
-final class CoinListButtonBarPagerViewController: ButtonBarPagerTabStripViewController {
+final class CoinListButtonBarPagerViewController: ButtonBarPagerTabStripViewController, ViewModelBindable {
 
-    // MARK: -View Properties
+    // MARK: - View Properties
     private let scrollView: UIScrollView = UIScrollView()
     
     private let buttonBarPagerView: ButtonBarView = ButtonBarView(
@@ -31,6 +34,9 @@ final class CoinListButtonBarPagerViewController: ButtonBarPagerTabStripViewCont
         $0.tintColor = .gray
     }
     
+    var viewModel: CoinListViewModel!
+    var disposeBag: DisposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         self.setupViews()
         self.configureStrip()
@@ -39,6 +45,16 @@ final class CoinListButtonBarPagerViewController: ButtonBarPagerTabStripViewCont
     
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         return [KRWViewController(), PopularityViewController(), FavoriteCoinViewController()]
+    }
+    
+    func bindViewModel() {
+        self.changeRateSettingButton.rx.tap
+            .bind(onNext: {
+                let changeRateViewController = ChangeRateSettingViewController()
+                self.presentPanModal(changeRateViewController)
+            })
+            .disposed(by: disposeBag)
+        
     }
     
     private func setupViews() {

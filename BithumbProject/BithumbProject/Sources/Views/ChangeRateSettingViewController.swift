@@ -7,6 +7,8 @@
 
 import UIKit
 
+import PanModal
+
 class ChangeRateSettingViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -14,4 +16,20 @@ class ChangeRateSettingViewController: UIViewController {
         self.view.backgroundColor = .systemPink
     }
 
+}
+
+extension ChangeRateSettingViewController: PanModalPresentable {
+
+    var panScrollable: UIScrollView? {
+        return nil
+    }
+    
+    var shortFormHeight: PanModalHeight {
+        return .contentHeight(300)
+    }
+
+    var longFormHeight: PanModalHeight {
+        return .maxHeightWithTopInset(40)
+    }
+    
 }

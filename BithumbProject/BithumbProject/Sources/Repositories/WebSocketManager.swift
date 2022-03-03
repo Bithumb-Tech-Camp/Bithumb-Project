@@ -28,6 +28,7 @@ final class WebSocketManager: WebSocketService {
     
     private var disposeBag: DisposeBag = DisposeBag()
     
+    // swiftlint:disable all
     func requestRealtime<T: Codable>(
         parameter: [String: Any],
         type: T.Type
@@ -77,4 +78,5 @@ final class WebSocketManager: WebSocketService {
             return Disposables.create()
         }
     }
+    // swiftlint:enable all
 }

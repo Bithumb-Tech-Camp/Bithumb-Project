@@ -34,7 +34,7 @@ class CoinListViewController: UIViewController, ViewModelBindable {
         $0.tintColor = .black
     }
     
-    private let coinListButtonBarPagerViewController: ButtonBarPagerTabStripViewController = CoinListButtonBarPagerViewController()
+    private var coinListButtonBarPagerViewController = CoinListButtonBarPagerViewController()
     
     var viewModel: CoinListViewModel!
     var disposeBag: DisposeBag = DisposeBag()
@@ -51,6 +51,7 @@ class CoinListViewController: UIViewController, ViewModelBindable {
     }
     
     private func setupViews() {
+        self.coinListButtonBarPagerViewController.bind(viewModel: self.viewModel)
         self.view.addSubview(self.coinListButtonBarPagerViewController.view)
         self.coinListButtonBarPagerViewController.view.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
