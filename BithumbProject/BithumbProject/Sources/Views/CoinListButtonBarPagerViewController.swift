@@ -7,11 +7,11 @@
 
 import Foundation
 
+import PanModal
+import RxCocoa
+import RxSwift
 import Then
 import XLPagerTabStrip
-import RxSwift
-import RxCocoa
-import PanModal
 
 final class CoinListButtonBarPagerViewController: ButtonBarPagerTabStripViewController, ViewModelBindable {
 

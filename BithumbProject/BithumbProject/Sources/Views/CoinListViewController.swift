@@ -7,10 +7,10 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import Then
-import RxSwift
-import RxCocoa
 import XLPagerTabStrip
 
 class CoinListViewController: UIViewController, ViewModelBindable {
