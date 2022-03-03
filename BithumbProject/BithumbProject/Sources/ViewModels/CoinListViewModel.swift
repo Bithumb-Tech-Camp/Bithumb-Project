@@ -7,6 +7,22 @@
 
 import Foundation
 
-final class CoinListViewModel {
+final class CoinListViewModel: ViewModelType {
+    
+    struct Input {
+        
+    }
+    
+    struct Output {
+        
+    }
+    
+    var input: Input
+    var output: Output
+    
+    init() {
+        self.input = Input()
+        self.output = Output()
+    }
     
 }

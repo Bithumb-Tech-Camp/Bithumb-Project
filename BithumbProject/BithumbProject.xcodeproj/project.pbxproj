@@ -12,6 +12,11 @@
 		03D6C6BE27C91F620028A7E0 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D6C6BD27C91F620028A7E0 /* Coin.swift */; };
 		03E19BFD27C9297F00F36A46 /* CoinListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */; };
 		03E19BFF27C9299D00F36A46 /* CoinListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */; };
+		03F2EC8427D059E800CEC21E /* CoinListButtonBarPagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8327D059E800CEC21E /* CoinListButtonBarPagerViewController.swift */; };
+		03F2EC8627D05AA600CEC21E /* KRWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8527D05AA600CEC21E /* KRWViewController.swift */; };
+		03F2EC8827D05ABC00CEC21E /* FavoriteCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8727D05ABC00CEC21E /* FavoriteCoinViewController.swift */; };
+		03F2EC8A27D05C1A00CEC21E /* PopularityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8927D05C1A00CEC21E /* PopularityViewController.swift */; };
+		03F2EC8C27D065EF00CEC21E /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */; };
 		1C9CFDFA27C75FCB00647FCE /* WebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CFDF927C75FCB00647FCE /* WebSocketService.swift */; };
 		1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CFE2627C7C85D00647FCE /* String+Extension.swift */; };
 		1C9CFE2A27C7C8F200647FCE /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CFE2927C7C8F200647FCE /* NetworkError.swift */; };
@@ -35,10 +40,10 @@
 		E592A92727C67BA9008BE814 /* Candlestick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A92627C67BA9008BE814 /* Candlestick.swift */; };
 		E592A92927C67D61008BE814 /* RealtimeOrderBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A92827C67D61008BE814 /* RealtimeOrderBook.swift */; };
 		E592A92B27C67E8C008BE814 /* RealtimeTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */; };
-		E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93E27CA81E1008BE814 /* OrderBook.swift */; };
-		E592A94127CA8381008BE814 /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A94027CA8381008BE814 /* TransactionHistory.swift */; };
 		E592A93327C9340F008BE814 /* OrderBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93227C9340F008BE814 /* OrderBookViewController.swift */; };
 		E592A93727C94741008BE814 /* OrderBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93627C94741008BE814 /* OrderBookCell.swift */; };
+		E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93E27CA81E1008BE814 /* OrderBook.swift */; };
+		E592A94127CA8381008BE814 /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A94027CA8381008BE814 /* TransactionHistory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +69,11 @@
 		03D6C6BD27C91F620028A7E0 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListViewModel.swift; sourceTree = "<group>"; };
 		03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListViewController.swift; sourceTree = "<group>"; };
+		03F2EC8327D059E800CEC21E /* CoinListButtonBarPagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListButtonBarPagerViewController.swift; sourceTree = "<group>"; };
+		03F2EC8527D05AA600CEC21E /* KRWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRWViewController.swift; sourceTree = "<group>"; };
+		03F2EC8727D05ABC00CEC21E /* FavoriteCoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCoinViewController.swift; sourceTree = "<group>"; };
+		03F2EC8927D05C1A00CEC21E /* PopularityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularityViewController.swift; sourceTree = "<group>"; };
+		03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
 		18428F2A50A0AD57949D9ADA /* Pods_BithumbProjectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProjectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C9CFDF927C75FCB00647FCE /* WebSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketService.swift; sourceTree = "<group>"; };
 		1C9CFE2627C7C85D00647FCE /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -96,10 +106,10 @@
 		E592A92627C67BA9008BE814 /* Candlestick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Candlestick.swift; sourceTree = "<group>"; };
 		E592A92827C67D61008BE814 /* RealtimeOrderBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeOrderBook.swift; sourceTree = "<group>"; };
 		E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeTransaction.swift; sourceTree = "<group>"; };
-		E592A93E27CA81E1008BE814 /* OrderBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBook.swift; sourceTree = "<group>"; };
-		E592A94027CA8381008BE814 /* TransactionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistory.swift; sourceTree = "<group>"; };
 		E592A93227C9340F008BE814 /* OrderBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookViewController.swift; sourceTree = "<group>"; };
 		E592A93627C94741008BE814 /* OrderBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookCell.swift; sourceTree = "<group>"; };
+		E592A93E27CA81E1008BE814 /* OrderBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBook.swift; sourceTree = "<group>"; };
+		E592A94027CA8381008BE814 /* TransactionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistory.swift; sourceTree = "<group>"; };
 		ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -143,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				1C9CFE2627C7C85D00647FCE /* String+Extension.swift */,
+				03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -266,6 +277,10 @@
 			isa = PBXGroup;
 			children = (
 				03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */,
+				03F2EC8327D059E800CEC21E /* CoinListButtonBarPagerViewController.swift */,
+				03F2EC8527D05AA600CEC21E /* KRWViewController.swift */,
+				03F2EC8927D05C1A00CEC21E /* PopularityViewController.swift */,
+				03F2EC8727D05ABC00CEC21E /* FavoriteCoinViewController.swift */,
 				E592A93227C9340F008BE814 /* OrderBookViewController.swift */,
 				E592A93627C94741008BE814 /* OrderBookCell.swift */,
 			);
@@ -598,6 +613,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C9CFE2A27C7C8F200647FCE /* NetworkError.swift in Sources */,
+				03F2EC8627D05AA600CEC21E /* KRWViewController.swift in Sources */,
 				E592A93327C9340F008BE814 /* OrderBookViewController.swift in Sources */,
 				1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */,
 				E592A93727C94741008BE814 /* OrderBookCell.swift in Sources */,
@@ -613,12 +629,16 @@
 				1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */,
 				1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */,
 				E592A92127C678E3008BE814 /* AssetsStatus.swift in Sources */,
+				03F2EC8A27D05C1A00CEC21E /* PopularityViewController.swift in Sources */,
+				03F2EC8427D059E800CEC21E /* CoinListButtonBarPagerViewController.swift in Sources */,
 				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
 				03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */,
 				E592A91D27C67303008BE814 /* APIResponse.swift in Sources */,
+				03F2EC8827D05ABC00CEC21E /* FavoriteCoinViewController.swift in Sources */,
 				E592A92327C67984008BE814 /* RealtimeTicker.swift in Sources */,
 				1C9CFE2E27C7E0CC00647FCE /* WebSocketManager.swift in Sources */,
 				E592A92727C67BA9008BE814 /* Candlestick.swift in Sources */,
+				03F2EC8C27D065EF00CEC21E /* UISearchBar+Extension.swift in Sources */,
 				03E19BFD27C9297F00F36A46 /* CoinListViewModel.swift in Sources */,
 				E592A94127CA8381008BE814 /* TransactionHistory.swift in Sources */,
 			);
