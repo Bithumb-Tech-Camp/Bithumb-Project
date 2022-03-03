@@ -13,7 +13,7 @@ extension UISearchBar {
         doneToolbar.barStyle = .default
         
         let flexSpaceItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneBarButton: UIBarButtonItem = UIBarButtonItem(title:  NSLocalizedString("닫기", comment: ""), style: .done, target: self, action: #selector(self.doneButtonAction))
+        let doneBarButton: UIBarButtonItem = UIBarButtonItem(title: NSLocalizedString("닫기", comment: ""), style: .done, target: self, action: #selector(self.doneButtonAction))
         
         let items = [flexSpaceItem, doneBarButton]
         doneToolbar.items = items
@@ -22,7 +22,7 @@ extension UISearchBar {
         self.inputAccessoryView = doneToolbar
     }
     
-    @objc func doneButtonAction(){
+    @objc func doneButtonAction() {
         self.resignFirstResponder()
     }
 }
