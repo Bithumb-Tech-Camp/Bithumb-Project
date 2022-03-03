@@ -7,6 +7,9 @@
 
 import Foundation
 
+import RxCocoa
+import RxSwift
+
 final class CoinListViewModel: ViewModelType {
     
     struct Input {
@@ -14,7 +17,7 @@ final class CoinListViewModel: ViewModelType {
     }
     
     struct Output {
-        
+        let changeRates = BehaviorRelay<[ChangeRate]>(value: [])
     }
     
     var input: Input
@@ -23,6 +26,14 @@ final class CoinListViewModel: ViewModelType {
     init() {
         self.input = Input()
         self.output = Output()
+        
+        
+    }
+    
+    private initialChangeRates() -> Observable<[ChangeRate]> {
+        let chageRates = [
+            ChangeRate(time: .Day, isSelected: <#T##Bool#>)
+        ]
     }
     
 }
