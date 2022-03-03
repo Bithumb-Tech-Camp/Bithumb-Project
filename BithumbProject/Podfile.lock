@@ -8,6 +8,7 @@ PODS:
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
+  - PanModal (1.2.7)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -42,6 +43,7 @@ PODS:
 DEPENDENCIES:
   - Charts
   - Moya
+  - PanModal
   - RxCocoa
   - RxDataSources
   - RxGesture
@@ -63,6 +65,7 @@ SPEC REPOS:
     - Charts
     - Differentiator
     - Moya
+    - PanModal
     - RxCocoa
     - RxDataSources
     - RxGesture
@@ -84,6 +87,7 @@ SPEC CHECKSUMS:
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxGesture: abadd243fc36db74df43dfc893829ddde94f1a3d
@@ -100,6 +104,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 33a326bdd5d8f0a8cbfbf2446fa830d55e4605ff
+PODFILE CHECKSUM: b1e3505fcc3b30da505471b34a44426844ebf68b
 
 COCOAPODS: 1.11.2

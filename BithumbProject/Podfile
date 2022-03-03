@@ -23,6 +23,7 @@ target 'BithumbProject' do
   pod 'Charts'
   pod 'SpreadsheetView'
   pod 'XLPagerTabStrip'
+  pod 'PanModal'
 
   target 'BithumbProjectTests' do
     inherit! :search_paths
