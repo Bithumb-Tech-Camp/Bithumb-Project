@@ -55,6 +55,13 @@ final class CoinListButtonBarPagerViewController: ButtonBarPagerTabStripViewCont
                 self.presentPanModal(changeRateViewController)
             })
             .disposed(by: disposeBag)
+        
+        self.viewModel.output.currentChangeRatePeriod
+            .withUnretained(self)
+            .bind(onNext: { owner, currentPeriod in
+                owner.changeRateSettingButton.setTitle(currentPeriod.rawValue, for: .normal)
+            })
+            .disposed(by: self.disposeBag)
     }
     
     private func setupViews() {
@@ -74,7 +81,7 @@ final class CoinListButtonBarPagerViewController: ButtonBarPagerTabStripViewCont
         self.view.addSubview(self.scrollView)
         
         self.buttonBarPagerView.snp.makeConstraints { make in
-            make.height.equalTo(40)
+            make.height.equalTo(45)
             make.width.equalTo(220)
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading)

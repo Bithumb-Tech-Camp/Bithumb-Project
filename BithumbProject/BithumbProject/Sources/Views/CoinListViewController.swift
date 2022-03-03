@@ -5,6 +5,7 @@
 //  Created by 박형석 on 2022/02/26.
 //
 
+import SafariServices
 import UIKit
 
 import RxCocoa
@@ -47,6 +48,27 @@ class CoinListViewController: UIViewController, ViewModelBindable {
     
     // MARK: - CoinListViewController Bind
     func bindViewModel() {
+        self.cafeBarButton.rx.tap
+            .bind(onNext: {
+                guard let url = URL(string: Constant.URL.cafeURL) else { return }
+                let safariViewController = SFSafariViewController(url: url)
+                self.present(safariViewController, animated: true, completion: nil)
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.alarmBarButton.rx.tap
+            .bind(onNext: {
+                self.alertMessage(message: "알림으로 가는 탭")
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.coinSearchBar.rx.text.orEmpty
+            .bind(to: self.viewModel.input.inputQuery)
+            .disposed(by: self.disposeBag)
+        
+        self.coinSearchBar.rx.searchButtonClicked
+            .bind(to: self.viewModel.input.searchButtonClicked)
+            .disposed(by: self.disposeBag)
         
     }
     
@@ -64,7 +86,7 @@ class CoinListViewController: UIViewController, ViewModelBindable {
     private func setupNavigation() {
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.titleView = self.coinSearchBar
-        self.navigationItem.rightBarButtonItems = [self.cafeBarButton, self.alarmBarButton]
+        self.navigationItem.rightBarButtonItems = [self.alarmBarButton, self.cafeBarButton]
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }

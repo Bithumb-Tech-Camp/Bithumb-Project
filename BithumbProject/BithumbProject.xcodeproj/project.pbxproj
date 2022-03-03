@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0320AF2127D1066300B3B83B /* ChangeRatePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0320AF2027D1066300B3B83B /* ChangeRatePeriod.swift */; };
+		0320AF2327D11AC800B3B83B /* UIVIewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */; };
 		03D6C6BA27C91DE70028A7E0 /* HTTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D6C6B827C91DE70028A7E0 /* HTTPService.swift */; };
 		03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D6C6B927C91DE70028A7E0 /* HTTPManager.swift */; };
 		03D6C6BE27C91F620028A7E0 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D6C6BD27C91F620028A7E0 /* Coin.swift */; };
@@ -74,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		0320AF2027D1066300B3B83B /* ChangeRatePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRatePeriod.swift; sourceTree = "<group>"; };
+		0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Extension.swift"; sourceTree = "<group>"; };
 		03D6C6B827C91DE70028A7E0 /* HTTPService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPService.swift; sourceTree = "<group>"; };
 		03D6C6B927C91DE70028A7E0 /* HTTPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPManager.swift; sourceTree = "<group>"; };
 		03D6C6BD27C91F620028A7E0 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				1C9CFE2627C7C85D00647FCE /* String+Extension.swift */,
 				03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */,
 				1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */,
+				0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 				03F2EC8427D059E800CEC21E /* CoinListButtonBarPagerViewController.swift in Sources */,
 				1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */,
 				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
+				0320AF2327D11AC800B3B83B /* UIVIewController+Extension.swift in Sources */,
 				03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */,
 				1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */,
 				1C33CF9F27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift in Sources */,
