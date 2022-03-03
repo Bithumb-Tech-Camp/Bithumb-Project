@@ -40,28 +40,4 @@ final class HTTPManager {
             return Disposables.create()
         }
     }
-    
-    func requestCoinList() -> Observable<[Coin]> {
-        return Observable.create { [weak self] observer in
-            guard let self = self else {
-                return Disposables.create()
-            }
-            self.provider.request(.assetsStatus()) { result in
-                switch result {
-                case .success(let response):
-                    do {
-                        let httpResponse = try JSONDecoder().decode(HTTPResponse<[String: AssetsStatus]>.self, from: response.data)
-                        let coinList = httpResponse.data?.keys.map { Coin(name: $0) } ?? []
-                        observer.onNext(coinList)
-                        observer.onCompleted()
-                    } catch {
-                        observer.onError(error)
-                    }
-                case .failure(let error):
-                    observer.onError(error)
-                }
-            }
-            return Disposables.create()
-        }
-    }
 }
