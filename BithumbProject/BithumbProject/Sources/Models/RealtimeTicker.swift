@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum UpDown {
+    case up
+    case down
+}
+
 struct RealtimeTicker: Codable {
     var symbol: String?
     var tickType: String?

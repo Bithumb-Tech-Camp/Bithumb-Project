@@ -8,6 +8,7 @@ PODS:
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
+  - PanModal (1.2.7)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -19,6 +20,9 @@ PODS:
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
   - RxKeyboard (2.0.0):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxOptional (5.0.2):
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
   - RxRelay (6.5.0):
@@ -39,10 +43,12 @@ PODS:
 DEPENDENCIES:
   - Charts
   - Moya
+  - PanModal
   - RxCocoa
   - RxDataSources
   - RxGesture
   - RxKeyboard
+  - RxOptional
   - RxSwift
   - RxTest
   - RxViewController
@@ -59,10 +65,12 @@ SPEC REPOS:
     - Charts
     - Differentiator
     - Moya
+    - PanModal
     - RxCocoa
     - RxDataSources
     - RxGesture
     - RxKeyboard
+    - RxOptional
     - RxRelay
     - RxSwift
     - RxTest
@@ -79,10 +87,12 @@ SPEC CHECKSUMS:
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxGesture: abadd243fc36db74df43dfc893829ddde94f1a3d
   RxKeyboard: 4f5863f43b4ff0cbb2a20b94688d6b80c8a43c14
+  RxOptional: 3664964c96b69dd20c9cf78bdfe546615e26eca8
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   RxTest: eb2d23adefc5a5ebf5779c7792fa3edfe6ebcc17
@@ -94,6 +104,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: c04d3db1c561bf89010444db9d86c3665fb33bd3
+PODFILE CHECKSUM: b1e3505fcc3b30da505471b34a44426844ebf68b
 
 COCOAPODS: 1.11.2
