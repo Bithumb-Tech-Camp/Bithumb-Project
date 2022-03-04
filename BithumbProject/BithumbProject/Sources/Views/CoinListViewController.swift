@@ -9,10 +9,12 @@ import SafariServices
 import UIKit
 
 import RxCocoa
+import RxDataSources
 import RxSwift
 import SnapKit
+import SpreadsheetView
 import Then
-import XLPagerTabStrip
+
 #warning("Constant 관리 필요")
 final class CoinListViewController: UIViewController, ViewModelBindable {
     
@@ -34,8 +36,10 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         $0.tintColor = .black
     }
     
-    private let coinListTableView = UITableView().then {
-        $0.register(CoinCell.self, forCellReuseIdentifier: CoinCell.identifier)
+    private let coinSpreadsheetView = SpreadsheetView().then {
+        $0.register(TitleCell.self, forCellWithReuseIdentifier: String(describing: TitleCell.self))
+        $0.register(CoinCell.self, forCellWithReuseIdentifier: String(describing: CoinCell.self))
+        $0.register(TickerCell.self, forCellWithReuseIdentifier: String(describing: TickerCell.self))
     }
     
     var viewModel: CoinListViewModel!
@@ -45,6 +49,12 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         super.viewDidLoad()
         self.makeConstraints()
         self.configureNavigationUI()
+        self.configureSpreadsheet()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.coinSpreadsheetView.flashScrollIndicators()
     }
     
     // MARK: - CoinListViewController Bind
@@ -79,7 +89,7 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
     private func makeConstraints() {
         var buttonBarController = ButtonBarController().then {
             $0.barColor = .black
-            $0.barHeight = 4
+            $0.barHeight = 3
             $0.titleDefaultColor = .systemGray
             $0.titleDefaultFont = .systemFont(ofSize: 17, weight: .semibold)
             $0.titleSelectedColor = .black
@@ -96,11 +106,19 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         }
         buttonBarController.didMove(toParent: self)
         
-        self.view.addSubview(self.coinListTableView)
-        self.coinListTableView.snp.makeConstraints { make in
+        self.view.addSubview(self.coinSpreadsheetView)
+        self.coinSpreadsheetView.snp.makeConstraints { make in
             make.top.equalTo(buttonBarController.view.snp.bottom)
             make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func configureSpreadsheet() {
+        self.coinSpreadsheetView.dataSource = self
+        self.coinSpreadsheetView.delegate = self
+        self.coinSpreadsheetView.stickyRowHeader = true
+        self.coinSpreadsheetView.gridStyle = .none
+        self.coinSpreadsheetView.intercellSpacing = CGSize(width: 0, height: 0)
     }
     
     private func configureNavigationUI() {
@@ -110,4 +128,86 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         self.navigationController?.navigationBar.backgroundColor = .systemBackground
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
+}
+
+extension CoinListViewController: SpreadsheetViewDataSource {
+    
+    func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
+        if indexPath.row == 0 {
+            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TitleCell.self), for: indexPath) as? TitleCell
+            cell?.borders.top = .none
+            cell?.borders.left = .none
+            cell?.borders.right = .none
+            cell?.borders.bottom = .solid(width: 1, color: .systemGray4)
+            
+            if indexPath.column != 0 {
+                cell?.sortTypeLabel.textAlignment = .right
+            }
+            return cell
+        } else if indexPath.column == 0 {
+            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: CoinCell.self), for: indexPath) as? CoinCell
+            cell?.borders.top = .none
+            cell?.borders.left = .none
+            cell?.borders.right = .none
+            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+            return cell
+        } else if indexPath.column == 1 {
+            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TickerCell.self), for: indexPath) as? TickerCell
+            cell?.borders.top = .none
+            cell?.borders.left = .none
+            cell?.borders.right = .none
+            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+            return cell
+        }
+        return nil
+    }
+    
+    func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow row: Int) -> CGFloat {
+        let headerHeight: CGFloat = 40
+        let rowHeight: CGFloat = 50
+        if row == 0 {
+            return headerHeight
+        } else {
+            return rowHeight
+        }
+        
+    }
+    
+    func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
+        let margin: CGFloat = 5
+        let wholeWidth: CGFloat = self.coinSpreadsheetView.frame.width
+        let firstColumnWidth: CGFloat = wholeWidth / 3.7
+        let secondColumnWidth: CGFloat = wholeWidth / 3.7
+        let thirdColumnWidth: CGFloat = wholeWidth / 5.4
+        let fourthColumnWidth: CGFloat = wholeWidth - firstColumnWidth - secondColumnWidth - thirdColumnWidth - (margin * 2)
+        
+        switch column {
+        case 0:
+            return firstColumnWidth
+        case 1:
+            return secondColumnWidth
+        case 2:
+            return thirdColumnWidth
+        case 3:
+            return fourthColumnWidth
+        default:
+            return 0
+        }
+    }
+    
+    func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
+        return 4
+    }
+    
+    func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
+        return 20
+    }
+    
+    func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
+        return 1
+    }
+}
+
+extension CoinListViewController: SpreadsheetViewDelegate {
+    
 }

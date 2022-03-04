@@ -12,7 +12,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let tempRootViewModel = CoinListViewModel()
+        let coinListService = CoinListService()
+        let tempRootViewModel = CoinListViewModel(coinListService: coinListService)
         var tempRootView = CoinListViewController()
         tempRootView.bind(viewModel: tempRootViewModel)
         

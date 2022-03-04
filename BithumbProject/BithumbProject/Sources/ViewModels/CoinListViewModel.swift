@@ -8,6 +8,7 @@
 import Foundation
 
 import RxCocoa
+import RxDataSources
 import RxSwift
 
 final class CoinListViewModel: ViewModelType {
@@ -16,10 +17,11 @@ final class CoinListViewModel: ViewModelType {
         let inputQuery = PublishRelay<String>()
         let searchButtonClicked = PublishRelay<Void>()
         let selectedCoinListType = BehaviorRelay<CoinListType>(value: .KRW)
-        let selectedChangeRatePeriod = PublishRelay<ChangeRatePeriod>()
+        let selectedChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .MID)
     }
     
     struct Output {
+        let coinList = BehaviorRelay<[SectionModel<Int, Coin>]>(value: [])
         let requestList = BehaviorRelay<[CoinListType]>(value: CoinListType.allCases)
         let changeRatePeriodList = BehaviorRelay<[ChangeRatePeriod]>(value: ChangeRatePeriod.allCases)
         let currentChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .MID)
@@ -28,12 +30,22 @@ final class CoinListViewModel: ViewModelType {
     var input: Input
     var output: Output
     var disposeBag = DisposeBag()
+    let coinListService: CoinListService
     
-    init() {
+    init(coinListService: CoinListService) {
         self.input = Input()
         self.output = Output()
+        self.coinListService = coinListService
         self.inputBinding(self.input)
         self.outputBinding(self.output)
+        
+        Observable.combineLatest(
+            self.input.selectedCoinListType,
+            self.input.selectedChangeRatePeriod)
+            .flatMap { coinListService.fetchCoinList($0, $1) }
+            .map { [SectionModel.init(model: 0, items: $0)] }
+            .bind(to: self.output.coinList)
+            .disposed(by: self.disposeBag)
     }
     
     func inputBinding(_ event: Input) {

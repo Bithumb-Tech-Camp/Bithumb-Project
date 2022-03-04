@@ -55,6 +55,7 @@ class ChangeRateSettingViewController: UIViewController, ViewModelBindable {
                 self.viewModel.input.selectedChangeRatePeriod.accept(period)
                 owner.dismiss(animated: true, completion: nil)
             })
+            .disposed(by: self.disposeBag)
         
         self.dismissButton.rx.tap
             .withUnretained(self)
