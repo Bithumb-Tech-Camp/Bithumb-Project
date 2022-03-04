@@ -304,11 +304,11 @@
 			isa = PBXGroup;
 			children = (
 				03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */,
+				03C4743227D18A46002AC4D2 /* TitleCell.swift */,
+				03C4743027D18A1A002AC4D2 /* CoinCell.swift */,
 				03C4743827D1BBF3002AC4D2 /* ButtonBarController.swift */,
 				03C4743427D19184002AC4D2 /* ButtonBarCollectionView.swift */,
 				03C4743627D1AE1B002AC4D2 /* ButtonBarCell.swift */,
-				03C4743027D18A1A002AC4D2 /* CoinCell.swift */,
-				03C4743227D18A46002AC4D2 /* TitleCell.swift */,
 				03F2EC8D27D0726E00CEC21E /* ChangeRateSettingViewController.swift */,
 				249C3E7A27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift */,
 				249C3E7827D0A9250069E131 /* PeriodCell.swift */,

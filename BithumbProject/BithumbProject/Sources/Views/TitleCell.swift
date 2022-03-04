@@ -35,7 +35,6 @@ final class TitleCell: UITableViewCell {
     }
     
     private func makeConstraints() {
-        
         let sortingStackView = UIStackView(
             arrangedSubviews: [
                 self.sortingButton,

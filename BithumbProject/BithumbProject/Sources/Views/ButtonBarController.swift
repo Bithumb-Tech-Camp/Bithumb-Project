@@ -90,11 +90,6 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
         self.makeConstraints()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.initialSetting()
-    }
-    
     // MARK: - bindViewModel
     func bindViewModel() {
         
@@ -109,8 +104,11 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
         self.viewModel.output.requestList
             .bind(to: self.buttonBarCollectionView.rx.items(
                 cellIdentifier: ButtonBarCell.idetifier,
-                cellType: ButtonBarCell.self)) { _, item, cell in
+                cellType: ButtonBarCell.self)) { row, item, cell in
                     cell.contentLabel.text = item.rawValue
+                    if row == 0 {
+                        self.initialSetting(row)
+                    }
                 }
                 .disposed(by: self.disposeBag)
         
@@ -171,8 +169,9 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
         self.view.backgroundColor = .systemBackground
     }
     
-    private func initialSetting() {
-        self.buttonBarCollectionView.moveTo(index: 0, animated: false)
-        self.buttonBarCollectionView.selectItem(at: IndexPath(row: 0, column: 0), animated: false, scrollPosition: .init())
+    private func initialSetting(_ row: Int) {
+        self.buttonBarCollectionView.moveTo(index: row, animated: false)
+        self.buttonBarCollectionView.selectItem(at: IndexPath(row: row, column: 0), animated: false, scrollPosition: .init())
+        
     }
 }

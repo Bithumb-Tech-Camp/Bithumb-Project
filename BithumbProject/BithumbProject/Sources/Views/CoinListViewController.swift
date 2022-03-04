@@ -34,6 +34,10 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         $0.tintColor = .black
     }
     
+    private let coinListTableView = UITableView().then {
+        $0.register(CoinCell.self, forCellReuseIdentifier: CoinCell.identifier)
+    }
+    
     var viewModel: CoinListViewModel!
     var disposeBag: DisposeBag = DisposeBag()
     
@@ -91,6 +95,12 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
             make.height.equalTo(45)
         }
         buttonBarController.didMove(toParent: self)
+        
+        self.view.addSubview(self.coinListTableView)
+        self.coinListTableView.snp.makeConstraints { make in
+            make.top.equalTo(buttonBarController.view.snp.bottom)
+            make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        }
     }
     
     private func configureNavigationUI() {
