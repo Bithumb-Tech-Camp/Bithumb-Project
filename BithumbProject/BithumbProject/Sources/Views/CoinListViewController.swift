@@ -13,8 +13,8 @@ import RxSwift
 import SnapKit
 import Then
 import XLPagerTabStrip
-
-class CoinListViewController: UIViewController, ViewModelBindable {
+#warning("Constant 관리 필요")
+final class CoinListViewController: UIViewController, ViewModelBindable {
     
     // MARK: - View Properties
     private lazy var coinSearchBar = UISearchBar().then {
@@ -24,7 +24,6 @@ class CoinListViewController: UIViewController, ViewModelBindable {
         $0.addDoneButtonOnKeyboard()
     }
     
-#warning("Constant 관리 및 다크모드 대응 Color 제작 필요")
     private let cafeBarButton = UIBarButtonItem().then {
         $0.image = UIImage(systemName: "gift")
         $0.tintColor = .black
@@ -35,19 +34,23 @@ class CoinListViewController: UIViewController, ViewModelBindable {
         $0.tintColor = .black
     }
     
-    private var coinListButtonBarPagerViewController = CoinListButtonBarPagerViewController()
-    
     var viewModel: CoinListViewModel!
     var disposeBag: DisposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupViews()
-        self.setupNavigation()
+        self.makeConstraints()
+        self.configureNavigationUI()
     }
     
     // MARK: - CoinListViewController Bind
     func bindViewModel() {
+        
+        
+        // output
+        
+        
+        // input
         self.cafeBarButton.rx.tap
             .bind(onNext: {
                 guard let url = URL(string: Constant.URL.cafeURL) else { return }
@@ -69,21 +72,25 @@ class CoinListViewController: UIViewController, ViewModelBindable {
         self.coinSearchBar.rx.searchButtonClicked
             .bind(to: self.viewModel.input.searchButtonClicked)
             .disposed(by: self.disposeBag)
-        
+      
     }
     
-    private func setupViews() {
-        self.coinListButtonBarPagerViewController.bind(viewModel: self.viewModel)
-        self.view.addSubview(self.coinListButtonBarPagerViewController.view)
-        self.coinListButtonBarPagerViewController.view.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing)
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+    private func makeConstraints() {
+        var buttonBarController = ButtonBarController()
+        buttonBarController.bind(viewModel: self.viewModel)
+        buttonBarController.view.isUserInteractionEnabled = true
+        self.addChild(buttonBarController)
+        self.view.addSubview(buttonBarController.view)
+        buttonBarController.view.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(45)
         }
+        
+        buttonBarController.didMove(toParent: self)
     }
     
-    private func setupNavigation() {
+    private func configureNavigationUI() {
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationItem.titleView = self.coinSearchBar
         self.navigationItem.rightBarButtonItems = [self.alarmBarButton, self.cafeBarButton]

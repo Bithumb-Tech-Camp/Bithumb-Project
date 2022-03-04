@@ -9,15 +9,16 @@
 /* Begin PBXBuildFile section */
 		0320AF2127D1066300B3B83B /* ChangeRatePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0320AF2027D1066300B3B83B /* ChangeRatePeriod.swift */; };
 		0320AF2327D11AC800B3B83B /* UIVIewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */; };
+		03C4743127D18A1A002AC4D2 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4743027D18A1A002AC4D2 /* CoinCell.swift */; };
+		03C4743327D18A46002AC4D2 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4743227D18A46002AC4D2 /* TitleCell.swift */; };
+		03C4743527D19184002AC4D2 /* ButtonBarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4743427D19184002AC4D2 /* ButtonBarCollectionView.swift */; };
+		03C4743727D1AE1B002AC4D2 /* ButtonBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4743627D1AE1B002AC4D2 /* ButtonBarCell.swift */; };
+		03C4743927D1BBF3002AC4D2 /* ButtonBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4743827D1BBF3002AC4D2 /* ButtonBarController.swift */; };
 		03D6C6BA27C91DE70028A7E0 /* HTTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D6C6B827C91DE70028A7E0 /* HTTPService.swift */; };
 		03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D6C6B927C91DE70028A7E0 /* HTTPManager.swift */; };
 		03D6C6BE27C91F620028A7E0 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D6C6BD27C91F620028A7E0 /* Coin.swift */; };
 		03E19BFD27C9297F00F36A46 /* CoinListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */; };
 		03E19BFF27C9299D00F36A46 /* CoinListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */; };
-		03F2EC8427D059E800CEC21E /* CoinListButtonBarPagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8327D059E800CEC21E /* CoinListButtonBarPagerViewController.swift */; };
-		03F2EC8627D05AA600CEC21E /* KRWViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8527D05AA600CEC21E /* KRWViewController.swift */; };
-		03F2EC8827D05ABC00CEC21E /* FavoriteCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8727D05ABC00CEC21E /* FavoriteCoinViewController.swift */; };
-		03F2EC8A27D05C1A00CEC21E /* PopularityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8927D05C1A00CEC21E /* PopularityViewController.swift */; };
 		03F2EC8C27D065EF00CEC21E /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */; };
 		03F2EC8E27D0726E00CEC21E /* ChangeRateSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8D27D0726E00CEC21E /* ChangeRateSettingViewController.swift */; };
 		1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */; };
@@ -38,7 +39,7 @@
 		1CDFFCA427C5266F0033B759 /* BithumbProjectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFCA327C5266F0033B759 /* BithumbProjectUITestsLaunchTests.swift */; };
 		1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFCBA27C52F7F0033B759 /* Constant.swift */; };
 		1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFCBC27C533ED0033B759 /* ViewModelType.swift */; };
-		249C3E7927D0A9250069E131 /* PeriodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C3E7827D0A9250069E131 /* PeriodTableViewCell.swift */; };
+		249C3E7927D0A9250069E131 /* PeriodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C3E7827D0A9250069E131 /* PeriodCell.swift */; };
 		249C3E7B27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C3E7A27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift */; };
 		2A92A7ECB0838843A92AC2AD /* Pods_BithumbProjectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18428F2A50A0AD57949D9ADA /* Pods_BithumbProjectTests.framework */; };
 		532B1ABC85F8AEA9FE9A0449 /* Pods_BithumbProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58A31623DBD441C2DF5D935B /* Pods_BithumbProject.framework */; };
@@ -76,15 +77,16 @@
 /* Begin PBXFileReference section */
 		0320AF2027D1066300B3B83B /* ChangeRatePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRatePeriod.swift; sourceTree = "<group>"; };
 		0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Extension.swift"; sourceTree = "<group>"; };
+		03C4743027D18A1A002AC4D2 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
+		03C4743227D18A46002AC4D2 /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
+		03C4743427D19184002AC4D2 /* ButtonBarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarCollectionView.swift; sourceTree = "<group>"; };
+		03C4743627D1AE1B002AC4D2 /* ButtonBarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarCell.swift; sourceTree = "<group>"; };
+		03C4743827D1BBF3002AC4D2 /* ButtonBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarController.swift; sourceTree = "<group>"; };
 		03D6C6B827C91DE70028A7E0 /* HTTPService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPService.swift; sourceTree = "<group>"; };
 		03D6C6B927C91DE70028A7E0 /* HTTPManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPManager.swift; sourceTree = "<group>"; };
 		03D6C6BD27C91F620028A7E0 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListViewModel.swift; sourceTree = "<group>"; };
 		03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListViewController.swift; sourceTree = "<group>"; };
-		03F2EC8327D059E800CEC21E /* CoinListButtonBarPagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListButtonBarPagerViewController.swift; sourceTree = "<group>"; };
-		03F2EC8527D05AA600CEC21E /* KRWViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KRWViewController.swift; sourceTree = "<group>"; };
-		03F2EC8727D05ABC00CEC21E /* FavoriteCoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCoinViewController.swift; sourceTree = "<group>"; };
-		03F2EC8927D05C1A00CEC21E /* PopularityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularityViewController.swift; sourceTree = "<group>"; };
 		03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
 		03F2EC8D27D0726E00CEC21E /* ChangeRateSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRateSettingViewController.swift; sourceTree = "<group>"; };
 		18428F2A50A0AD57949D9ADA /* Pods_BithumbProjectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProjectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,7 +113,7 @@
 		1CDFFCBA27C52F7F0033B759 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		1CDFFCBC27C533ED0033B759 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		248E52B21DD25FF26025A40A /* Pods_BithumbProject_BithumbProjectUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProject_BithumbProjectUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		249C3E7827D0A9250069E131 /* PeriodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodTableViewCell.swift; sourceTree = "<group>"; };
+		249C3E7827D0A9250069E131 /* PeriodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodCell.swift; sourceTree = "<group>"; };
 		249C3E7A27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRateSettingHeaderView.swift; sourceTree = "<group>"; };
 		2C0DF3FC129104ABB573CD1B /* Pods-BithumbProjectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.release.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.release.xcconfig"; sourceTree = "<group>"; };
 		58A31623DBD441C2DF5D935B /* Pods_BithumbProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -300,13 +302,14 @@
 			isa = PBXGroup;
 			children = (
 				03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */,
-				03F2EC8327D059E800CEC21E /* CoinListButtonBarPagerViewController.swift */,
-				03F2EC8527D05AA600CEC21E /* KRWViewController.swift */,
-				03F2EC8927D05C1A00CEC21E /* PopularityViewController.swift */,
-				03F2EC8727D05ABC00CEC21E /* FavoriteCoinViewController.swift */,
+				03C4743827D1BBF3002AC4D2 /* ButtonBarController.swift */,
+				03C4743427D19184002AC4D2 /* ButtonBarCollectionView.swift */,
+				03C4743627D1AE1B002AC4D2 /* ButtonBarCell.swift */,
+				03C4743027D18A1A002AC4D2 /* CoinCell.swift */,
+				03C4743227D18A46002AC4D2 /* TitleCell.swift */,
 				03F2EC8D27D0726E00CEC21E /* ChangeRateSettingViewController.swift */,
 				249C3E7A27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift */,
-				249C3E7827D0A9250069E131 /* PeriodTableViewCell.swift */,
+				249C3E7827D0A9250069E131 /* PeriodCell.swift */,
 				1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */,
 				1C33CF9E27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift */,
 				1C33CFA027CF9F80007E91F0 /* ChartViewController.swift */,
@@ -642,13 +645,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03C4743127D18A1A002AC4D2 /* CoinCell.swift in Sources */,
 				1C9CFE2A27C7C8F200647FCE /* NetworkError.swift in Sources */,
-				03F2EC8627D05AA600CEC21E /* KRWViewController.swift in Sources */,
 				E592A93327C9340F008BE814 /* OrderBookViewController.swift in Sources */,
 				1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */,
 				249C3E7B27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift in Sources */,
 				E592A93727C94741008BE814 /* OrderBookCell.swift in Sources */,
 				03E19BFF27C9299D00F36A46 /* CoinListViewController.swift in Sources */,
+				03C4743727D1AE1B002AC4D2 /* ButtonBarCell.swift in Sources */,
 				1C9CFDFA27C75FCB00647FCE /* WebSocketService.swift in Sources */,
 				03D6C6BE27C91F620028A7E0 /* Coin.swift in Sources */,
 				1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */,
@@ -662,10 +666,8 @@
 				1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */,
 				1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */,
 				1C33CF9B27CF364F007E91F0 /* CoinDetailViewModel.swift in Sources */,
-				249C3E7927D0A9250069E131 /* PeriodTableViewCell.swift in Sources */,
+				249C3E7927D0A9250069E131 /* PeriodCell.swift in Sources */,
 				E592A92127C678E3008BE814 /* AssetsStatus.swift in Sources */,
-				03F2EC8A27D05C1A00CEC21E /* PopularityViewController.swift in Sources */,
-				03F2EC8427D059E800CEC21E /* CoinListButtonBarPagerViewController.swift in Sources */,
 				1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */,
 				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
 				0320AF2327D11AC800B3B83B /* UIVIewController+Extension.swift in Sources */,
@@ -673,10 +675,12 @@
 				1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */,
 				1C33CF9F27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift in Sources */,
 				1C33CFA127CF9F80007E91F0 /* ChartViewController.swift in Sources */,
+				03C4743527D19184002AC4D2 /* ButtonBarCollectionView.swift in Sources */,
 				E592A91D27C67303008BE814 /* APIResponse.swift in Sources */,
-				03F2EC8827D05ABC00CEC21E /* FavoriteCoinViewController.swift in Sources */,
 				E592A92327C67984008BE814 /* RealtimeTicker.swift in Sources */,
+				03C4743927D1BBF3002AC4D2 /* ButtonBarController.swift in Sources */,
 				1C9CFE2E27C7E0CC00647FCE /* WebSocketManager.swift in Sources */,
+				03C4743327D18A46002AC4D2 /* TitleCell.swift in Sources */,
 				E592A92727C67BA9008BE814 /* Candlestick.swift in Sources */,
 				03F2EC8C27D065EF00CEC21E /* UISearchBar+Extension.swift in Sources */,
 				03E19BFD27C9297F00F36A46 /* CoinListViewModel.swift in Sources */,

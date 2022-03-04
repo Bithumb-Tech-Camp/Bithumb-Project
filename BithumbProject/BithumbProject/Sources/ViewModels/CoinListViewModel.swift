@@ -19,6 +19,7 @@ final class CoinListViewModel: ViewModelType {
     }
     
     struct Output {
+        let requestList = BehaviorRelay<[String]>(value: ["원화", "인기", "관심"])
         let changeRatePeriodList = BehaviorRelay<[ChangeRatePeriod]>(value: ChangeRatePeriod.allCases)
         let currentChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .MID)
     }

@@ -27,8 +27,8 @@ class ChangeRateSettingViewController: UIViewController, ViewModelBindable {
     private let periodHeaderView = ChangeRateSettingHeaderView(frame: .zero)
     
     private let periodTableView = UITableView().then {
-        $0.register(PeriodTableViewCell.self,
-                    forCellReuseIdentifier: PeriodTableViewCell.identifier)
+        $0.register(PeriodCell.self,
+                    forCellReuseIdentifier: PeriodCell.identifier)
         $0.isScrollEnabled = false
         $0.separatorStyle = .none
     }
@@ -44,7 +44,7 @@ class ChangeRateSettingViewController: UIViewController, ViewModelBindable {
     
     func bindViewModel() {
         
-        viewModel.output.changeRatePeriodList
+        self.viewModel.output.changeRatePeriodList
             .map { [SectionModel.init(model: 0, items: $0)] }
             .bind(to: self.periodTableView.rx.items(dataSource: self.createDataSource()))
             .disposed(by: self.disposeBag)
@@ -71,8 +71,8 @@ class ChangeRateSettingViewController: UIViewController, ViewModelBindable {
     private func createDataSource() -> PeriodDataSource {
         return PeriodDataSource { _, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: PeriodTableViewCell.identifier,
-                for: indexPath) as? PeriodTableViewCell else {
+                withIdentifier: PeriodCell.identifier,
+                for: indexPath) as? PeriodCell else {
                     return UITableViewCell()
                 }
             let checkImage = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 15))

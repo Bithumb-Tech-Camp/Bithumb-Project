@@ -1,5 +1,5 @@
 //
-//  PeriodTableViewCell.swift
+//  PeriodCell.swift
 //  BithumbProject
 //
 //  Created by 박형석 on 2022/03/03.
@@ -12,7 +12,7 @@ import RxSwift
 import SnapKit
 import Then
 
-class PeriodTableViewCell: UITableViewCell {
+class PeriodCell: UITableViewCell {
     static let identifier = "PeriodTableViewCell"
     
     private let periodLabel = UILabel().then {
@@ -28,15 +28,15 @@ class PeriodTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.makeConstrains()
+        self.makeConstraints()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.makeConstrains()
+        self.makeConstraints()
     }
     
-    private func makeConstrains() {
+    private func makeConstraints() {
         self.contentView.addSubview(self.periodLabel)
         self.contentView.addSubview(self.checkImage)
         
@@ -52,7 +52,7 @@ class PeriodTableViewCell: UITableViewCell {
     }
 }
 
-extension PeriodTableViewCell {
+extension PeriodCell {
     func rendering(_ changeRatePeriod: ChangeRatePeriod) {
         self.periodLabel.text = changeRatePeriod.rawValue
     }
