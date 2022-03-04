@@ -46,9 +46,7 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
     // MARK: - CoinListViewController Bind
     func bindViewModel() {
         
-        
         // output
-        
         
         // input
         self.cafeBarButton.rx.tap
@@ -72,11 +70,17 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         self.coinSearchBar.rx.searchButtonClicked
             .bind(to: self.viewModel.input.searchButtonClicked)
             .disposed(by: self.disposeBag)
-      
     }
     
     private func makeConstraints() {
-        var buttonBarController = ButtonBarController()
+        var buttonBarController = ButtonBarController().then {
+            $0.barColor = .black
+            $0.barHeight = 4
+            $0.titleDefaultColor = .systemGray
+            $0.titleDefaultFont = .systemFont(ofSize: 17, weight: .semibold)
+            $0.titleSelectedColor = .black
+            $0.titleSelectedFont = .systemFont(ofSize: 17, weight: .semibold)
+        }
         buttonBarController.bind(viewModel: self.viewModel)
         buttonBarController.view.isUserInteractionEnabled = true
         self.addChild(buttonBarController)
@@ -86,7 +90,6 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(45)
         }
-        
         buttonBarController.didMove(toParent: self)
     }
     

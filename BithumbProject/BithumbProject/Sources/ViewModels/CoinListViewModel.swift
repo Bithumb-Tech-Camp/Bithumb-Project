@@ -15,11 +15,12 @@ final class CoinListViewModel: ViewModelType {
     struct Input {
         let inputQuery = PublishRelay<String>()
         let searchButtonClicked = PublishRelay<Void>()
+        let selectedCoinListType = BehaviorRelay<CoinListType>(value: .KRW)
         let selectedChangeRatePeriod = PublishRelay<ChangeRatePeriod>()
     }
     
     struct Output {
-        let requestList = BehaviorRelay<[String]>(value: ["원화", "인기", "관심"])
+        let requestList = BehaviorRelay<[CoinListType]>(value: CoinListType.allCases)
         let changeRatePeriodList = BehaviorRelay<[ChangeRatePeriod]>(value: ChangeRatePeriod.allCases)
         let currentChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .MID)
     }
@@ -48,6 +49,13 @@ final class CoinListViewModel: ViewModelType {
             .bind(onNext: { query in
                 // 검색 쿼리 서버로 연동
                 print(query)
+            })
+            .disposed(by: self.disposeBag)
+        
+        event.selectedCoinListType
+            .bind(onNext: { coinListType in
+                // 쿼리를 날려서 데이터 받아오기
+                print(coinListType.rawValue)
             })
             .disposed(by: self.disposeBag)
     }

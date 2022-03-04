@@ -58,9 +58,9 @@ final class ButtonBarCell: UICollectionViewCell {
 
 extension ButtonBarCell {
     enum Font {
-        fileprivate static let defaultFont: UIFont = .systemFont(ofSize: 17, weight: .semibold)
-        fileprivate static let defaultTextColor: UIColor = .systemGray
-        fileprivate static let selectedFont: UIFont = .systemFont(ofSize: 17, weight: .semibold)
-        fileprivate static let selectedTextColor: UIColor = .black
+        static var defaultFont: UIFont = .systemFont(ofSize: 17, weight: .semibold)
+        static var defaultTextColor: UIColor = .systemGray
+        static var selectedFont: UIFont = .systemFont(ofSize: 17, weight: .semibold)
+        static var selectedTextColor: UIColor = .black
     }
 }

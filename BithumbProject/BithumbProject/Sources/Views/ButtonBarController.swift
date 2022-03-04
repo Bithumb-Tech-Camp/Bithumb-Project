@@ -13,12 +13,6 @@ import RxSwift
 final class ButtonBarController: UIViewController, ViewModelBindable {
     
     // MARK: - Public Properties
-    public var barBackgroundColor: UIColor = .systemBackground {
-        didSet {
-            self.view.backgroundColor = self.barBackgroundColor
-        }
-    }
-    
     public var barColor: UIColor = .black {
         didSet {
             self.buttonBarCollectionView.selectedBar.backgroundColor = self.barColor
@@ -28,6 +22,38 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
     public var barHeight: CGFloat = 4 {
         didSet {
             self.buttonBarCollectionView.selectedBarHeight = self.barHeight
+        }
+    }
+    
+    public var titleDefaultFont: UIFont? {
+        didSet {
+            if let titleDefaultFont = titleDefaultFont {
+                ButtonBarCell.Font.defaultFont = titleDefaultFont
+            }
+        }
+    }
+    
+    public var titleSelectedFont: UIFont? {
+        didSet {
+            if let titleSelectedFont = titleSelectedFont {
+                ButtonBarCell.Font.selectedFont = titleSelectedFont
+            }
+        }
+    }
+    
+    public var titleDefaultColor: UIColor? {
+        didSet {
+            if let titleDefaultColor = titleDefaultColor {
+                ButtonBarCell.Font.defaultTextColor = titleDefaultColor
+            }
+        }
+    }
+    
+    public var titleSelectedColor: UIColor? {
+        didSet {
+            if let titleSelectedColor = titleSelectedColor {
+                ButtonBarCell.Font.selectedTextColor = titleSelectedColor
+            }
         }
     }
     
@@ -64,6 +90,11 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
         self.makeConstraints()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.initialSetting()
+    }
+    
     // MARK: - bindViewModel
     func bindViewModel() {
         
@@ -79,7 +110,7 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
             .bind(to: self.buttonBarCollectionView.rx.items(
                 cellIdentifier: ButtonBarCell.idetifier,
                 cellType: ButtonBarCell.self)) { _, item, cell in
-                    cell.contentLabel.text = item
+                    cell.contentLabel.text = item.rawValue
                 }
                 .disposed(by: self.disposeBag)
         
@@ -92,8 +123,16 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
             })
             .disposed(by: disposeBag)
         
-        self.buttonBarCollectionView.rx.itemSelected
-            .bind(onNext: { indexPath in
+        Observable.zip(
+            self.buttonBarCollectionView.rx.itemSelected
+                .distinctUntilChanged(),
+            self.buttonBarCollectionView.rx.modelSelected(CoinListType.self)
+                .distinctUntilChanged())
+            .bind(onNext: { [weak self] indexPath, listType in
+                guard let self = self else {
+                    return
+                }
+                self.viewModel.input.selectedCoinListType.accept(listType)
                 self.buttonBarCollectionView.moveTo(index: indexPath.row, animated: true)
             })
             .disposed(by: self.disposeBag)
@@ -102,7 +141,6 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
     // MARK: - View Methods
     
     private func makeConstraints() {
-        
         let changeRateStackView = UIStackView(arrangedSubviews: [
             self.changeRateSettingButton,
             self.changeRateSettingImage]
@@ -133,4 +171,8 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
         self.view.backgroundColor = .systemBackground
     }
     
+    private func initialSetting() {
+        self.buttonBarCollectionView.moveTo(index: 0, animated: false)
+        self.buttonBarCollectionView.selectItem(at: IndexPath(row: 0, column: 0), animated: false, scrollPosition: .init())
+    }
 }
