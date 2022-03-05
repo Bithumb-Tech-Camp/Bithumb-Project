@@ -40,6 +40,8 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         $0.register(TitleCell.self, forCellWithReuseIdentifier: String(describing: TitleCell.self))
         $0.register(CoinCell.self, forCellWithReuseIdentifier: String(describing: CoinCell.self))
         $0.register(TickerCell.self, forCellWithReuseIdentifier: String(describing: TickerCell.self))
+        $0.register(ChangeRateCell.self, forCellWithReuseIdentifier: String(describing: ChangeRateCell.self))
+        $0.register(TransactionCell.self, forCellWithReuseIdentifier: String(describing: TransactionCell.self))
     }
     
     var viewModel: CoinListViewModel!
@@ -134,7 +136,10 @@ extension CoinListViewController: SpreadsheetViewDataSource {
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
         if indexPath.row == 0 {
-            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TitleCell.self), for: indexPath) as? TitleCell
+            let cell = spreadsheetView.dequeueReusableCell(
+                withReuseIdentifier: String(describing: TitleCell.self),
+                for: indexPath) as? TitleCell
+            
             cell?.borders.top = .none
             cell?.borders.left = .none
             cell?.borders.right = .none
@@ -143,20 +148,51 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             if indexPath.column != 0 {
                 cell?.sortTypeLabel.textAlignment = .right
             }
+            
             return cell
         } else if indexPath.column == 0 {
-            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: CoinCell.self), for: indexPath) as? CoinCell
+            let cell = spreadsheetView.dequeueReusableCell(
+                withReuseIdentifier: String(describing: CoinCell.self),
+                for: indexPath) as? CoinCell
+            
             cell?.borders.top = .none
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+            
             return cell
         } else if indexPath.column == 1 {
-            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TickerCell.self), for: indexPath) as? TickerCell
+            let cell = spreadsheetView.dequeueReusableCell(
+                withReuseIdentifier: String(describing: TickerCell.self),
+                for: indexPath) as? TickerCell
+            
             cell?.borders.top = .none
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+
+            return cell
+        } else if indexPath.column == 2 {
+            let cell = spreadsheetView.dequeueReusableCell(
+                withReuseIdentifier: String(describing: ChangeRateCell.self),
+                for: indexPath) as? ChangeRateCell
+            
+            cell?.borders.top = .none
+            cell?.borders.left = .none
+            cell?.borders.right = .none
+            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+
+            return cell
+        } else if indexPath.column == 3 {
+            let cell = spreadsheetView.dequeueReusableCell(
+                withReuseIdentifier: String(describing: TransactionCell.self),
+                for: indexPath) as? TransactionCell
+            
+            cell?.borders.top = .none
+            cell?.borders.left = .none
+            cell?.borders.right = .none
+            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+
             return cell
         }
         return nil
@@ -176,9 +212,9 @@ extension CoinListViewController: SpreadsheetViewDataSource {
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
         let margin: CGFloat = 5
         let wholeWidth: CGFloat = self.coinSpreadsheetView.frame.width
-        let firstColumnWidth: CGFloat = wholeWidth / 3.7
-        let secondColumnWidth: CGFloat = wholeWidth / 3.7
-        let thirdColumnWidth: CGFloat = wholeWidth / 5.4
+        let firstColumnWidth: CGFloat = wholeWidth / 4
+        let secondColumnWidth: CGFloat = wholeWidth / 4
+        let thirdColumnWidth: CGFloat = wholeWidth / 5
         let fourthColumnWidth: CGFloat = wholeWidth - firstColumnWidth - secondColumnWidth - thirdColumnWidth - (margin * 2)
         
         switch column {

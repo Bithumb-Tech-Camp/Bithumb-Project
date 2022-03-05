@@ -9,21 +9,19 @@ import UIKit
 
 import Then
 import SnapKit
+import SpreadsheetView
 
-final class TitleCell: UITableViewCell {
-    static let identifier = "TitleCell"
+final class TitleCell: Cell {
     
-    let sortingButton = UIButton().then {
-        $0.setTitle("가산", for: .normal)
+    let sortTypeLabel = UILabel().then {
+        $0.text = "현재가 \u{25B2}"
+        $0.textColor = .systemGray
+        $0.textAlignment = .left
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .regular)
     }
     
-    private let sortingImage = UIImageView().then {
-        $0.image = UIImage(systemName: "eject.fill", withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 10))
-        $0.tintColor = .gray
-    }
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.configureUI()
         self.makeConstraints()
     }
@@ -35,20 +33,11 @@ final class TitleCell: UITableViewCell {
     }
     
     private func makeConstraints() {
-        let sortingStackView = UIStackView(
-            arrangedSubviews: [
-                self.sortingButton,
-                self.sortingImage
-            ]).then {
-                $0.distribution = .fill
-                $0.alignment = .center
-                $0.axis = .horizontal
-                $0.spacing  = 0
-            }
-        
-        self.contentView.addSubview(sortingStackView)
-        sortingStackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        self.contentView.addSubview(self.sortTypeLabel)
+        self.sortTypeLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(10)
+            make.right.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
         }
     }
     
