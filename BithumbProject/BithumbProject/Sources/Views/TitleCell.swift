@@ -37,7 +37,7 @@ final class TitleCell: Cell {
         self.sortTypeLabel.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(10)
             make.right.equalToSuperview()
-            make.leading.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(15)
         }
     }
     

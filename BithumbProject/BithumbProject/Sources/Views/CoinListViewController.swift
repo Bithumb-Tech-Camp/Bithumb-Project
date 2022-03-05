@@ -40,8 +40,9 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         $0.register(TitleCell.self, forCellWithReuseIdentifier: String(describing: TitleCell.self))
         $0.register(CoinCell.self, forCellWithReuseIdentifier: String(describing: CoinCell.self))
         $0.register(TickerCell.self, forCellWithReuseIdentifier: String(describing: TickerCell.self))
-//        $0.register(ChangeRateCell.self, forCellWithReuseIdentifier: String(describing: ChangeRateCell.self))
+        $0.register(ChangeRateCell.self, forCellWithReuseIdentifier: String(describing: ChangeRateCell.self))
         $0.register(TransactionCell.self, forCellWithReuseIdentifier: String(describing: TransactionCell.self))
+        $0.register(StarCell.self, forCellWithReuseIdentifier: String(describing: StarCell.self))
     }
     
     var viewModel: CoinListViewModel!
@@ -149,6 +150,11 @@ extension CoinListViewController: SpreadsheetViewDataSource {
                 cell?.sortTypeLabel.textAlignment = .right
             }
             
+            if indexPath.column == 4 {
+                cell?.sortTypeLabel.text = nil
+                cell?.sortTypeLabel.textAlignment = .center
+            }
+            
             return cell
         } else if indexPath.column == 0 {
             let cell = spreadsheetView.dequeueReusableCell(
@@ -173,20 +179,31 @@ extension CoinListViewController: SpreadsheetViewDataSource {
 
             return cell
         } else if indexPath.column == 2 {
-//            let cell = spreadsheetView.dequeueReusableCell(
-//                withReuseIdentifier: String(describing: ChangeRateCell.self),
-//                for: indexPath) as? ChangeRateCell
-//
-//            cell?.borders.top = .none
-//            cell?.borders.left = .none
-//            cell?.borders.right = .none
-//            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+            let cell = spreadsheetView.dequeueReusableCell(
+                withReuseIdentifier: String(describing: ChangeRateCell.self),
+                for: indexPath) as? ChangeRateCell
 
-            return nil
+            cell?.borders.top = .none
+            cell?.borders.left = .none
+            cell?.borders.right = .none
+            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+
+            return cell
         } else if indexPath.column == 3 {
             let cell = spreadsheetView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: TransactionCell.self),
                 for: indexPath) as? TransactionCell
+            
+            cell?.borders.top = .none
+            cell?.borders.left = .none
+            cell?.borders.right = .none
+            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+
+            return cell
+        } else if indexPath.column == 4 {
+            let cell = spreadsheetView.dequeueReusableCell(
+                withReuseIdentifier: String(describing: StarCell.self),
+                for: indexPath) as? StarCell
             
             cell?.borders.top = .none
             cell?.borders.left = .none
@@ -212,10 +229,11 @@ extension CoinListViewController: SpreadsheetViewDataSource {
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
         let margin: CGFloat = 5
         let wholeWidth: CGFloat = self.coinSpreadsheetView.frame.width
-        let firstColumnWidth: CGFloat = wholeWidth / 4
-        let secondColumnWidth: CGFloat = wholeWidth / 4
-        let thirdColumnWidth: CGFloat = wholeWidth / 5
-        let fourthColumnWidth: CGFloat = wholeWidth - firstColumnWidth - secondColumnWidth - thirdColumnWidth - (margin * 2)
+        let firstColumnWidth: CGFloat = wholeWidth / 4.5
+        let secondColumnWidth: CGFloat = wholeWidth / 4.5
+        let thirdColumnWidth: CGFloat = wholeWidth / 5.0
+        let fifthColumnWidth: CGFloat = wholeWidth / 8.5
+        let fourthColumnWidth: CGFloat = wholeWidth - firstColumnWidth - secondColumnWidth - thirdColumnWidth - fifthColumnWidth - (margin)
         
         switch column {
         case 0:
@@ -226,13 +244,15 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             return thirdColumnWidth
         case 3:
             return fourthColumnWidth
+        case 4:
+            return fifthColumnWidth
         default:
             return 0
         }
     }
     
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
-        return 4
+        return 5
     }
     
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {

@@ -32,7 +32,7 @@ final class CoinListViewModel: ViewModelType {
     var output: Output
     var disposeBag = DisposeBag()
     let coinListService: CoinListService
-    private let sortedColums: [SortedColumn] = (0...3).map { .init(column: $0) }
+    private let sortedColums: [SortedColumn] = (0...4).map { .init(column: $0) }
     
     init(coinListService: CoinListService) {
         self.input = Input()

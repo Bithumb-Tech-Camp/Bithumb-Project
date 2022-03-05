@@ -19,6 +19,7 @@ struct Coin {
     var ticker: Double
     var changeRate: ChangeRate
     var transaction: Double
+    var isStarred: Bool
     var isHigher: Bool
 }
 

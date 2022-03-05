@@ -17,13 +17,12 @@ final class CoinListService {
         print(coinListType.rawValue, changeRatePeriod.rawValue)
         
         return .just([
-            Coin(name: "BTC_KRW", currency: .KRW),
-            Coin(name: "BTC_KRW", currency: .KRW),
-            Coin(name: "BTC_KRW", currency: .KRW),
-            Coin(name: "BTC_KRW", currency: .KRW),
-            Coin(name: "BTC_KRW", currency: .KRW),
-            Coin(name: "BTC_KRW", currency: .KRW)
+//            Coin(name: "BTC_KRW", currency: .KRW),
+//            Coin(name: "BTC_KRW", currency: .KRW),
+//            Coin(name: "BTC_KRW", currency: .KRW),
+//            Coin(name: "BTC_KRW", currency: .KRW),
+//            Coin(name: "BTC_KRW", currency: .KRW),
+//            Coin(name: "BTC_KRW", currency: .KRW)
         ])
     }
-    
 }

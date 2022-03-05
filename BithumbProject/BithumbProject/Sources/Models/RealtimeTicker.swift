@@ -49,5 +49,3 @@ struct RealtimeTicker: Codable {
         case volumePower
     }
 }
-
-extension 
