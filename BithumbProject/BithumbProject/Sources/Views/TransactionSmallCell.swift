@@ -27,6 +27,12 @@ class TransactionSmallCell: UITableViewCell {
         $0.textAlignment = .right
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.contractPriceLabel.textColor = .black
+        self.contractQuantityLabel.textColor = .black
+    }
+    
     private func makeConstrains() {
         let contractStackView = UIStackView(
             arrangedSubviews: [
@@ -42,9 +48,9 @@ class TransactionSmallCell: UITableViewCell {
         
         self.contentView.addSubview(contractStackView)
         contractStackView.snp.makeConstraints {
-            $0.leading.equalTo(self.contentView).offset(5)
+            $0.leading.equalTo(self.contentView).offset(3)
             $0.centerY.equalTo(self.contentView)
-            $0.trailing.equalTo(self.contentView).offset(-5)
+            $0.trailing.equalTo(self.contentView).offset(-3)
         }
     }
     

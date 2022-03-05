@@ -54,12 +54,14 @@ class TransactionCellViewController: UIViewController {
     private func bindViewModel() {
         viewModel.output.transactionData
             .map { $0.sorted { $0.transactionDate ?? "" > $1.transactionDate ?? "" }}
-            .map { $0[0..<20] }
-            .bind(to: self.tableView.rx.items(cellIdentifier: String(describing: TransactionSmallCell.self), cellType: TransactionSmallCell.self)) { (_, dataSource, cell) in
+            .map { [TransactionHistory(unitsTraded: "체결량", price: "체결가")] + $0[0..<20] }
+            .bind(to: self.tableView.rx.items(cellIdentifier: String(describing: TransactionSmallCell.self), cellType: TransactionSmallCell.self)) { (row, dataSource, cell) in
                 cell.contractPriceLabel.text = dataSource.price
                 cell.contractQuantityLabel.text = dataSource.unitsTraded
-                cell.contractPriceLabel.textColor = dataSource.updown == "dn" ? .blue : .red
-                cell.contractQuantityLabel.textColor = dataSource.updown == "dn" ? .blue : .red
+                if row != 0 {
+                    cell.contractPriceLabel.textColor = dataSource.updown == "dn" ? .blue : .red
+                    cell.contractQuantityLabel.textColor = dataSource.updown == "dn" ? .blue : .red
+                }
             }
             .disposed(by: disposeBag)
     }
