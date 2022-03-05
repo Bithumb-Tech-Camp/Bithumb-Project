@@ -13,7 +13,11 @@ final class TransactionViewController: UIViewController {
     var disposeBag: DisposeBag = DisposeBag()
     let viewModel = TransactionCellViewModel()
     
-    let spreadSheetView = SpreadsheetView()
+    let spreadSheetView = SpreadsheetView().then {
+        $0.register(OrderBookCell.self, forCellWithReuseIdentifier: String(describing: OrderBookCell.self))
+        $0.bounces = false
+        $0.showsHorizontalScrollIndicator = false
+    }
     var transactionList: [TransactionHistory] = []
     
     override func viewDidLoad() {
@@ -22,10 +26,7 @@ final class TransactionViewController: UIViewController {
     }
     
     private func configureUI() {
-        //        self.spreadSheetView.delegate = self
         self.spreadSheetView.dataSource = self
-        
-        self.spreadSheetView.register(OrderBookCell.self, forCellWithReuseIdentifier: String(describing: OrderBookCell.self))
         
         view.addSubview(self.spreadSheetView)
         spreadSheetView.snp.makeConstraints {
