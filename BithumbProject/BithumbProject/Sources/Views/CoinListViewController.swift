@@ -40,7 +40,7 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         $0.register(TitleCell.self, forCellWithReuseIdentifier: String(describing: TitleCell.self))
         $0.register(CoinCell.self, forCellWithReuseIdentifier: String(describing: CoinCell.self))
         $0.register(TickerCell.self, forCellWithReuseIdentifier: String(describing: TickerCell.self))
-        $0.register(ChangeRateCell.self, forCellWithReuseIdentifier: String(describing: ChangeRateCell.self))
+//        $0.register(ChangeRateCell.self, forCellWithReuseIdentifier: String(describing: ChangeRateCell.self))
         $0.register(TransactionCell.self, forCellWithReuseIdentifier: String(describing: TransactionCell.self))
     }
     
@@ -175,16 +175,16 @@ extension CoinListViewController: SpreadsheetViewDataSource {
 
             return cell
         } else if indexPath.column == 2 {
-            let cell = spreadsheetView.dequeueReusableCell(
-                withReuseIdentifier: String(describing: ChangeRateCell.self),
-                for: indexPath) as? ChangeRateCell
-            
-            cell?.borders.top = .none
-            cell?.borders.left = .none
-            cell?.borders.right = .none
-            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+//            let cell = spreadsheetView.dequeueReusableCell(
+//                withReuseIdentifier: String(describing: ChangeRateCell.self),
+//                for: indexPath) as? ChangeRateCell
+//
+//            cell?.borders.top = .none
+//            cell?.borders.left = .none
+//            cell?.borders.right = .none
+//            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
 
-            return cell
+            return nil
         } else if indexPath.column == 3 {
             let cell = spreadsheetView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: TransactionCell.self),
