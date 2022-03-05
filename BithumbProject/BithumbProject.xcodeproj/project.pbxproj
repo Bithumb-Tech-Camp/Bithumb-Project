@@ -46,6 +46,8 @@
 		1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDFFCBC27C533ED0033B759 /* ViewModelType.swift */; };
 		249C3E7927D0A9250069E131 /* PeriodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C3E7827D0A9250069E131 /* PeriodCell.swift */; };
 		249C3E7B27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C3E7A27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift */; };
+		24E4FAC627D3466300EEC4AC /* UINavigationBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E4FAC527D3466300EEC4AC /* UINavigationBar+Extension.swift */; };
+		24E4FAC827D34F4900EEC4AC /* ChangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E4FAC727D34F4900EEC4AC /* ChangeRate.swift */; };
 		2A92A7ECB0838843A92AC2AD /* Pods_BithumbProjectTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18428F2A50A0AD57949D9ADA /* Pods_BithumbProjectTests.framework */; };
 		532B1ABC85F8AEA9FE9A0449 /* Pods_BithumbProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58A31623DBD441C2DF5D935B /* Pods_BithumbProject.framework */; };
 		7377C65BC5D4352A6E8ACB80 /* Pods_BithumbProject_BithumbProjectUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 248E52B21DD25FF26025A40A /* Pods_BithumbProject_BithumbProjectUITests.framework */; };
@@ -125,6 +127,8 @@
 		248E52B21DD25FF26025A40A /* Pods_BithumbProject_BithumbProjectUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProject_BithumbProjectUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		249C3E7827D0A9250069E131 /* PeriodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodCell.swift; sourceTree = "<group>"; };
 		249C3E7A27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRateSettingHeaderView.swift; sourceTree = "<group>"; };
+		24E4FAC527D3466300EEC4AC /* UINavigationBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+Extension.swift"; sourceTree = "<group>"; };
+		24E4FAC727D34F4900EEC4AC /* ChangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRate.swift; sourceTree = "<group>"; };
 		2C0DF3FC129104ABB573CD1B /* Pods-BithumbProjectTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.release.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.release.xcconfig"; sourceTree = "<group>"; };
 		58A31623DBD441C2DF5D935B /* Pods_BithumbProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F5F699AD92EA317CFC92076 /* Pods-BithumbProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProject.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProject/Pods-BithumbProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +193,7 @@
 				03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */,
 				1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */,
 				0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */,
+				24E4FAC527D3466300EEC4AC /* UINavigationBar+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -366,9 +371,10 @@
 				E592A92227C67984008BE814 /* RealtimeTicker.swift */,
 				E592A92827C67D61008BE814 /* RealtimeOrderBook.swift */,
 				E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */,
-				03D6C6BD27C91F620028A7E0 /* Coin.swift */,
 				E592A93E27CA81E1008BE814 /* OrderBook.swift */,
 				E592A94027CA8381008BE814 /* TransactionHistory.swift */,
+				03D6C6BD27C91F620028A7E0 /* Coin.swift */,
+				24E4FAC727D34F4900EEC4AC /* ChangeRate.swift */,
 				0320AF2027D1066300B3B83B /* ChangeRatePeriod.swift */,
 				03C4743A27D1C75C002AC4D2 /* CoinListType.swift */,
 				03C4744427D2E28C002AC4D2 /* SortedColumn.swift */,
@@ -698,7 +704,9 @@
 				E592A91D27C67303008BE814 /* APIResponse.swift in Sources */,
 				E592A92327C67984008BE814 /* RealtimeTicker.swift in Sources */,
 				03C4744527D2E28C002AC4D2 /* SortedColumn.swift in Sources */,
+				24E4FAC827D34F4900EEC4AC /* ChangeRate.swift in Sources */,
 				03C4743927D1BBF3002AC4D2 /* ButtonBarController.swift in Sources */,
+				24E4FAC627D3466300EEC4AC /* UINavigationBar+Extension.swift in Sources */,
 				1C9CFE2E27C7E0CC00647FCE /* WebSocketManager.swift in Sources */,
 				03C4743327D18A46002AC4D2 /* TitleCell.swift in Sources */,
 				E592A92727C67BA9008BE814 /* Candlestick.swift in Sources */,

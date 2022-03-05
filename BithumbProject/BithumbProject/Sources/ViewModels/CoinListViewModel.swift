@@ -70,7 +70,7 @@ final class CoinListViewModel: ViewModelType {
         event.selectedCoinListType
             .bind(onNext: { coinListType in
                 // 쿼리를 날려서 데이터 받아오기
-                print(coinListType.rawValue)
+//                print(coinListType.rawValue)
             })
             .disposed(by: self.disposeBag)
     }

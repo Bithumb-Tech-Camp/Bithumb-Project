@@ -17,11 +17,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         var tempRootView = CoinListViewController()
         tempRootView.bind(viewModel: tempRootViewModel)
         
+        let navigationController = UINavigationController(rootViewController: tempRootView)
+        navigationController.navigationBar.transparentNavigationBar()
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         window?.backgroundColor = .white
-        window?.rootViewController = UINavigationController(rootViewController: tempRootView)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 }

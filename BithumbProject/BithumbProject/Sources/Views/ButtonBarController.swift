@@ -68,6 +68,7 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
     ).then {
         $0.selectedBarHeight = 3
         $0.register(ButtonBarCell.self, forCellWithReuseIdentifier: ButtonBarCell.idetifier)
+        $0.backgroundColor = .systemBackground
     }
     
     private let changeRateSettingButton = UIButton().then {
