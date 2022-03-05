@@ -5,7 +5,7 @@
 //  Created by 박형석 on 2022/02/26.
 //
 
-import Foundation
+import UIKit
 
 import RxCocoa
 import RxDataSources
@@ -21,6 +21,7 @@ final class CoinListViewModel: ViewModelType {
     }
     
     struct Output {
+        let headerList: [SortedColumn]
         let coinList = BehaviorRelay<[SectionModel<Int, Coin>]>(value: [])
         let requestList = BehaviorRelay<[CoinListType]>(value: CoinListType.allCases)
         let changeRatePeriodList = BehaviorRelay<[ChangeRatePeriod]>(value: ChangeRatePeriod.allCases)
@@ -31,11 +32,13 @@ final class CoinListViewModel: ViewModelType {
     var output: Output
     var disposeBag = DisposeBag()
     let coinListService: CoinListService
+    private let sortedColums: [SortedColumn] = (0...3).map { .init(column: $0) }
     
     init(coinListService: CoinListService) {
         self.input = Input()
-        self.output = Output()
+        self.output = Output(headerList: self.sortedColums)
         self.coinListService = coinListService
+        
         self.inputBinding(self.input)
         self.outputBinding(self.output)
         

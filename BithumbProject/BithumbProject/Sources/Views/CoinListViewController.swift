@@ -140,6 +140,8 @@ extension CoinListViewController: SpreadsheetViewDataSource {
                 withReuseIdentifier: String(describing: TitleCell.self),
                 for: indexPath) as? TitleCell
             
+            let target = self.viewModel.output.headerList[indexPath.column]
+            cell?.sortTypeLabel.text = target.name + target.sorting.symbol
             cell?.borders.top = .none
             cell?.borders.left = .none
             cell?.borders.right = .none
@@ -245,5 +247,17 @@ extension CoinListViewController: SpreadsheetViewDataSource {
 }
 
 extension CoinListViewController: SpreadsheetViewDelegate {
-    
+    func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            var target = self.viewModel.output.headerList[indexPath.column]
+            if target.column == indexPath.column {
+                target.toggling(indexPath.column)
+                print(target.sorting.symbol)
+            } else {
+                target = SortedColumn(column: indexPath.row, sorting: .ascending)
+            }
+            
+            self.coinSpreadsheetView.reloadData()
+        }
+    }
 }

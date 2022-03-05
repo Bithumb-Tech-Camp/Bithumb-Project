@@ -9,21 +9,24 @@ import UIKit
 
 import Then
 import SnapKit
+import SpreadsheetView
 
-final class CoinCell: UITableViewCell {
-    static let identifier = "CoinCell"
+final class CoinCell: Cell {
     
-    let sortingButton = UIButton().then {
-        $0.setTitle("가산", for: .normal)
+    private let nameLabel = UILabel().then {
+        $0.text = "비트코인"
+        $0.textColor = .black
+        $0.font = UIFont.systemFont(ofSize: 13, weight: .regular)
     }
     
-    private let sortingImage = UIImageView().then {
-        $0.image = UIImage(systemName: "eject.fill", withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 10))
-        $0.tintColor = .gray
+    private let symbolLabel = UILabel().then {
+        $0.text = "BTC/KRW"
+        $0.textColor = .systemGray
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .regular)
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.configureUI()
         self.makeConstraints()
     }
@@ -35,21 +38,21 @@ final class CoinCell: UITableViewCell {
     }
     
     private func makeConstraints() {
-        
-        let sortingStackView = UIStackView(
+        let nameSymbolStackView = UIStackView(
             arrangedSubviews: [
-                self.sortingButton,
-                self.sortingImage
+                self.nameLabel,
+                self.symbolLabel
             ]).then {
+                $0.axis = .vertical
+                $0.spacing = 1
+                $0.alignment = .leading
                 $0.distribution = .fill
-                $0.alignment = .center
-                $0.axis = .horizontal
-                $0.spacing  = 0
             }
         
-        self.contentView.addSubview(sortingStackView)
-        sortingStackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        self.contentView.addSubview(nameSymbolStackView)
+        nameSymbolStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(20)
+            make.centerY.equalToSuperview()
         }
     }
     
