@@ -50,13 +50,23 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
     
     private let buttonBarPagerViewController: ButtonBarPagerTabStripViewController = CoinDetailButtonBarPagerViewController()
     
-    var viewModel: CoinDetailViewModel!
+    var viewModel: CoinDetailViewModel
     var disposeBag: DisposeBag = DisposeBag()
+    
+    init(viewModel: CoinDetailViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavigationBar()
         self.setupViews()
+        self.bind()
     }
     
     private func setupNavigationBar() {
@@ -95,7 +105,7 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
         }
     }
     
-    func bindViewModel() {
+    func bind() {
         
     }
 }

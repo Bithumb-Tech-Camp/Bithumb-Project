@@ -16,13 +16,15 @@ final class CoinListViewModel: ViewModelType {
     struct Input {
         let inputQuery = PublishRelay<String>()
         let searchButtonClicked = PublishRelay<Void>()
+        let selectedSortedColumn = PublishRelay<SortedColumn>()
         let selectedCoinListType = BehaviorRelay<CoinListType>(value: .KRW)
         let selectedChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .MID)
     }
     
     struct Output {
+        var update: (() -> Void)?
         let headerList: [SortedColumn]
-        let coinList = BehaviorRelay<[SectionModel<Int, Coin>]>(value: [])
+        var coinList = [Coin]()
         let requestList = BehaviorRelay<[CoinListType]>(value: CoinListType.allCases)
         let changeRatePeriodList = BehaviorRelay<[ChangeRatePeriod]>(value: ChangeRatePeriod.allCases)
         let currentChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .MID)
@@ -32,6 +34,7 @@ final class CoinListViewModel: ViewModelType {
     var output: Output
     var disposeBag = DisposeBag()
     let coinListService: CoinListService
+    
     private let sortedColums: [SortedColumn] = (0...4).map { .init(column: $0) }
     
     init(coinListService: CoinListService) {
@@ -46,8 +49,13 @@ final class CoinListViewModel: ViewModelType {
             self.input.selectedCoinListType,
             self.input.selectedChangeRatePeriod)
             .flatMap { coinListService.fetchCoinList($0, $1) }
-            .map { [SectionModel.init(model: 0, items: $0)] }
-            .bind(to: self.output.coinList)
+            .map { $0.sorted { $0.krName < $1.krName }}
+            .bind(onNext: { [weak self] coinList in
+                self?.output.coinList = coinList
+                if let update = self?.output.update {
+                    update()
+                }
+            })
             .disposed(by: self.disposeBag)
     }
     
@@ -71,6 +79,34 @@ final class CoinListViewModel: ViewModelType {
             .bind(onNext: { coinListType in
                 // 쿼리를 날려서 데이터 받아오기
 //                print(coinListType.rawValue)
+            })
+            .disposed(by: self.disposeBag)
+        
+        event.selectedSortedColumn
+            .bind(onNext:{ standard in
+                switch standard {
+                case .init(column: 0, sorting: .ascending):
+                    self.output.coinList.sort { $0.krName < $1.krName }
+                case .init(column: 0, sorting: .descending):
+                    self.output.coinList.sort { $0.krName > $1.krName }
+                case .init(column: 1, sorting: .ascending):
+                    self.output.coinList.sort { $0.ticker < $1.ticker }
+                case .init(column: 1, sorting: .descending):
+                    self.output.coinList.sort { $0.ticker > $1.ticker }
+                case .init(column: 2, sorting: .ascending):
+                    self.output.coinList.sort { $0.changeRate.rate < $1.changeRate.rate }
+                case .init(column: 2, sorting: .descending):
+                    self.output.coinList.sort { $0.changeRate.rate > $1.changeRate.rate }
+                case .init(column: 3, sorting: .ascending):
+                    self.output.coinList.sort { $0.transaction < $1.transaction }
+                case .init(column: 3, sorting: .descending):
+                    self.output.coinList.sort { $0.transaction > $1.transaction }
+                default:
+                    break
+                }
+                if let update = self.output.update {
+                    update()
+                }
             })
             .disposed(by: self.disposeBag)
     }

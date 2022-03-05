@@ -14,9 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         let coinListService = CoinListService()
         let tempRootViewModel = CoinListViewModel(coinListService: coinListService)
-        var tempRootView = CoinListViewController()
-        tempRootView.bind(viewModel: tempRootViewModel)
-        
+        let tempRootView = CoinListViewController(viewModel: tempRootViewModel)
         let navigationController = UINavigationController(rootViewController: tempRootView)
         navigationController.navigationBar.transparentNavigationBar()
         

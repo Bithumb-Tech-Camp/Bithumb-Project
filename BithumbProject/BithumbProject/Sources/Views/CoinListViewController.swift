@@ -45,14 +45,24 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         $0.register(StarCell.self, forCellWithReuseIdentifier: String(describing: StarCell.self))
     }
     
-    var viewModel: CoinListViewModel!
+    var viewModel: CoinListViewModel
     var disposeBag: DisposeBag = DisposeBag()
+    
+    init(viewModel: CoinListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.makeConstraints()
         self.configureNavigationUI()
         self.configureSpreadsheet()
+        self.bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,9 +71,12 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
     }
     
     // MARK: - CoinListViewController Bind
-    func bindViewModel() {
+    func bind() {
         
         // output
+        self.viewModel.output.update = {[weak self] in
+            self?.coinSpreadsheetView.reloadData()
+        }
         
         // input
         self.cafeBarButton.rx.tap
@@ -90,7 +103,7 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
     }
     
     private func makeConstraints() {
-        var buttonBarController = ButtonBarController().then {
+        let buttonBarController = ButtonBarController(viewModel: self.viewModel).then {
             $0.barColor = .black
             $0.barHeight = 3
             $0.titleDefaultColor = .systemGray
@@ -98,7 +111,6 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
             $0.titleSelectedColor = .black
             $0.titleSelectedFont = .systemFont(ofSize: 17, weight: .semibold)
         }
-        buttonBarController.bind(viewModel: self.viewModel)
         buttonBarController.view.isUserInteractionEnabled = true
         self.addChild(buttonBarController)
         self.view.addSubview(buttonBarController.view)
@@ -134,6 +146,9 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
 extension CoinListViewController: SpreadsheetViewDataSource {
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
+        
+        let coin = self.viewModel.output.coinList[indexPath.row]
+        
         if indexPath.row == 0 {
             let cell = spreadsheetView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: TitleCell.self),
@@ -165,6 +180,7 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+            cell?.rendering(coin)
             
             return cell
         } else if indexPath.column == 1 {
@@ -176,7 +192,8 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
-
+            cell?.rendering(coin)
+            
             return cell
         } else if indexPath.column == 2 {
             let cell = spreadsheetView.dequeueReusableCell(
@@ -187,7 +204,8 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
-
+            cell?.rendering(coin)
+            
             return cell
         } else if indexPath.column == 3 {
             let cell = spreadsheetView.dequeueReusableCell(
@@ -198,7 +216,8 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
-
+            cell?.rendering(coin)
+            
             return cell
         } else if indexPath.column == 4 {
             let cell = spreadsheetView.dequeueReusableCell(
@@ -227,13 +246,12 @@ extension CoinListViewController: SpreadsheetViewDataSource {
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
-        let margin: CGFloat = 5
         let wholeWidth: CGFloat = self.coinSpreadsheetView.frame.width
         let firstColumnWidth: CGFloat = wholeWidth / 4.5
         let secondColumnWidth: CGFloat = wholeWidth / 4.5
         let thirdColumnWidth: CGFloat = wholeWidth / 5.0
         let fifthColumnWidth: CGFloat = wholeWidth / 8.5
-        let fourthColumnWidth: CGFloat = wholeWidth - firstColumnWidth - secondColumnWidth - thirdColumnWidth - fifthColumnWidth - (margin)
+        let fourthColumnWidth: CGFloat = wholeWidth - firstColumnWidth - secondColumnWidth - thirdColumnWidth - fifthColumnWidth
         
         switch column {
         case 0:
@@ -256,7 +274,7 @@ extension CoinListViewController: SpreadsheetViewDataSource {
     }
     
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
-        return 20
+        return self.viewModel.output.coinList.count
     }
     
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
@@ -270,12 +288,11 @@ extension CoinListViewController: SpreadsheetViewDelegate {
             var target = self.viewModel.output.headerList[indexPath.column]
             if target.column == indexPath.column {
                 target.toggling(indexPath.column)
+                self.viewModel.input.selectedSortedColumn.accept(target)
                 print(target.sorting.symbol)
             } else {
                 target = SortedColumn(column: indexPath.row, sorting: .ascending)
             }
-            
-            self.coinSpreadsheetView.reloadData()
         }
     }
 }

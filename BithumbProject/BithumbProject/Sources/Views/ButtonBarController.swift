@@ -82,17 +82,27 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
         $0.tintColor = .gray
     }
     
-    var viewModel: CoinListViewModel!
+    var viewModel: CoinListViewModel
     var disposeBag = DisposeBag()
+    
+    init(viewModel: CoinListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUI()
         self.makeConstraints()
+        self.bind()
     }
     
     // MARK: - bindViewModel
-    func bindViewModel() {
+    func bind() {
         
         // output
         self.viewModel.output.currentChangeRatePeriod
@@ -116,8 +126,7 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
         // input
         self.changeRateSettingButton.rx.tap
             .bind(onNext: {
-                var changeRateViewController = ChangeRateSettingViewController()
-                changeRateViewController.bind(viewModel: self.viewModel)
+                var changeRateViewController = ChangeRateSettingViewController(viewModel: self.viewModel)
                 self.presentPanModal(changeRateViewController)
             })
             .disposed(by: disposeBag)

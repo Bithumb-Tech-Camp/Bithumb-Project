@@ -13,7 +13,7 @@ import SpreadsheetView
 
 final class TickerCell: Cell {
     
-    let tickerLabel = UILabel().then {
+    private let tickerLabel = UILabel().then {
         $0.text = "49,230,124"
         $0.textColor = .systemBlue
         $0.textAlignment = .right
@@ -38,5 +38,11 @@ final class TickerCell: Cell {
     
     private func configureUI() {
         self.contentView.backgroundColor = .white
+    }
+}
+
+extension TickerCell {
+    func rendering(_ coin: Coin) {
+        self.tickerLabel.text = String(describing: coin.ticker)
     }
 }

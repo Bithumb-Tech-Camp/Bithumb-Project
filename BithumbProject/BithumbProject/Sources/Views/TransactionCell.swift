@@ -13,7 +13,7 @@ import SpreadsheetView
 
 final class TransactionCell: Cell {
     
-    let transactionLabel = UILabel().then {
+    private let transactionLabel = UILabel().then {
         $0.text = "49,230,124"
         $0.textColor = .black
         $0.textAlignment = .right
@@ -38,5 +38,11 @@ final class TransactionCell: Cell {
     
     private func configureUI() {
         self.contentView.backgroundColor = .white
+    }
+}
+
+extension TransactionCell {
+    func rendering(_ coin: Coin) {
+        self.transactionLabel.text = String(describing: coin.transaction)
     }
 }

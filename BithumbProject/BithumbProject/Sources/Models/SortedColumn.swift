@@ -52,3 +52,9 @@ final class SortedColumn {
         }
     }
 }
+
+extension SortedColumn: Equatable {
+    static func == (lhs: SortedColumn, rhs: SortedColumn) -> Bool {
+        return lhs.column == rhs.column && lhs.sorting == rhs.sorting
+    }
+}

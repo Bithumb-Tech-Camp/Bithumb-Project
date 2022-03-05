@@ -383,9 +383,9 @@
 				E592A93E27CA81E1008BE814 /* OrderBook.swift */,
 				E592A94027CA8381008BE814 /* TransactionHistory.swift */,
 				03D6C6BD27C91F620028A7E0 /* Coin.swift */,
+				03C4743A27D1C75C002AC4D2 /* CoinListType.swift */,
 				24E4FAC727D34F4900EEC4AC /* ChangeRate.swift */,
 				0320AF2027D1066300B3B83B /* ChangeRatePeriod.swift */,
-				03C4743A27D1C75C002AC4D2 /* CoinListType.swift */,
 				03C4744427D2E28C002AC4D2 /* SortedColumn.swift */,
 			);
 			path = Models;

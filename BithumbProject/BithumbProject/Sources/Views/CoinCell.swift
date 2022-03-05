@@ -60,3 +60,10 @@ final class CoinCell: Cell {
         self.contentView.backgroundColor = .white
     }
 }
+
+extension CoinCell {
+    func rendering(_ coin: Coin) {
+        self.nameLabel.text = coin.krName
+        self.symbolLabel.text = coin.symbol
+    }
+}

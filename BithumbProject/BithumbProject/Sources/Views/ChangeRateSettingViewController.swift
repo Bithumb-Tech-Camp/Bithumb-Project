@@ -33,16 +33,26 @@ class ChangeRateSettingViewController: UIViewController, ViewModelBindable {
         $0.separatorStyle = .none
     }
     
-    var viewModel: CoinListViewModel!
+    var viewModel: CoinListViewModel
     var disposeBag: DisposeBag = DisposeBag()
-
+    
+    required init(viewModel: CoinListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.makeConstraints()
         self.configureUI()
+        self.bind()
     }
     
-    func bindViewModel() {
+    func bind() {
         
         self.viewModel.output.changeRatePeriodList
             .map { [SectionModel.init(model: 0, items: $0)] }
