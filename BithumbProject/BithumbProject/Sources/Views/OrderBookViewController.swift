@@ -14,7 +14,7 @@ import RxDataSources
 class OrderBookViewController: UIViewController {
     var disposeBag = DisposeBag()
     let viewModel = OrderBookViewModel()
-//    let baseView = OrderBookView()
+    let transactionCellViewController = TransactionCellViewController()
     
     let spreadSheetView = SpreadsheetView()
     var bidList: [BidAsk] = []  // 매수
@@ -32,6 +32,7 @@ class OrderBookViewController: UIViewController {
         
         self.spreadSheetView.register(OrderBookCell.self, forCellWithReuseIdentifier: String(describing: OrderBookCell.self))
         self.spreadSheetView.register(OrderBookTickerCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTickerCell.self))
+        self.spreadSheetView.register(OrderBookTransactionCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTransactionCell.self))
         
         view.addSubview(self.spreadSheetView)
         spreadSheetView.snp.makeConstraints {
@@ -58,7 +59,6 @@ class OrderBookViewController: UIViewController {
                 self.spreadSheetView.reloadData()
             })
             .disposed(by: disposeBag)
-            
     }
 }
 
@@ -103,33 +103,42 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
             cell?.accTradeValue24HLabel.content = self.tickerData.accTradeValue24H
             cell?.unitsTraded24HLabel.content = self.tickerData.unitsTraded24H
             return cell
-        }
-        let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookCell.self), for: indexPath) as? OrderBookCell
-        if !self.askList.isEmpty && !self.bidList.isEmpty {
-            if indexPath.column ==  0 && indexPath.row < 30 {
-                cell?.label.text = self.askList[indexPath.row].quantity
-                cell?.label.textAlignment = .right
-                cell?.contentView.backgroundColor = .blue
+        } else if indexPath.row == 30 && indexPath.column == 0 {
+            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookTransactionCell.self), for: indexPath)
+            cell.layoutIfNeeded()
+            if self.children.isEmpty {
+                transactionCellViewController.setup(to: self)
             }
-            
-            if indexPath.column ==  1 {
-                if indexPath.row < 30 {
-                    cell?.label.text = self.askList[indexPath.row].price
-                    cell?.label.textAlignment = .center
+            transactionCellViewController.attach(to: cell.contentView)
+            return cell
+        } else {
+            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookCell.self), for: indexPath) as? OrderBookCell
+            if !self.askList.isEmpty && !self.bidList.isEmpty {
+                if indexPath.column ==  0 && indexPath.row < 30 {
+                    cell?.label.text = self.askList[indexPath.row].quantity
+                    cell?.label.textAlignment = .right
                     cell?.contentView.backgroundColor = .blue
-                } else {
-                    cell?.label.text = self.bidList[indexPath.row-30].price
-                    cell?.label.textAlignment = .center
+                }
+                
+                if indexPath.column ==  1 {
+                    if indexPath.row < 30 {
+                        cell?.label.text = self.askList[indexPath.row].price
+                        cell?.label.textAlignment = .center
+                        cell?.contentView.backgroundColor = .blue
+                    } else {
+                        cell?.label.text = self.bidList[indexPath.row-30].price
+                        cell?.label.textAlignment = .center
+                        cell?.contentView.backgroundColor = .red
+                    }
+                }
+                
+                if indexPath.column ==  2 && indexPath.row >= 30 {
+                    cell?.label.text = self.bidList[indexPath.row-30].quantity
+                    cell?.label.textAlignment = .left
                     cell?.contentView.backgroundColor = .red
                 }
             }
-            
-            if indexPath.column ==  2 && indexPath.row >= 30 {
-                cell?.label.text = self.bidList[indexPath.row-30].quantity
-                cell?.label.textAlignment = .left
-                cell?.contentView.backgroundColor = .red
-            }
+            return cell
         }
-        return cell
     }
 }

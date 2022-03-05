@@ -13,6 +13,7 @@ struct TransactionHistory: Codable {
     var unitsTraded: String?
     var price: String?
     var total: String?
+    var updown: String?
     
     enum CodingKeys: String, CodingKey {
         case transactionDate = "transaction_date"
@@ -20,5 +21,6 @@ struct TransactionHistory: Codable {
         case unitsTraded = "units_traded"
         case price
         case total
+        case updown
     }
 }

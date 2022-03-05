@@ -40,6 +40,11 @@ final class OrderBookViewModel: ViewModelType {
         let httpManager = HTTPManager(provider: provider)
         let webSocketManager = WebSocketManager()
         
+        let orderBookParameter: [String: Any] = [
+              "type": BithumbWebSocketRequestType.orderBookDepth.rawValue,
+              "symbols": ["BTC_KRW"]
+            ]
+        
         input.orderBookData
             .bind(to: output.orderBookData)
             .disposed(by: disposeBag)
@@ -75,8 +80,8 @@ final class OrderBookViewModel: ViewModelType {
             .map { $0.sorted { $0.price ?? "" > $1.price ?? "" } }
             .bind(to: input.askList)
             .disposed(by: disposeBag)
-        
-        webSocketManager.requestRealtimeOrderbook()
+
+        webSocketManager.requestRealtime(parameter: orderBookParameter, type: RealtimeOrderBook.self)
             .bind(to: input.realtimeOrderBookData)
             .disposed(by: disposeBag)
         

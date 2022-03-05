@@ -54,8 +54,10 @@
 		E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93E27CA81E1008BE814 /* OrderBook.swift */; };
 		E592A94127CA8381008BE814 /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A94027CA8381008BE814 /* TransactionHistory.swift */; };
 		E592A94A27CE791E008BE814 /* OrderBookTickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */; };
-		E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93E27CA81E1008BE814 /* OrderBook.swift */; };
-		E592A94127CA8381008BE814 /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A94027CA8381008BE814 /* TransactionHistory.swift */; };
+		E592A95D27D10E08008BE814 /* OrderBookTransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */; };
+		E592A95F27D124D0008BE814 /* TransactionCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */; };
+		E592A96127D129D4008BE814 /* TransactionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96027D129D4008BE814 /* TransactionCellViewModel.swift */; };
+		E592A96327D335AE008BE814 /* TransactionSmallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96227D335AE008BE814 /* TransactionSmallCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,8 +134,10 @@
 		E592A93E27CA81E1008BE814 /* OrderBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBook.swift; sourceTree = "<group>"; };
 		E592A94027CA8381008BE814 /* TransactionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistory.swift; sourceTree = "<group>"; };
 		E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookTickerCell.swift; sourceTree = "<group>"; };
-		E592A93E27CA81E1008BE814 /* OrderBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBook.swift; sourceTree = "<group>"; };
-		E592A94027CA8381008BE814 /* TransactionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistory.swift; sourceTree = "<group>"; };
+		E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookTransactionCell.swift; sourceTree = "<group>"; };
+		E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCellViewController.swift; sourceTree = "<group>"; };
+		E592A96027D129D4008BE814 /* TransactionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCellViewModel.swift; sourceTree = "<group>"; };
+		E592A96227D335AE008BE814 /* TransactionSmallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSmallCell.swift; sourceTree = "<group>"; };
 		ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -171,6 +175,7 @@
 				03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */,
 				E592A93C27CA1FE8008BE814 /* OrderBookViewModel.swift */,
 				1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */,
+				E592A96027D129D4008BE814 /* TransactionCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -317,6 +322,9 @@
 				E592A93227C9340F008BE814 /* OrderBookViewController.swift */,
 				E592A93627C94741008BE814 /* OrderBookCell.swift */,
 				E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */,
+				E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */,
+				E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */,
+				E592A96227D335AE008BE814 /* TransactionSmallCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -647,11 +655,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C9CFE2A27C7C8F200647FCE /* NetworkError.swift in Sources */,
+				E592A96127D129D4008BE814 /* TransactionCellViewModel.swift in Sources */,
 				03F2EC8627D05AA600CEC21E /* KRWViewController.swift in Sources */,
 				E592A93327C9340F008BE814 /* OrderBookViewController.swift in Sources */,
 				1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */,
 				249C3E7B27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift in Sources */,
 				E592A93727C94741008BE814 /* OrderBookCell.swift in Sources */,
+				E592A95D27D10E08008BE814 /* OrderBookTransactionCell.swift in Sources */,
 				03E19BFF27C9299D00F36A46 /* CoinListViewController.swift in Sources */,
 				E592A94A27CE791E008BE814 /* OrderBookTickerCell.swift in Sources */,
 				1C9CFDFA27C75FCB00647FCE /* WebSocketService.swift in Sources */,
@@ -675,6 +685,7 @@
 				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
 				03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */,
 				1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */,
+				E592A96327D335AE008BE814 /* TransactionSmallCell.swift in Sources */,
 				1C33CF9F27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift in Sources */,
 				1C33CFA127CF9F80007E91F0 /* ChartViewController.swift in Sources */,
 				E592A91D27C67303008BE814 /* APIResponse.swift in Sources */,
@@ -682,6 +693,7 @@
 				E592A92327C67984008BE814 /* RealtimeTicker.swift in Sources */,
 				1C9CFE2E27C7E0CC00647FCE /* WebSocketManager.swift in Sources */,
 				E592A92727C67BA9008BE814 /* Candlestick.swift in Sources */,
+				E592A95F27D124D0008BE814 /* TransactionCellViewController.swift in Sources */,
 				03F2EC8C27D065EF00CEC21E /* UISearchBar+Extension.swift in Sources */,
 				03E19BFD27C9297F00F36A46 /* CoinListViewModel.swift in Sources */,
 				E592A94127CA8381008BE814 /* TransactionHistory.swift in Sources */,

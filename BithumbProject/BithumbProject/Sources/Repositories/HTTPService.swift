@@ -16,6 +16,7 @@ enum HTTPService {
     case assetsStatus(_ orderCurrency: OrderCurrency = "All")
     case candleStick(_ orderCurrency: OrderCurrency, _ chartIntervals: String)
     case orderBook(_ orderCurrency: OrderCurrency)
+    case transactionHistory(_ orderCurrency: OrderCurrency)
 }
 
 extension HTTPService: TargetType {
@@ -33,6 +34,8 @@ extension HTTPService: TargetType {
             return Constant.Path.candleStickPath + "/\(orderCurrency)" + "/\(chartIntervals)"
         case .orderBook(let orderCurrency):
             return Constant.Path.orderBookPath + "/\(orderCurrency)"
+        case .transactionHistory(let orderCurrency):
+            return Constant.Path.transationHistoryPath + "/\(orderCurrency)"
         }
     }
     
