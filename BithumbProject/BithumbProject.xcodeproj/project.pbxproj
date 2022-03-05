@@ -58,6 +58,8 @@
 		E592A95F27D124D0008BE814 /* TransactionCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */; };
 		E592A96127D129D4008BE814 /* TransactionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96027D129D4008BE814 /* TransactionCellViewModel.swift */; };
 		E592A96327D335AE008BE814 /* TransactionSmallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96227D335AE008BE814 /* TransactionSmallCell.swift */; };
+		E592A96527D3C095008BE814 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96427D3C095008BE814 /* TransactionViewController.swift */; };
+		E592A96727D3D261008BE814 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96627D3D261008BE814 /* TransactionViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +140,8 @@
 		E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCellViewController.swift; sourceTree = "<group>"; };
 		E592A96027D129D4008BE814 /* TransactionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCellViewModel.swift; sourceTree = "<group>"; };
 		E592A96227D335AE008BE814 /* TransactionSmallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSmallCell.swift; sourceTree = "<group>"; };
+		E592A96427D3C095008BE814 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
+		E592A96627D3D261008BE814 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
 		ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,6 +180,7 @@
 				E592A93C27CA1FE8008BE814 /* OrderBookViewModel.swift */,
 				1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */,
 				E592A96027D129D4008BE814 /* TransactionCellViewModel.swift */,
+				E592A96627D3D261008BE814 /* TransactionViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -325,6 +330,7 @@
 				E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */,
 				E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */,
 				E592A96227D335AE008BE814 /* TransactionSmallCell.swift */,
+				E592A96427D3C095008BE814 /* TransactionViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -673,6 +679,7 @@
 				E592A92927C67D61008BE814 /* RealtimeOrderBook.swift in Sources */,
 				03D6C6BA27C91DE70028A7E0 /* HTTPService.swift in Sources */,
 				E592A91F27C6764E008BE814 /* Ticker.swift in Sources */,
+				E592A96527D3C095008BE814 /* TransactionViewController.swift in Sources */,
 				E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */,
 				1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */,
 				1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */,
@@ -682,6 +689,7 @@
 				03F2EC8A27D05C1A00CEC21E /* PopularityViewController.swift in Sources */,
 				03F2EC8427D059E800CEC21E /* CoinListButtonBarPagerViewController.swift in Sources */,
 				1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */,
+				E592A96727D3D261008BE814 /* TransactionViewModel.swift in Sources */,
 				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
 				03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */,
 				1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */,
