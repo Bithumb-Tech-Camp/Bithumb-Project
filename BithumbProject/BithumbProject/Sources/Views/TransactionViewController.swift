@@ -34,8 +34,8 @@ final class TransactionViewController: UIViewController {
         }
         
         self.viewModel.output.transactionData
-            .map { $0.sorted { $0.transactionDate ?? "" > $1.transactionDate ?? "" }}
-            .map { [TransactionHistory(transactionDate: "시간", unitsTraded: "체결량(BTC)", price: "체결가(KRW)")] + $0 }
+            .map { $0.sorted { $0.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() > $1.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() }}
+            .map { [TransactionHistory(transactionDate: "시간", unitsTraded: "체결량(BTC)", price: "가격(KRW)")] + $0 }
             .subscribe(onNext: { transactionList in
                 self.transactionList = transactionList
                 self.spreadSheetView.reloadData()
@@ -73,19 +73,24 @@ extension TransactionViewController: SpreadsheetViewDataSource {
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookCell.self), for: indexPath) as? OrderBookCell
         if self.transactionList.count > 20 {
             if indexPath.column == 0 {
-                cell?.label.text = self.transactionList[indexPath.row].transactionDate ?? ""
+                cell?.label.text = self.transactionList[indexPath.row].transactionDate?.changeDateFormat(from: "YYYY-MM-DD HH:mm:ss", to: "HH:mm:ss") ?? "시간"
             } else if indexPath.column == 1 {
-                cell?.label.text = self.transactionList[indexPath.row].price ?? ""
+                cell?.label.text = self.transactionList[indexPath.row].price?.decimal ?? "가격"
             } else if indexPath.column == 2 {
-                cell?.label.text = self.transactionList[indexPath.row].unitsTraded ?? ""
+                cell?.label.text = self.transactionList[indexPath.row].unitsTraded?.rounded ?? "체결량"
             }
             
             if indexPath.row == 0 || indexPath.column == 0 {
                 cell?.label.textColor = .black
                 cell?.label.textAlignment = .center
             } else {
-                cell?.label.textColor = self.transactionList[indexPath.row].updown == "up" ? .red : .blue
+                cell?.label.textColor = self.transactionList[indexPath.row].updown == "dn" ? .systemBlue : .systemRed
                 cell?.label.textAlignment = .right
+            }
+            
+            if indexPath.row == 0 {
+                cell?.borders.top = .solid(width: 1, color: .darkGray)
+                cell?.borders.bottom = .solid(width: 1, color: .darkGray)
             }
         }
         return cell

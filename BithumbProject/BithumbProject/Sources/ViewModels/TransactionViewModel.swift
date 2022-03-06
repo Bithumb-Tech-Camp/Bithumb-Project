@@ -64,7 +64,7 @@ final class TransactionViewModel: ViewModelType {
             transaction.price = $0.contractPrice
             transaction.unitsTraded = $0.contractQuantity
             transaction.updown = $0.updown
-            transaction.transactionDate = $0.contractDatetime
+            transaction.transactionDate = $0.contractDatetime?.changeDateFormat(from: "YYYY-MM-DD HH:mm:ss.SSS", to: "YYYY-MM-DD HH:mm:ss")
             updatedList.append(transaction)
         }
         return updatedList

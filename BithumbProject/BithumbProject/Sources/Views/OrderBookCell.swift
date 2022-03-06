@@ -30,8 +30,8 @@ class OrderBookCell: Cell {
         contentView.addSubview(label)
         label.snp.makeConstraints {
             $0.centerY.equalTo(contentView)
-            $0.right.equalTo(contentView).inset(5)
-            $0.left.equalTo(contentView).inset(5)
+            $0.leading.equalTo(contentView).offset(5)
+            $0.trailing.equalTo(contentView).offset(-5)
         }
     }
     
