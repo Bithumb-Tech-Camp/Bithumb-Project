@@ -126,7 +126,7 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
         // input
         self.changeRateSettingButton.rx.tap
             .bind(onNext: {
-                var changeRateViewController = ChangeRateSettingViewController(viewModel: self.viewModel)
+                let changeRateViewController = ChangeRateSettingViewController(viewModel: self.viewModel)
                 self.presentPanModal(changeRateViewController)
             })
             .disposed(by: disposeBag)

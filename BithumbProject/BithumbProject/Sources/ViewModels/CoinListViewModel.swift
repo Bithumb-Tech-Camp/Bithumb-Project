@@ -16,7 +16,8 @@ final class CoinListViewModel: ViewModelType {
     struct Input {
         let inputQuery = PublishRelay<String>()
         let searchButtonClicked = PublishRelay<Void>()
-        let selectedSortedColumn = PublishRelay<SortedColumn>()
+        // 이 세가지 기본 옵션을 UserDefault에서 받아오기
+        let selectedSortedColumn = BehaviorRelay<SortedColumn>(value: .init(column: 0, sorting: .ascending))
         let selectedCoinListType = BehaviorRelay<CoinListType>(value: .KRW)
         let selectedChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .MID)
     }
@@ -47,9 +48,15 @@ final class CoinListViewModel: ViewModelType {
         
         Observable.combineLatest(
             self.input.selectedCoinListType,
-            self.input.selectedChangeRatePeriod)
-            .flatMap { coinListService.fetchCoinList($0, $1) }
-            .map { $0.sorted { $0.krName < $1.krName }}
+            self.input.selectedChangeRatePeriod,
+            self.input.selectedSortedColumn)
+            .flatMap { [weak self] type, period, standard -> Observable<[Coin]> in
+                guard let self = self else {
+                    return .empty()
+                }
+                return self.coinListService.fetchCoinList(type, period)
+                    .map { self.sort(coinList: $0, by: standard) }
+            }
             .bind(onNext: { [weak self] coinList in
                 self?.output.coinList = coinList
                 if let update = self?.output.update {
@@ -81,38 +88,33 @@ final class CoinListViewModel: ViewModelType {
 //                print(coinListType.rawValue)
             })
             .disposed(by: self.disposeBag)
-        
-        event.selectedSortedColumn
-            .bind(onNext:{ standard in
-                switch standard {
-                case .init(column: 0, sorting: .ascending):
-                    self.output.coinList.sort { $0.krName < $1.krName }
-                case .init(column: 0, sorting: .descending):
-                    self.output.coinList.sort { $0.krName > $1.krName }
-                case .init(column: 1, sorting: .ascending):
-                    self.output.coinList.sort { $0.ticker < $1.ticker }
-                case .init(column: 1, sorting: .descending):
-                    self.output.coinList.sort { $0.ticker > $1.ticker }
-                case .init(column: 2, sorting: .ascending):
-                    self.output.coinList.sort { $0.changeRate.rate < $1.changeRate.rate }
-                case .init(column: 2, sorting: .descending):
-                    self.output.coinList.sort { $0.changeRate.rate > $1.changeRate.rate }
-                case .init(column: 3, sorting: .ascending):
-                    self.output.coinList.sort { $0.transaction < $1.transaction }
-                case .init(column: 3, sorting: .descending):
-                    self.output.coinList.sort { $0.transaction > $1.transaction }
-                default:
-                    break
-                }
-                if let update = self.output.update {
-                    update()
-                }
-            })
-            .disposed(by: self.disposeBag)
     }
     
     func outputBinding(_ event: Output) {
         
+    }
+    
+    func sort(coinList: [Coin], by standard: SortedColumn) -> [Coin] {
+        switch standard {
+        case .init(column: 0, sorting: .ascending):
+            return coinList.sorted { $0.krName < $1.krName }
+        case .init(column: 0, sorting: .descending):
+            return coinList.sorted { $0.krName > $1.krName }
+        case .init(column: 1, sorting: .ascending):
+            return coinList.sorted { $0.ticker < $1.ticker }
+        case .init(column: 1, sorting: .descending):
+            return coinList.sorted { $0.ticker > $1.ticker }
+        case .init(column: 2, sorting: .ascending):
+            return coinList.sorted { $0.changeRate.rate < $1.changeRate.rate }
+        case .init(column: 2, sorting: .descending):
+            return coinList.sorted { $0.changeRate.rate > $1.changeRate.rate }
+        case .init(column: 3, sorting: .ascending):
+            return coinList.sorted { $0.transaction < $1.transaction }
+        case .init(column: 3, sorting: .descending):
+            return coinList.sorted { $0.transaction > $1.transaction }
+        default:
+            return []
+        }
     }
     
 }

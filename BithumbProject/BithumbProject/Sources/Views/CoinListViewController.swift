@@ -289,7 +289,6 @@ extension CoinListViewController: SpreadsheetViewDelegate {
             if target.column == indexPath.column {
                 target.toggling(indexPath.column)
                 self.viewModel.input.selectedSortedColumn.accept(target)
-                print(target.sorting.symbol)
             } else {
                 target = SortedColumn(column: indexPath.row, sorting: .ascending)
             }
