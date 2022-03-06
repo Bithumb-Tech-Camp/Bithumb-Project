@@ -56,10 +56,10 @@
 		E592A94A27CE791E008BE814 /* OrderBookTickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */; };
 		E592A95D27D10E08008BE814 /* OrderBookTransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */; };
 		E592A95F27D124D0008BE814 /* TransactionCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */; };
-		E592A96127D129D4008BE814 /* TransactionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96027D129D4008BE814 /* TransactionCellViewModel.swift */; };
+		E592A96127D129D4008BE814 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96027D129D4008BE814 /* TransactionViewModel.swift */; };
 		E592A96327D335AE008BE814 /* TransactionSmallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96227D335AE008BE814 /* TransactionSmallCell.swift */; };
 		E592A96527D3C095008BE814 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96427D3C095008BE814 /* TransactionViewController.swift */; };
-		E592A96727D3D261008BE814 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96627D3D261008BE814 /* TransactionViewModel.swift */; };
+		E592A96A27D5362A008BE814 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96927D5362A008BE814 /* Color+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,10 +138,10 @@
 		E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookTickerCell.swift; sourceTree = "<group>"; };
 		E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookTransactionCell.swift; sourceTree = "<group>"; };
 		E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCellViewController.swift; sourceTree = "<group>"; };
-		E592A96027D129D4008BE814 /* TransactionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCellViewModel.swift; sourceTree = "<group>"; };
+		E592A96027D129D4008BE814 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
 		E592A96227D335AE008BE814 /* TransactionSmallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSmallCell.swift; sourceTree = "<group>"; };
 		E592A96427D3C095008BE814 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
-		E592A96627D3D261008BE814 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
+		E592A96927D5362A008BE814 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -179,8 +179,7 @@
 				03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */,
 				E592A93C27CA1FE8008BE814 /* OrderBookViewModel.swift */,
 				1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */,
-				E592A96027D129D4008BE814 /* TransactionCellViewModel.swift */,
-				E592A96627D3D261008BE814 /* TransactionViewModel.swift */,
+				E592A96027D129D4008BE814 /* TransactionViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -191,6 +190,7 @@
 				1C9CFE2627C7C85D00647FCE /* String+Extension.swift */,
 				03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */,
 				1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */,
+				E592A96927D5362A008BE814 /* Color+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -661,7 +661,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C9CFE2A27C7C8F200647FCE /* NetworkError.swift in Sources */,
-				E592A96127D129D4008BE814 /* TransactionCellViewModel.swift in Sources */,
+				E592A96A27D5362A008BE814 /* Color+Extension.swift in Sources */,
+				E592A96127D129D4008BE814 /* TransactionViewModel.swift in Sources */,
 				03F2EC8627D05AA600CEC21E /* KRWViewController.swift in Sources */,
 				E592A93327C9340F008BE814 /* OrderBookViewController.swift in Sources */,
 				1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */,
@@ -689,7 +690,6 @@
 				03F2EC8A27D05C1A00CEC21E /* PopularityViewController.swift in Sources */,
 				03F2EC8427D059E800CEC21E /* CoinListButtonBarPagerViewController.swift in Sources */,
 				1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */,
-				E592A96727D3D261008BE814 /* TransactionViewModel.swift in Sources */,
 				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
 				03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */,
 				1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */,

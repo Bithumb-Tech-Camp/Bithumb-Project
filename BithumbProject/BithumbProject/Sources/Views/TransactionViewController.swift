@@ -11,7 +11,7 @@ import SpreadsheetView
 
 final class TransactionViewController: UIViewController {
     var disposeBag: DisposeBag = DisposeBag()
-    let viewModel = TransactionCellViewModel()
+    let viewModel = TransactionViewModel()
     
     let spreadSheetView = SpreadsheetView().then {
         $0.register(OrderBookCell.self, forCellWithReuseIdentifier: String(describing: OrderBookCell.self))

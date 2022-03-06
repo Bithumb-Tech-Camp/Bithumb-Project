@@ -12,10 +12,6 @@ import SnapKit
 
 class OrderBookTransactionCell: Cell {
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }

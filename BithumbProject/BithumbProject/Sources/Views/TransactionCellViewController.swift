@@ -12,7 +12,7 @@ import RxDataSources
 
 class TransactionCellViewController: UIViewController {
     let disposeBag = DisposeBag()
-    let viewModel = TransactionCellViewModel()
+    let viewModel = TransactionViewModel()
     
     let tableView = UITableView().then {
         $0.separatorStyle = .none
@@ -53,11 +53,11 @@ class TransactionCellViewController: UIViewController {
     
     private func bindViewModel() {
         viewModel.output.transactionData
-            .map { $0.sorted { $0.transactionDate ?? "" > $1.transactionDate ?? "" }}
+            .map { $0.sorted { $0.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() > $1.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() }}
             .map { [TransactionHistory(unitsTraded: "체결량", price: "체결가")] + $0[0..<20] }
             .bind(to: self.tableView.rx.items(cellIdentifier: String(describing: TransactionSmallCell.self), cellType: TransactionSmallCell.self)) { (row, dataSource, cell) in
-                cell.contractPriceLabel.text = dataSource.price
-                cell.contractQuantityLabel.text = dataSource.unitsTraded
+                cell.contractPriceLabel.text = dataSource.price?.decimal ?? "체결가"
+                cell.contractQuantityLabel.text = dataSource.unitsTraded?.rounded ?? "체결량"
                 if row != 0 {
                     cell.contractPriceLabel.textColor = dataSource.updown == "dn" ? .blue : .red
                     cell.contractQuantityLabel.textColor = dataSource.updown == "dn" ? .blue : .red

@@ -16,7 +16,13 @@ class OrderBookViewController: UIViewController {
     let viewModel = OrderBookViewModel()
     let transactionCellViewController = TransactionCellViewController()
     
-    let spreadSheetView = SpreadsheetView()
+    let spreadSheetView = SpreadsheetView().then {
+        $0.register(OrderBookCell.self, forCellWithReuseIdentifier: String(describing: OrderBookCell.self))
+        $0.register(OrderBookTickerCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTickerCell.self))
+        $0.register(OrderBookTransactionCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTransactionCell.self))
+        $0.bounces = false
+        $0.showsHorizontalScrollIndicator = false
+    }
     var bidList: [BidAsk] = []  // 매수
     var askList: [BidAsk] = []  // 매도
     var tickerData: Ticker = Ticker()
@@ -29,10 +35,6 @@ class OrderBookViewController: UIViewController {
     private func configureUI() {
         self.spreadSheetView.delegate = self
         self.spreadSheetView.dataSource = self
-        
-        self.spreadSheetView.register(OrderBookCell.self, forCellWithReuseIdentifier: String(describing: OrderBookCell.self))
-        self.spreadSheetView.register(OrderBookTickerCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTickerCell.self))
-        self.spreadSheetView.register(OrderBookTransactionCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTransactionCell.self))
         
         view.addSubview(self.spreadSheetView)
         spreadSheetView.snp.makeConstraints {
@@ -117,25 +119,29 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
                 if indexPath.column ==  0 && indexPath.row < 30 {
                     cell?.label.text = self.askList[indexPath.row].quantity
                     cell?.label.textAlignment = .right
-                    cell?.contentView.backgroundColor = .blue
+                    cell?.contentView.backgroundColor = Color.backgroundBlue
+                    cell?.label.textColor = self.tickerData.prevClosingPrice ?? "" <= self.askList[indexPath.row].price ?? "" ? .systemRed : .systemBlue
                 }
                 
                 if indexPath.column ==  1 {
                     if indexPath.row < 30 {
                         cell?.label.text = self.askList[indexPath.row].price
                         cell?.label.textAlignment = .center
-                        cell?.contentView.backgroundColor = .blue
+                        cell?.contentView.backgroundColor = Color.backgroundBlue
+                        cell?.label.textColor = self.tickerData.prevClosingPrice ?? "" <= self.askList[indexPath.row].price ?? "" ? .systemRed : .systemBlue
                     } else {
                         cell?.label.text = self.bidList[indexPath.row-30].price
                         cell?.label.textAlignment = .center
-                        cell?.contentView.backgroundColor = .red
+                        cell?.contentView.backgroundColor = Color.backgroundRed
+                        cell?.label.textColor = self.tickerData.prevClosingPrice ?? "" <= self.bidList[indexPath.row - 30].price ?? "" ? .systemRed : .systemBlue
                     }
                 }
                 
                 if indexPath.column ==  2 && indexPath.row >= 30 {
                     cell?.label.text = self.bidList[indexPath.row-30].quantity
                     cell?.label.textAlignment = .left
-                    cell?.contentView.backgroundColor = .red
+                    cell?.contentView.backgroundColor = Color.backgroundRed
+                    cell?.label.textColor = self.tickerData.prevClosingPrice ?? "" <= self.bidList[indexPath.row - 30].price ?? "" ? .systemRed : .systemBlue
                 }
             }
             return cell

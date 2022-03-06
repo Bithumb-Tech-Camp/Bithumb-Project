@@ -1,16 +1,17 @@
 //
-//  TransactionViewModel.swift
+//  TransactionCellViewModel.swift
 //  BithumbProject
 //
-//  Created by 최다빈 on 2022/03/06.
+//  Created by 최다빈 on 2022/03/04.
 //
 
 import Foundation
 import RxSwift
-import RxCocoa
+import RxRelay
 import Moya
 
 final class TransactionViewModel: ViewModelType {
+    
     var input: Input
     var output: Output
     var disposeBag: DisposeBag = DisposeBag()
@@ -39,6 +40,7 @@ final class TransactionViewModel: ViewModelType {
             ]
 
         httpManager.request(httpServiceType: .transactionHistory("BTC"), model: [TransactionHistory].self)
+            .map { self.addUpdownColumn($0) }
             .bind(to: input.transactionData)
             .disposed(by: disposeBag)
         
@@ -66,6 +68,14 @@ final class TransactionViewModel: ViewModelType {
             transaction.updown = $0.updown
             transaction.transactionDate = $0.contractDatetime?.changeDateFormat(from: "YYYY-MM-DD HH:mm:ss.SSS", to: "YYYY-MM-DD HH:mm:ss")
             updatedList.append(transaction)
+        }
+        return updatedList
+    }
+    
+    private func addUpdownColumn(_ transationData: [TransactionHistory]) -> [TransactionHistory] {
+        var updatedList = transationData
+        for i in 1..<updatedList.count {
+            updatedList[i].updown = updatedList[i-1].price ?? "" <= updatedList[i].price ?? "" ? "up" : "dn"
         }
         return updatedList
     }
