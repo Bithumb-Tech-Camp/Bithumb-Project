@@ -74,57 +74,6 @@ class OrderBookTickerCell: Cell {
             $0.trailing.equalTo(self.contentView)
             $0.bottom.equalTo(self.contentView).offset(-5)
         }
-        
-//        contentView.addSubview(lowPriceLabel)
-//        lowPriceLabel.snp.makeConstraints {
-//            $0.leading.equalTo(contentView)
-//            $0.trailing.equalTo(contentView)
-//            $0.bottom.equalTo(contentView).offset(-5)
-//        }
-//
-//        contentView.addSubview(highPriceLabel)
-//        highPriceLabel.snp.makeConstraints {
-//            $0.leading.equalTo(contentView)
-//            $0.trailing.equalTo(contentView)
-//            $0.bottom.equalTo(lowPriceLabel.snp.top).offset(-5)
-//        }
-//
-//        contentView.addSubview(openPriceLabel)
-//        openPriceLabel.snp.makeConstraints {
-//            $0.leading.equalTo(contentView)
-//            $0.trailing.equalTo(contentView)
-//            $0.bottom.equalTo(highPriceLabel.snp.top).offset(-5)
-//        }
-//
-//        contentView.addSubview(prevClosePriceLabel)
-//        prevClosePriceLabel.snp.makeConstraints {
-//            $0.leading.equalTo(contentView)
-//            $0.trailing.equalTo(contentView)
-//            $0.bottom.equalTo(openPriceLabel.snp.top).offset(-5)
-//        }
-//
-//        contentView.addSubview(separateView)
-//        separateView.snp.makeConstraints {
-//            $0.leading.equalTo(contentView).offset(5)
-//            $0.trailing.equalTo(contentView).offset(-5)
-//            $0.bottom.equalTo(prevClosePriceLabel.snp.top).offset(-5)
-//            $0.height.equalTo(1)
-//        }
-//
-//        contentView.addSubview(accTradeValueLabel)
-//        accTradeValueLabel.snp.makeConstraints {
-//            $0.leading.equalTo(contentView)
-//            $0.trailing.equalTo(contentView)
-//            $0.bottom.equalTo(separateView.snp.top).offset(-5)
-//        }
-//
-//        contentView.addSubview(unitsTradedLabel)
-//        unitsTradedLabel.snp.makeConstraints {
-//            $0.leading.equalTo(contentView)
-//            $0.trailing.equalTo(contentView)
-//            $0.bottom.equalTo(accTradeValueLabel.snp.top).offset(-5)
-//        }
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -171,7 +120,7 @@ final class LeftTitleLabel: UIView {
             ])
             .then {
                 $0.axis = .horizontal
-//                $0.alignment = .fill
+                $0.alignment = .fill
                 $0.distribution = .fill
                 $0.spacing = 10
             }
@@ -183,22 +132,6 @@ final class LeftTitleLabel: UIView {
             $0.trailing.equalTo(self).offset(-3)
             $0.bottom.equalTo(self)
         }
-        
-//        self.addSubview(titleLabel)
-//        titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-//        titleLabel.snp.makeConstraints {
-//            $0.top.equalTo(self)
-//            $0.leading.equalTo(self).offset(1)
-//        }
-//
-//        self.addSubview(contentLabel)
-//        contentLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-//        contentLabel.snp.makeConstraints {
-//            $0.top.equalTo(self)
-//            $0.leading.equalTo(titleLabel.snp.trailing)
-//            $0.trailing.equalTo(self).offset(-5)
-//            $0.bottom.equalTo(self)
-//        }
     }
     
     override init(frame: CGRect) {

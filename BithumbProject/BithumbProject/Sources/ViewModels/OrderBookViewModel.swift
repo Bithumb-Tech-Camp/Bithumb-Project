@@ -120,10 +120,6 @@ final class OrderBookViewModel: ViewModelType {
             .map { $0.sorted { $0.price ?? "" > $1.price ?? "" }}
             .bind(to: input.askList)
             .disposed(by: disposeBag)
-        
-//        httpManager.request(httpServiceType: .ticker("BTC"), model: Ticker.self)
-//            .bind(to: input.tickerData)
-//            .disposed(by: disposeBag)
     }
     
     private func reflectRealtimeData(previousList: [BidAsk], realtimeList: [RealtimeOrderbookDepth]) -> [BidAsk] {
