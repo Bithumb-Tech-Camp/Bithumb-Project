@@ -60,7 +60,7 @@ final class CoinDetailViewModel: ViewModelType {
             .flatMap { _ -> Observable<RealtimeTicker> in
                 let parameter: [String: Any] = [
                     "type": BithumbWebSocketRequestType.ticker.rawValue,
-                    "symbols": [Coin(name: orderCurrency).symbol],
+                    "symbols": [orderCurrency],
                     "tickTypes": [TickType.thirtyMinute].map { $0.rawValue }
                 ]
                 return webSocketManager.requestRealtime(parameter: parameter, type: RealtimeTicker.self)
