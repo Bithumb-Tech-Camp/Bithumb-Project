@@ -29,11 +29,16 @@
 		03E19BFF27C9299D00F36A46 /* CoinListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */; };
 		03F2EC8C27D065EF00CEC21E /* UISearchBar+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */; };
 		03F2EC8E27D0726E00CEC21E /* ChangeRateSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F2EC8D27D0726E00CEC21E /* ChangeRateSettingViewController.swift */; };
+		1C192EE627D34BF100BCDAA0 /* IntOrString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C192EE527D34BF100BCDAA0 /* IntOrString.swift */; };
+		1C192EED27D3C69200BCDAA0 /* UInt64+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C192EEC27D3C69200BCDAA0 /* UInt64+Extension.swift */; };
 		1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */; };
 		1C33CF9B27CF364F007E91F0 /* CoinDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */; };
 		1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */; };
 		1C33CF9F27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9E27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift */; };
 		1C33CFA127CF9F80007E91F0 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CFA027CF9F80007E91F0 /* ChartViewController.swift */; };
+		1C33CFA327D1E8F0007E91F0 /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CFA227D1E8F0007E91F0 /* ChartViewModel.swift */; };
+		1C33CFA527D1F862007E91F0 /* SingleChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CFA427D1F862007E91F0 /* SingleChartView.swift */; };
+		1C54520927D637B1002FF371 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54520827D637B1002FF371 /* CALayer+Extension.swift */; };
 		1C9CFDFA27C75FCB00647FCE /* WebSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CFDF927C75FCB00647FCE /* WebSocketService.swift */; };
 		1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CFE2627C7C85D00647FCE /* String+Extension.swift */; };
 		1C9CFE2A27C7C8F200647FCE /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CFE2927C7C8F200647FCE /* NetworkError.swift */; };
@@ -108,11 +113,16 @@
 		03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar+Extension.swift"; sourceTree = "<group>"; };
 		03F2EC8D27D0726E00CEC21E /* ChangeRateSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRateSettingViewController.swift; sourceTree = "<group>"; };
 		18428F2A50A0AD57949D9ADA /* Pods_BithumbProjectTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BithumbProjectTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C192EE527D34BF100BCDAA0 /* IntOrString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntOrString.swift; sourceTree = "<group>"; };
+		1C192EEC27D3C69200BCDAA0 /* UInt64+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt64+Extension.swift"; sourceTree = "<group>"; };
 		1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailViewController.swift; sourceTree = "<group>"; };
 		1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailViewModel.swift; sourceTree = "<group>"; };
 		1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		1C33CF9E27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailButtonBarPagerViewController.swift; sourceTree = "<group>"; };
 		1C33CFA027CF9F80007E91F0 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
+		1C33CFA227D1E8F0007E91F0 /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
+		1C33CFA427D1F862007E91F0 /* SingleChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleChartView.swift; sourceTree = "<group>"; };
+		1C54520827D637B1002FF371 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
 		1C9CFDF927C75FCB00647FCE /* WebSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketService.swift; sourceTree = "<group>"; };
 		1C9CFE2627C7C85D00647FCE /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		1C9CFE2927C7C8F200647FCE /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
@@ -188,6 +198,7 @@
 			children = (
 				03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */,
 				1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */,
+				1C33CFA227D1E8F0007E91F0 /* ChartViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -195,9 +206,11 @@
 		1C9CFE2327C7C80A00647FCE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1C54520827D637B1002FF371 /* CALayer+Extension.swift */,
 				1C9CFE2627C7C85D00647FCE /* String+Extension.swift */,
 				03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */,
 				1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */,
+				1C192EEC27D3C69200BCDAA0 /* UInt64+Extension.swift */,
 				0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */,
 				24E4FAC527D3466300EEC4AC /* UINavigationBar+Extension.swift */,
 			);
@@ -342,6 +355,7 @@
 				1C33CFA027CF9F80007E91F0 /* ChartViewController.swift */,
 				E592A93227C9340F008BE814 /* OrderBookViewController.swift */,
 				E592A93627C94741008BE814 /* OrderBookCell.swift */,
+				1C33CFA427D1F862007E91F0 /* SingleChartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -382,6 +396,7 @@
 				E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */,
 				E592A93E27CA81E1008BE814 /* OrderBook.swift */,
 				E592A94027CA8381008BE814 /* TransactionHistory.swift */,
+				1C192EE527D34BF100BCDAA0 /* IntOrString.swift */,
 				03D6C6BD27C91F620028A7E0 /* Coin.swift */,
 				03C4743A27D1C75C002AC4D2 /* CoinListType.swift */,
 				24E4FAC727D34F4900EEC4AC /* ChangeRate.swift */,
@@ -681,16 +696,20 @@
 				1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */,
 				03C4743D27D1FFB3002AC4D2 /* CoinListService.swift in Sources */,
 				249C3E7B27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift in Sources */,
+				1C33CFA327D1E8F0007E91F0 /* ChartViewModel.swift in Sources */,
 				E592A93727C94741008BE814 /* OrderBookCell.swift in Sources */,
 				03E19BFF27C9299D00F36A46 /* CoinListViewController.swift in Sources */,
 				03C4743727D1AE1B002AC4D2 /* ButtonBarCell.swift in Sources */,
 				1C9CFDFA27C75FCB00647FCE /* WebSocketService.swift in Sources */,
 				03D6C6BE27C91F620028A7E0 /* Coin.swift in Sources */,
+				1C33CFA527D1F862007E91F0 /* SingleChartView.swift in Sources */,
+				1C192EED27D3C69200BCDAA0 /* UInt64+Extension.swift in Sources */,
 				1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */,
 				03F2EC8E27D0726E00CEC21E /* ChangeRateSettingViewController.swift in Sources */,
 				03C4744927D396FC002AC4D2 /* StarButton.swift in Sources */,
 				E592A92B27C67E8C008BE814 /* RealtimeTransaction.swift in Sources */,
 				E592A92927C67D61008BE814 /* RealtimeOrderBook.swift in Sources */,
+				1C192EE627D34BF100BCDAA0 /* IntOrString.swift in Sources */,
 				03D6C6BA27C91DE70028A7E0 /* HTTPService.swift in Sources */,
 				E592A91F27C6764E008BE814 /* Ticker.swift in Sources */,
 				03C4744727D38A28002AC4D2 /* ChangeRateCell.swift in Sources */,
@@ -699,6 +718,7 @@
 				1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */,
 				1CDFFCBD27C533ED0033B759 /* ViewModelType.swift in Sources */,
 				1C33CF9B27CF364F007E91F0 /* CoinDetailViewModel.swift in Sources */,
+				1C54520927D637B1002FF371 /* CALayer+Extension.swift in Sources */,
 				03C4744327D2DF39002AC4D2 /* TransactionCell.swift in Sources */,
 				249C3E7927D0A9250069E131 /* PeriodCell.swift in Sources */,
 				E592A92127C678E3008BE814 /* AssetsStatus.swift in Sources */,
