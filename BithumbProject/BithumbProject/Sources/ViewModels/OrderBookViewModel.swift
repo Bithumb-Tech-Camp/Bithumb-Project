@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Moya
+import RxOptional
 
 final class OrderBookViewModel: ViewModelType {
 
@@ -21,7 +22,7 @@ final class OrderBookViewModel: ViewModelType {
         let bidList = PublishRelay<[BidAsk]>()
         let askList = PublishRelay<[BidAsk]>()
         let realtimeOrderBookData = PublishRelay<RealtimeOrderBook>()
-        let tickerData = PublishRelay<Ticker>()
+        let tickerData = PublishRelay<RealtimeTicker>()
     }
     
     struct Output {
@@ -29,7 +30,8 @@ final class OrderBookViewModel: ViewModelType {
         let bidList = BehaviorRelay<[BidAsk]>(value: [])
         let askList = BehaviorRelay<[BidAsk]>(value: [])
         let realtimeOrderBookData = BehaviorRelay<RealtimeOrderBook>(value: RealtimeOrderBook())
-        let tickerData = BehaviorRelay<Ticker>(value: Ticker())
+        let tickerData = BehaviorRelay<RealtimeTicker>(value: RealtimeTicker())
+        let prevClosePrice = BehaviorRelay<String>(value: "")
     }
     
     init() {
@@ -44,6 +46,12 @@ final class OrderBookViewModel: ViewModelType {
               "type": BithumbWebSocketRequestType.orderBookDepth.rawValue,
               "symbols": ["BTC_KRW"]
             ]
+        
+        let tickerParameter: [String: Any] = [
+              "type": BithumbWebSocketRequestType.ticker.rawValue,
+              "symbols": ["BTC_KRW"],
+              "tickTypes": [TickType.oneHour].map { $0.rawValue }
+             ]
         
         input.orderBookData
             .bind(to: output.orderBookData)
@@ -63,6 +71,18 @@ final class OrderBookViewModel: ViewModelType {
         
         input.tickerData
             .bind(to: output.tickerData)
+            .disposed(by: disposeBag)
+        
+        webSocketManager.requestRealtime(parameter: tickerParameter, type: RealtimeTicker.self)
+            .filter { $0.prevClosePrice != nil }
+            .bind(to: input.tickerData)
+            .disposed(by: disposeBag)
+        
+        input.tickerData
+            .map { $0.prevClosePrice }
+            .filterNil()
+            .distinctUntilChanged()
+            .bind(to: output.prevClosePrice)
             .disposed(by: disposeBag)
         
         httpManager.request(httpServiceType: .orderBook("BTC"), model: OrderBook.self)
@@ -101,9 +121,9 @@ final class OrderBookViewModel: ViewModelType {
             .bind(to: input.askList)
             .disposed(by: disposeBag)
         
-        httpManager.request(httpServiceType: .ticker("BTC"), model: Ticker.self)
-            .bind(to: input.tickerData)
-            .disposed(by: disposeBag)
+//        httpManager.request(httpServiceType: .ticker("BTC"), model: Ticker.self)
+//            .bind(to: input.tickerData)
+//            .disposed(by: disposeBag)
     }
     
     private func reflectRealtimeData(previousList: [BidAsk], realtimeList: [RealtimeOrderbookDepth]) -> [BidAsk] {
