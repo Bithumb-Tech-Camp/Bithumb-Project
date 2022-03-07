@@ -152,7 +152,7 @@ final class ChartViewController: UIViewController, ViewModelBindable {
         $0.backgroundColor = .systemGray5
     }
     
-    var viewModel: ChartViewModel!
+    var viewModel: ChartViewModel
     var disposeBag: DisposeBag = DisposeBag()
     
     init(viewModel: ChartViewModel) {
@@ -161,12 +161,13 @@ final class ChartViewController: UIViewController, ViewModelBindable {
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -265,7 +266,7 @@ final class ChartViewController: UIViewController, ViewModelBindable {
 
     }
     
-    func bindViewModel() {
+    func bind() {
         
         Observable.just(())
             .bind(onNext: {[weak self] _ in

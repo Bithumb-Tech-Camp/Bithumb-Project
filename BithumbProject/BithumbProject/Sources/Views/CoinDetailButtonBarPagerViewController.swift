@@ -85,12 +85,10 @@ final class CoinDetailButtonBarPagerViewController: ButtonBarPagerTabStripViewCo
     
     override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         
-        let orderCurrency = Coin(name: "BTC")
         let httpManager = HTTPManager(provider: MoyaProvider<HTTPService>())
         let webSocketManager = WebSocketManager()
-        let chartViewModel = ChartViewModel(orderCurrency: orderCurrency.symbol, httpManager: httpManager, webSocketManager: webSocketManager)
+        let chartViewModel = ChartViewModel(orderCurrency: "BTC_KRW", httpManager: httpManager, webSocketManager: webSocketManager)
         var chartViewController = ChartViewController(viewModel: chartViewModel)
-        chartViewController.bind(viewModel: chartViewModel)
         
         return [
             chartViewController
