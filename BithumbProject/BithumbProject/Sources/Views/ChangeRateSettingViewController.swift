@@ -27,26 +27,45 @@ class ChangeRateSettingViewController: UIViewController, ViewModelBindable {
     private let periodHeaderView = ChangeRateSettingHeaderView(frame: .zero)
     
     private let periodTableView = UITableView().then {
-        $0.register(PeriodTableViewCell.self,
-                    forCellReuseIdentifier: PeriodTableViewCell.identifier)
+        $0.register(PeriodCell.self,
+                    forCellReuseIdentifier: PeriodCell.identifier)
+        $0.isScrollEnabled = false
+        $0.separatorStyle = .none
     }
     
-    var viewModel: CoinListViewModel!
+    var viewModel: CoinListViewModel
     var disposeBag: DisposeBag = DisposeBag()
-
+    
+    required init(viewModel: CoinListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.makeConstraints()
         self.configureUI()
+        self.bind()
     }
     
-    func bindViewModel() {
+    func bind() {
         
-        Observable.from([])
-            .bind(to: self.periodTableView.rx.items(dataSource: createDataSource()))
+        self.viewModel.output.changeRatePeriodList
+            .map { [SectionModel.init(model: 0, items: $0)] }
+            .bind(to: self.periodTableView.rx.items(dataSource: self.createDataSource()))
             .disposed(by: self.disposeBag)
         
-        //        self.periodTableView.rx.modelSelected(ChangeRate.self)
+        self.periodTableView.rx.modelSelected(ChangeRatePeriod.self)
+            .withUnretained(self)
+            .bind(onNext: { owner, period in
+                self.viewModel.input.selectedChangeRatePeriod.accept(period)
+                owner.dismiss(animated: true, completion: nil)
+            })
+            .disposed(by: self.disposeBag)
         
         self.dismissButton.rx.tap
             .withUnretained(self)
@@ -59,15 +78,19 @@ class ChangeRateSettingViewController: UIViewController, ViewModelBindable {
             .disposed(by: self.disposeBag)
     }
     
-    typealias PeriodDataSource = RxTableViewSectionedReloadDataSource<SectionModel<Int, ChangeRate>>
+    typealias PeriodDataSource = RxTableViewSectionedReloadDataSource<SectionModel<Int, ChangeRatePeriod>>
     private func createDataSource() -> PeriodDataSource {
-        return PeriodDataSource { datasource, tableView, indexPath, item in
+        return PeriodDataSource { _, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: PeriodTableViewCell.identifier,
-                for: indexPath) as? PeriodTableViewCell else {
+                withIdentifier: PeriodCell.identifier,
+                for: indexPath) as? PeriodCell else {
                     return UITableViewCell()
                 }
+            let checkImage = UIImage(systemName: "checkmark", withConfiguration: UIImage.SymbolConfiguration.init(pointSize: 15))
+            let currentPeriodImage = self.viewModel.output.currentChangeRatePeriod.value == item ? checkImage : nil
+            cell.checkImage.image = currentPeriodImage
             cell.rendering(item)
+            cell.selectionStyle = .none
             return cell
         }
     }
@@ -95,8 +118,8 @@ extension ChangeRateSettingViewController: PanModalPresentable {
         return nil
     }
     
-    var shortFormHeight: PanModalHeight {
-        return .contentHeight(400)
+    var longFormHeight: PanModalHeight {
+        return .contentHeight(Size.longFormHeight)
     }
 }
 
@@ -106,19 +129,20 @@ extension ChangeRateSettingViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 200
+        return Size.tableViewHeaderHeight
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let cellCount: CGFloat = 5
+        return (Size.longFormHeight - Size.tableViewHeaderHeight - Size.panModalTopMargin - (Size.tableViewCellMargin*2)) / cellCount
     }
 }
 
-struct ChangeRate {
-    enum Period {
-        case MID
-        case Day
-        case HalfDay
-        case Hour
-        case HalfHour
+extension ChangeRateSettingViewController {
+    enum Size {
+        fileprivate static let longFormHeight: CGFloat = 350
+        fileprivate static let tableViewHeaderHeight: CGFloat = 100
+        fileprivate static let panModalTopMargin: CGFloat = 10
+        fileprivate static let tableViewCellMargin: CGFloat = 10
     }
-    
-    let time: Period
-    let isSelected: Bool = false
 }
