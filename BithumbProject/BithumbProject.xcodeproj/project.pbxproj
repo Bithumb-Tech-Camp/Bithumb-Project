@@ -77,6 +77,7 @@
 		E592A96327D335AE008BE814 /* TransactionSmallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96227D335AE008BE814 /* TransactionSmallCell.swift */; };
 		E592A96527D3C095008BE814 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96427D3C095008BE814 /* TransactionViewController.swift */; };
 		E592A96A27D5362A008BE814 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96927D5362A008BE814 /* Color+Extension.swift */; };
+		E592A97227D64B08008BE814 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A97127D64B08008BE814 /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +177,7 @@
 		E592A96227D335AE008BE814 /* TransactionSmallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSmallCell.swift; sourceTree = "<group>"; };
 		E592A96427D3C095008BE814 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
 		E592A96927D5362A008BE814 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		E592A97127D64B08008BE814 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -258,7 +260,7 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
-		1C9CFE2C27C7D48000647FCE /* Repositories */ = {
+		1C9CFE2C27C7D48000647FCE /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				03D6C6B927C91DE70028A7E0 /* HTTPManager.swift */,
@@ -266,7 +268,7 @@
 				1C9CFDF927C75FCB00647FCE /* WebSocketService.swift */,
 				1C9CFE2D27C7E0CC00647FCE /* WebSocketManager.swift */,
 			);
-			path = Repositories;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		1CDFFC7427C5266E0033B759 = {
@@ -320,8 +322,9 @@
 		1CDFFCB027C52D530033B759 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E592A97027D64ACF008BE814 /* Data */,
 				E592A91B27C672E8008BE814 /* Models */,
-				1C9CFE2C27C7D48000647FCE /* Repositories */,
+				1C9CFE2C27C7D48000647FCE /* Network */,
 				1CDFFCB227C52D8D0033B759 /* Application */,
 				03E19BFB27C9295500F36A46 /* ViewModels */,
 				1CDFFCB727C52E150033B759 /* Views */,
@@ -353,30 +356,8 @@
 		1CDFFCB727C52E150033B759 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */,
-				03C4743227D18A46002AC4D2 /* TitleCell.swift */,
-				03C4743027D18A1A002AC4D2 /* CoinCell.swift */,
-				03C4743E27D27462002AC4D2 /* TickerCell.swift */,
-				03C4744227D2DF39002AC4D2 /* TransactionCell.swift */,
-				03C4744A27D39E73002AC4D2 /* StarCell.swift */,
-				03C4744827D396FC002AC4D2 /* StarButton.swift */,
-				03C4743827D1BBF3002AC4D2 /* ButtonBarController.swift */,
-				03C4743427D19184002AC4D2 /* ButtonBarCollectionView.swift */,
-				03C4743627D1AE1B002AC4D2 /* ButtonBarCell.swift */,
-				03F2EC8D27D0726E00CEC21E /* ChangeRateSettingViewController.swift */,
-				249C3E7A27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift */,
-				249C3E7827D0A9250069E131 /* PeriodCell.swift */,
-				1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */,
-				1C33CF9E27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift */,
-				1C33CFA027CF9F80007E91F0 /* ChartViewController.swift */,
-				E592A93227C9340F008BE814 /* OrderBookViewController.swift */,
-				E592A93627C94741008BE814 /* OrderBookCell.swift */,
-				E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */,
-				E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */,
-				E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */,
-				E592A96227D335AE008BE814 /* TransactionSmallCell.swift */,
-				E592A96427D3C095008BE814 /* TransactionViewController.swift */,
-				1C33CFA427D1F862007E91F0 /* SingleChartView.swift */,
+				E592A96C27D64A0E008BE814 /* Detail */,
+				E592A96B27D649CA008BE814 /* Main */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -425,6 +406,76 @@
 				03C4744427D2E28C002AC4D2 /* SortedColumn.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		E592A96B27D649CA008BE814 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				03E19BFE27C9299D00F36A46 /* CoinListViewController.swift */,
+				03C4743227D18A46002AC4D2 /* TitleCell.swift */,
+				03C4743027D18A1A002AC4D2 /* CoinCell.swift */,
+				03C4743E27D27462002AC4D2 /* TickerCell.swift */,
+				03C4744227D2DF39002AC4D2 /* TransactionCell.swift */,
+				03C4744A27D39E73002AC4D2 /* StarCell.swift */,
+				03C4744827D396FC002AC4D2 /* StarButton.swift */,
+				03C4743827D1BBF3002AC4D2 /* ButtonBarController.swift */,
+				03C4743427D19184002AC4D2 /* ButtonBarCollectionView.swift */,
+				03C4743627D1AE1B002AC4D2 /* ButtonBarCell.swift */,
+				03F2EC8D27D0726E00CEC21E /* ChangeRateSettingViewController.swift */,
+				249C3E7A27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift */,
+				249C3E7827D0A9250069E131 /* PeriodCell.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		E592A96C27D64A0E008BE814 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				E592A96F27D64A40008BE814 /* Transaction */,
+				E592A96E27D64A3A008BE814 /* OrderBook */,
+				E592A96D27D64A35008BE814 /* Chart */,
+				1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */,
+				1C33CF9E27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		E592A96D27D64A35008BE814 /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				1C33CFA027CF9F80007E91F0 /* ChartViewController.swift */,
+				1C33CFA427D1F862007E91F0 /* SingleChartView.swift */,
+			);
+			path = Chart;
+			sourceTree = "<group>";
+		};
+		E592A96E27D64A3A008BE814 /* OrderBook */ = {
+			isa = PBXGroup;
+			children = (
+				E592A93227C9340F008BE814 /* OrderBookViewController.swift */,
+				E592A93627C94741008BE814 /* OrderBookCell.swift */,
+				E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */,
+				E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */,
+				E592A96227D335AE008BE814 /* TransactionSmallCell.swift */,
+			);
+			path = OrderBook;
+			sourceTree = "<group>";
+		};
+		E592A96F27D64A40008BE814 /* Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */,
+				E592A96427D3C095008BE814 /* TransactionViewController.swift */,
+			);
+			path = Transaction;
+			sourceTree = "<group>";
+		};
+		E592A97027D64ACF008BE814 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				E592A97127D64B08008BE814 /* Data.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		F3FB7FFF813F1FAEACF90A39 /* Frameworks */ = {
@@ -715,10 +766,10 @@
 				1C9CFE2A27C7C8F200647FCE /* NetworkError.swift in Sources */,
 				E592A96A27D5362A008BE814 /* Color+Extension.swift in Sources */,
 				E592A96127D129D4008BE814 /* TransactionViewModel.swift in Sources */,
-				03F2EC8627D05AA600CEC21E /* KRWViewController.swift in Sources */,
 				E592A93327C9340F008BE814 /* OrderBookViewController.swift in Sources */,
 				1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */,
 				03C4743D27D1FFB3002AC4D2 /* CoinListService.swift in Sources */,
+				E592A97227D64B08008BE814 /* Data.swift in Sources */,
 				249C3E7B27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift in Sources */,
 				1C33CFA327D1E8F0007E91F0 /* ChartViewModel.swift in Sources */,
 				E592A93727C94741008BE814 /* OrderBookCell.swift in Sources */,
@@ -740,7 +791,6 @@
 				03D6C6BA27C91DE70028A7E0 /* HTTPService.swift in Sources */,
 				E592A91F27C6764E008BE814 /* Ticker.swift in Sources */,
 				E592A96527D3C095008BE814 /* TransactionViewController.swift in Sources */,
-				03C4744727D38A28002AC4D2 /* ChangeRateCell.swift in Sources */,
 				E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */,
 				0320AF2127D1066300B3B83B /* ChangeRatePeriod.swift in Sources */,
 				1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */,
