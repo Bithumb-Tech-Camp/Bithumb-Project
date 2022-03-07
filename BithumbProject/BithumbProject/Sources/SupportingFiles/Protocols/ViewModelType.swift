@@ -16,14 +16,7 @@ protocol ViewModelType {
 
 protocol ViewModelBindable {
     associatedtype ViewModelType
-    var viewModel: ViewModelType! { get set }
-    func bindViewModel()
-}
-
-extension ViewModelBindable where Self: UIViewController {
-    mutating func bind(viewModel: ViewModelType) {
-        self.viewModel = viewModel
-        loadViewIfNeeded()
-        bindViewModel()
-    }
+    var viewModel: ViewModelType { get set }
+    init(viewModel: ViewModelType)
+    func bind()
 }

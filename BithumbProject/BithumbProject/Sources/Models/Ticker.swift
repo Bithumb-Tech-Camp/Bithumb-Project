@@ -36,3 +36,5 @@ struct Ticker: Codable {
         case date
     }
 }
+
+

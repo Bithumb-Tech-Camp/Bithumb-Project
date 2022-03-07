@@ -12,9 +12,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let tempRootViewModel = CoinListViewModel()
-        var tempRootView = CoinListViewController()
-        tempRootView.bind(viewModel: tempRootViewModel)
+        let coinListService = CoinListService()
+        let tempRootViewModel = CoinListViewModel(coinListService: coinListService)
+        let tempRootView = CoinListViewController(viewModel: tempRootViewModel)
+        let navigationController = UINavigationController(rootViewController: tempRootView)
+        navigationController.navigationBar.transparentNavigationBar()
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
@@ -22,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.backgroundColor = .white
         window?.rootViewController = OrderBookViewController()
         window?.rootViewController = UINavigationController(rootViewController: tempRootView)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 
+import Moya
 import Then
 import XLPagerTabStrip
 
@@ -42,6 +43,7 @@ final class CoinDetailButtonBarPagerViewController: ButtonBarPagerTabStripViewCo
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0
         
+        // swiftlint:disable all
         changeCurrentIndexProgressive = { [weak self] (
             oldCell: ButtonBarViewCell?,
             newCell: ButtonBarViewCell?,
@@ -57,9 +59,11 @@ final class CoinDetailButtonBarPagerViewController: ButtonBarPagerTabStripViewCo
             newCell?.label.font = self?.selectedFont
             newCell?.label.textColor = self?.selectedTextColor
         }
+        // swiftlint:enable all
         
         self.buttonBarView = self.buttonBarPagerView
         self.containerView = self.scrollView
+        self.containerView.isScrollEnabled = false
         
         self.view.addSubview(self.buttonBarPagerView)
         self.view.addSubview(self.scrollView)
@@ -80,6 +84,16 @@ final class CoinDetailButtonBarPagerViewController: ButtonBarPagerTabStripViewCo
     }
     
     override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
-      return [ChartViewController(), ChartViewController(), ChartViewController(), ChartViewController()]
+        
+        let orderCurrency = Coin(name: "BTC")
+        let httpManager = HTTPManager(provider: MoyaProvider<HTTPService>())
+        let webSocketManager = WebSocketManager()
+        let chartViewModel = ChartViewModel(orderCurrency: orderCurrency.symbol, httpManager: httpManager, webSocketManager: webSocketManager)
+        var chartViewController = ChartViewController(viewModel: chartViewModel)
+        chartViewController.bind(viewModel: chartViewModel)
+        
+        return [
+            chartViewController
+        ]
     }
 }
