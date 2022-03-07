@@ -67,8 +67,16 @@
 		E592A92B27C67E8C008BE814 /* RealtimeTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */; };
 		E592A93327C9340F008BE814 /* OrderBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93227C9340F008BE814 /* OrderBookViewController.swift */; };
 		E592A93727C94741008BE814 /* OrderBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93627C94741008BE814 /* OrderBookCell.swift */; };
+		E592A93D27CA1FE8008BE814 /* OrderBookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93C27CA1FE8008BE814 /* OrderBookViewModel.swift */; };
 		E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A93E27CA81E1008BE814 /* OrderBook.swift */; };
 		E592A94127CA8381008BE814 /* TransactionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A94027CA8381008BE814 /* TransactionHistory.swift */; };
+		E592A94A27CE791E008BE814 /* OrderBookTickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */; };
+		E592A95D27D10E08008BE814 /* OrderBookTransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */; };
+		E592A95F27D124D0008BE814 /* TransactionCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */; };
+		E592A96127D129D4008BE814 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96027D129D4008BE814 /* TransactionViewModel.swift */; };
+		E592A96327D335AE008BE814 /* TransactionSmallCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96227D335AE008BE814 /* TransactionSmallCell.swift */; };
+		E592A96527D3C095008BE814 /* TransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96427D3C095008BE814 /* TransactionViewController.swift */; };
+		E592A96A27D5362A008BE814 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96927D5362A008BE814 /* Color+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,8 +166,16 @@
 		E592A92A27C67E8C008BE814 /* RealtimeTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeTransaction.swift; sourceTree = "<group>"; };
 		E592A93227C9340F008BE814 /* OrderBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookViewController.swift; sourceTree = "<group>"; };
 		E592A93627C94741008BE814 /* OrderBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookCell.swift; sourceTree = "<group>"; };
+		E592A93C27CA1FE8008BE814 /* OrderBookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookViewModel.swift; sourceTree = "<group>"; };
 		E592A93E27CA81E1008BE814 /* OrderBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBook.swift; sourceTree = "<group>"; };
 		E592A94027CA8381008BE814 /* TransactionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistory.swift; sourceTree = "<group>"; };
+		E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookTickerCell.swift; sourceTree = "<group>"; };
+		E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookTransactionCell.swift; sourceTree = "<group>"; };
+		E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCellViewController.swift; sourceTree = "<group>"; };
+		E592A96027D129D4008BE814 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
+		E592A96227D335AE008BE814 /* TransactionSmallCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSmallCell.swift; sourceTree = "<group>"; };
+		E592A96427D3C095008BE814 /* TransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewController.swift; sourceTree = "<group>"; };
+		E592A96927D5362A008BE814 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -195,7 +211,9 @@
 			isa = PBXGroup;
 			children = (
 				03E19BFC27C9297F00F36A46 /* CoinListViewModel.swift */,
+				E592A93C27CA1FE8008BE814 /* OrderBookViewModel.swift */,
 				1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */,
+				E592A96027D129D4008BE814 /* TransactionViewModel.swift */,
 				1C33CFA227D1E8F0007E91F0 /* ChartViewModel.swift */,
 			);
 			path = ViewModels;
@@ -208,6 +226,7 @@
 				1C9CFE2627C7C85D00647FCE /* String+Extension.swift */,
 				03F2EC8B27D065EF00CEC21E /* UISearchBar+Extension.swift */,
 				1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */,
+				E592A96927D5362A008BE814 /* Color+Extension.swift */,
 				1C192EEC27D3C69200BCDAA0 /* UInt64+Extension.swift */,
 				0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */,
 				24E4FAC527D3466300EEC4AC /* UINavigationBar+Extension.swift */,
@@ -352,6 +371,11 @@
 				1C33CFA027CF9F80007E91F0 /* ChartViewController.swift */,
 				E592A93227C9340F008BE814 /* OrderBookViewController.swift */,
 				E592A93627C94741008BE814 /* OrderBookCell.swift */,
+				E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */,
+				E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */,
+				E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */,
+				E592A96227D335AE008BE814 /* TransactionSmallCell.swift */,
+				E592A96427D3C095008BE814 /* TransactionViewController.swift */,
 				1C33CFA427D1F862007E91F0 /* SingleChartView.swift */,
 			);
 			path = Views;
@@ -689,19 +713,25 @@
 			files = (
 				03C4743127D18A1A002AC4D2 /* CoinCell.swift in Sources */,
 				1C9CFE2A27C7C8F200647FCE /* NetworkError.swift in Sources */,
+				E592A96A27D5362A008BE814 /* Color+Extension.swift in Sources */,
+				E592A96127D129D4008BE814 /* TransactionViewModel.swift in Sources */,
+				03F2EC8627D05AA600CEC21E /* KRWViewController.swift in Sources */,
 				E592A93327C9340F008BE814 /* OrderBookViewController.swift in Sources */,
 				1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */,
 				03C4743D27D1FFB3002AC4D2 /* CoinListService.swift in Sources */,
 				249C3E7B27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift in Sources */,
 				1C33CFA327D1E8F0007E91F0 /* ChartViewModel.swift in Sources */,
 				E592A93727C94741008BE814 /* OrderBookCell.swift in Sources */,
+				E592A95D27D10E08008BE814 /* OrderBookTransactionCell.swift in Sources */,
 				03E19BFF27C9299D00F36A46 /* CoinListViewController.swift in Sources */,
+				E592A94A27CE791E008BE814 /* OrderBookTickerCell.swift in Sources */,
 				03C4743727D1AE1B002AC4D2 /* ButtonBarCell.swift in Sources */,
 				1C9CFDFA27C75FCB00647FCE /* WebSocketService.swift in Sources */,
 				03D6C6BE27C91F620028A7E0 /* Coin.swift in Sources */,
 				1C33CFA527D1F862007E91F0 /* SingleChartView.swift in Sources */,
 				1C192EED27D3C69200BCDAA0 /* UInt64+Extension.swift in Sources */,
 				1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */,
+				E592A93D27CA1FE8008BE814 /* OrderBookViewModel.swift in Sources */,
 				03F2EC8E27D0726E00CEC21E /* ChangeRateSettingViewController.swift in Sources */,
 				03C4744927D396FC002AC4D2 /* StarButton.swift in Sources */,
 				E592A92B27C67E8C008BE814 /* RealtimeTransaction.swift in Sources */,
@@ -709,6 +739,8 @@
 				1C192EE627D34BF100BCDAA0 /* IntOrString.swift in Sources */,
 				03D6C6BA27C91DE70028A7E0 /* HTTPService.swift in Sources */,
 				E592A91F27C6764E008BE814 /* Ticker.swift in Sources */,
+				E592A96527D3C095008BE814 /* TransactionViewController.swift in Sources */,
+				03C4744727D38A28002AC4D2 /* ChangeRateCell.swift in Sources */,
 				E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */,
 				0320AF2127D1066300B3B83B /* ChangeRatePeriod.swift in Sources */,
 				1CDFFC8327C5266E0033B759 /* SceneDelegate.swift in Sources */,
@@ -725,6 +757,7 @@
 				0320AF2327D11AC800B3B83B /* UIVIewController+Extension.swift in Sources */,
 				03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */,
 				1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */,
+				E592A96327D335AE008BE814 /* TransactionSmallCell.swift in Sources */,
 				1C33CF9F27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift in Sources */,
 				1C33CFA127CF9F80007E91F0 /* ChartViewController.swift in Sources */,
 				03C4743B27D1C75C002AC4D2 /* CoinListType.swift in Sources */,
@@ -738,6 +771,7 @@
 				1C9CFE2E27C7E0CC00647FCE /* WebSocketManager.swift in Sources */,
 				03C4743327D18A46002AC4D2 /* TitleCell.swift in Sources */,
 				E592A92727C67BA9008BE814 /* Candlestick.swift in Sources */,
+				E592A95F27D124D0008BE814 /* TransactionCellViewController.swift in Sources */,
 				03F2EC8C27D065EF00CEC21E /* UISearchBar+Extension.swift in Sources */,
 				03E19BFD27C9297F00F36A46 /* CoinListViewModel.swift in Sources */,
 				E592A94127CA8381008BE814 /* TransactionHistory.swift in Sources */,

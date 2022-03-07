@@ -17,6 +17,12 @@ class OrderBookCell: Cell {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        contentView.backgroundColor = .white
+        self.label.text = ""
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -24,8 +30,8 @@ class OrderBookCell: Cell {
         contentView.addSubview(label)
         label.snp.makeConstraints {
             $0.centerY.equalTo(contentView)
-            $0.right.equalTo(contentView).inset(5)
-            $0.left.equalTo(contentView).inset(5)
+            $0.leading.equalTo(contentView).offset(5)
+            $0.trailing.equalTo(contentView).offset(-5)
         }
     }
     
