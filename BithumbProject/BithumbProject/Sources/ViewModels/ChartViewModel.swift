@@ -16,7 +16,7 @@ final class ChartViewModel: ViewModelType {
         let fetchCandlestick: PublishSubject<Void> = PublishSubject<Void>()
         let fetchRealtimeTicker: PublishSubject<Void> = PublishSubject<Void>()
         var changeOption: BehaviorSubject<ChartOption> = BehaviorSubject<ChartOption>(
-            value: ChartOption(orderCurrency: Coin(name: "BTC").symbol, interval: .day, layout: .single)
+            value: ChartOption(orderCurrency: "BTC_KRW", interval: .day, layout: .single)
         )
     }
     
@@ -24,7 +24,7 @@ final class ChartViewModel: ViewModelType {
         let candlesticks: PublishRelay<[Candlestick]> = PublishRelay<[Candlestick]>()
         let realtimeTicker: PublishRelay<RealtimeTicker> = PublishRelay<RealtimeTicker>()
         var option: BehaviorRelay<ChartOption> = BehaviorRelay<ChartOption>(
-            value: ChartOption(orderCurrency: Coin(name: "BTC").symbol, interval: .day, layout: .single)
+            value: ChartOption(orderCurrency: "BTC_KRW", interval: .day, layout: .single)
         )
         let error: PublishRelay<NSError> = PublishRelay<NSError>()
     }
