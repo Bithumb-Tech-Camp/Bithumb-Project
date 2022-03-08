@@ -1,5 +1,5 @@
 //
-//  TransactionCell.swift
+//  TickerCell.swift
 //  BithumbProject
 //
 //  Created by 박형석 on 2022/03/05.
@@ -11,11 +11,11 @@ import Then
 import SnapKit
 import SpreadsheetView
 
-final class TransactionCell: Cell {
+final class TickerCell: Cell {
     
-    private let transactionLabel = UILabel().then {
+    private let tickerLabel = UILabel().then {
         $0.text = "49,230,124"
-        $0.textColor = .black
+        $0.textColor = .systemBlue
         $0.textAlignment = .right
         $0.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         $0.minimumScaleFactor = 0.5
@@ -29,8 +29,8 @@ final class TransactionCell: Cell {
     
     private func makeConstraints() {
       
-        self.contentView.addSubview(self.transactionLabel)
-        self.transactionLabel.snp.makeConstraints { make in
+        self.contentView.addSubview(self.tickerLabel)
+        self.tickerLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
             make.centerY.equalToSuperview()
         }
@@ -41,8 +41,8 @@ final class TransactionCell: Cell {
     }
 }
 
-extension TransactionCell {
+extension TickerCell {
     func rendering(_ coin: Coin) {
-        self.transactionLabel.text = String(describing: coin.transaction)
+        self.tickerLabel.text = coin.ticker.tickerDecimal
     }
 }

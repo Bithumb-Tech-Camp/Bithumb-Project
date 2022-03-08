@@ -26,7 +26,7 @@ final class CoinListViewModel: ViewModelType {
     struct Output {
         var coinListUpdate: (() -> Void)?
         var coinList = [Coin]()
-        let currentSortedColumn = BehaviorRelay<SortedColumn>(value: .init(column: 1))
+        let currentSortedColumn = BehaviorRelay<SortedColumn>(value: .init(column: 1, sorting: .descending))
         
         // 이 두 가지 기본 옵션을 UserDefault에서 받아오기
         let currentCoinListType = BehaviorRelay<CoinListType>(value: .popularity)

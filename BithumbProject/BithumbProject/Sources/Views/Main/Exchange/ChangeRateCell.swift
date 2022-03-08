@@ -65,7 +65,12 @@ final class ChangeRateCell: Cell {
 
 extension ChangeRateCell {
     func rendering(_ coin: Coin) {
-        self.changeRateLabel.text = String(describing: coin.changeRate.rate)
-        self.changeAmountLabel.text = String(describing: coin.changeRate.amount)
+        let changeRateColor: UIColor = coin.changeRate.rate < 0 ? . systemBlue : .systemRed
+        let changeRatePrefix: String = coin.changeRate.rate > 0 ? "+" : ""
+        self.changeRateLabel.text = changeRatePrefix + String(describing: coin.changeRate.rate) + "%"
+        self.changeRateLabel.textColor = changeRateColor
+        self.changeAmountLabel.text = changeRatePrefix + coin.changeRate.amount.changeRateDecimal
+        self.changeAmountLabel.textColor = changeRateColor
+        
     }
 }
