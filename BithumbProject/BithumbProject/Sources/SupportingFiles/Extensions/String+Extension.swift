@@ -40,4 +40,25 @@ extension String {
         guard let number = Double(self) else { return nil }
         return String(format: "%.4f", round(number * 10000) / 10000)
     }
+    
+    func changeRate(from: String) -> String {
+        guard let from = Double(from) else { return "" }
+        guard let to = Double(self) else { return "" }
+        
+        return String(format: "%.2f", round( ((to - from) / from) * 10000 ) / 100) + "%"
+    }
+    
+    var displayToBillions: String? {
+        guard var number = Double(self) else { return nil }
+        number = round(trunc(number) / 10000000) / 10
+        return String(format: "%.3f", number) + " 억"
+    }
+    
+    var displayToCoin: String? {
+        guard var number = Double(self) else { return nil }
+        number = round(number * 1000) / 1000
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter.string(for: number)
+    }
 }

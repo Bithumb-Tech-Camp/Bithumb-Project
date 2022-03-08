@@ -17,7 +17,7 @@ class OrderBookViewController: UIViewController {
     let transactionCellViewController = TransactionCellViewController()
     
     let spreadSheetView = SpreadsheetView().then {
-        $0.register(OrderBookCell.self, forCellWithReuseIdentifier: String(describing: OrderBookCell.self))
+        $0.register(OrderBookPriceCell.self, forCellWithReuseIdentifier: String(describing: OrderBookPriceCell.self))
         $0.register(OrderBookTickerCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTickerCell.self))
         $0.register(OrderBookTransactionCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTransactionCell.self))
         $0.bounces = false
@@ -26,8 +26,10 @@ class OrderBookViewController: UIViewController {
     
     var bidList: [BidAsk] = []  // 매수
     var askList: [BidAsk] = []  // 매도
-    var tickerData: RealtimeTicker = RealtimeTicker()
+    var tickerData: Ticker = Ticker()
+    var realTimeTickerData: RealtimeTicker = RealtimeTicker()
     var prevClosePrice: String = ""
+    var closePrice: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +37,6 @@ class OrderBookViewController: UIViewController {
     }
     
     private func configureUI() {
-        self.spreadSheetView.delegate = self
         self.spreadSheetView.dataSource = self
         
         view.addSubview(self.spreadSheetView)
@@ -64,14 +65,14 @@ class OrderBookViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        self.viewModel.output.prevClosePrice
+        self.viewModel.output.prevClosingPrice
             .bind(to: self.rx.prevClosePrice)
             .disposed(by: disposeBag)
+        
+        self.viewModel.output.closePrice
+            .bind(to: self.rx.closePrice)
+            .disposed(by: disposeBag)
     }
-}
-
-extension OrderBookViewController: SpreadsheetViewDelegate {
-    
 }
 
 extension OrderBookViewController: SpreadsheetViewDataSource {
@@ -100,17 +101,25 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
+        let askListIndex = self.askList.count + indexPath.row - 30
+        let bidListIndex = indexPath.row - 30
+        
         if indexPath.row == 0 && indexPath.column == 2 {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookTickerCell.self), for: indexPath) as? OrderBookTickerCell
-            cell?.lowPriceLabel.content = self.tickerData.lowPrice
-            cell?.highPriceLabel.content = self.tickerData.highPrice
-            cell?.openPriceLabel.content = self.tickerData.openPrice
-            cell?.prevClosePriceLabel.content = self.tickerData.prevClosePrice
-            cell?.accTradeValueLabel.content = self.tickerData.value
-            cell?.unitsTradedLabel.content = self.tickerData.volume
+            
+            cell?.lowPriceLabel.content = "\(self.tickerData.minPrice?.decimal ?? "")\n\(self.tickerData.minPrice?.changeRate(from: self.prevClosePrice) ?? "")"
+            cell?.highPriceLabel.content = "\(self.tickerData.maxPrice?.decimal ?? "")\n\(self.tickerData.maxPrice?.changeRate(from: self.prevClosePrice) ?? "")"
+            cell?.openPriceLabel.content = self.tickerData.openingPrice?.decimal
+            cell?.prevClosePriceLabel.content = self.tickerData.prevClosingPrice?.decimal
+            cell?.accTradeValueLabel.content = self.tickerData.accTradeValue24H?.displayToBillions
+            #warning("코인 이름에 맞춰 넣어주기")
+            if let unitsTraded = self.tickerData.unitsTraded24H?.displayToCoin {
+                cell?.unitsTradedLabel.content = unitsTraded + " BTC"
+            }
             return cell
         } else if indexPath.row == 30 && indexPath.column == 0 {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookTransactionCell.self), for: indexPath)
+            
             cell.layoutIfNeeded()
             if self.children.isEmpty {
                 transactionCellViewController.setup(to: self)
@@ -118,35 +127,38 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
             transactionCellViewController.attach(to: cell.contentView)
             return cell
         } else {
-            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookCell.self), for: indexPath) as? OrderBookCell
+            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookPriceCell.self), for: indexPath) as? OrderBookPriceCell
+            
             if !self.askList.isEmpty && !self.bidList.isEmpty {
                 if indexPath.column ==  0 && indexPath.row < 30 {
-                    cell?.label.text = self.askList[indexPath.row].quantity
-                    cell?.label.textAlignment = .right
+                    cell?.priceLabel.text = self.askList[askListIndex].quantity?.rounded
+                    cell?.priceLabel.textAlignment = .right
                     cell?.contentView.backgroundColor = Color.backgroundBlue
-                    cell?.label.textColor = self.prevClosePrice <= self.askList[indexPath.row].price ?? "" ? .systemRed : .systemBlue
+                    cell?.priceLabel.textColor = .black
                 }
                 
                 if indexPath.column ==  1 {
                     if indexPath.row < 30 {
-                        cell?.label.text = self.askList[indexPath.row].price
-                        cell?.label.textAlignment = .center
+                        cell?.priceLabel.text = self.askList[askListIndex].price?.decimal
+                        cell?.percentLabel.text = self.askList[askListIndex].price?.changeRate(from: self.prevClosePrice)
                         cell?.contentView.backgroundColor = Color.backgroundBlue
-                        cell?.label.textColor = self.prevClosePrice <= self.askList[indexPath.row].price ?? "" ? .systemRed : .systemBlue
+                        cell?.priceLabel.textColor = self.prevClosePrice <= self.askList[askListIndex].price ?? "" ? .red : .blue
+                        cell?.percentLabel.textColor = self.prevClosePrice <= self.askList[askListIndex].price ?? "" ? .red : .blue
                         
-                        if self.askList[indexPath.row].price ?? "" == self.tickerData.closePrice ?? "" {
+                        if self.askList[self.askList.count + indexPath.row - 30].price ?? "" == self.closePrice {
                             cell?.borders.top = .solid(width: 1, color: .black)
                             cell?.borders.left = .solid(width: 1, color: .black)
                             cell?.borders.right = .solid(width: 1, color: .black)
                             cell?.borders.bottom = .solid(width: 1, color: .black)
                         }
                     } else {
-                        cell?.label.text = self.bidList[indexPath.row-30].price
-                        cell?.label.textAlignment = .center
+                        cell?.priceLabel.text = self.bidList[bidListIndex].price?.decimal
+                        cell?.percentLabel.text = self.bidList[bidListIndex].price?.changeRate(from: self.prevClosePrice)
                         cell?.contentView.backgroundColor = Color.backgroundRed
-                        cell?.label.textColor = self.prevClosePrice <= self.bidList[indexPath.row - 30].price ?? "" ? .systemRed : .systemBlue
+                        cell?.priceLabel.textColor = self.prevClosePrice <= self.bidList[bidListIndex].price ?? "" ? .red : .blue
+                        cell?.percentLabel.textColor = self.prevClosePrice <= self.bidList[bidListIndex].price ?? "" ? .red : .blue
                         
-                        if self.bidList[indexPath.row - 30].price ?? "" == self.tickerData.closePrice ?? "" {
+                        if self.bidList[indexPath.row - 30].price ?? "" == self.closePrice {
                             cell?.borders.top = .solid(width: 1, color: .black)
                             cell?.borders.left = .solid(width: 1, color: .black)
                             cell?.borders.right = .solid(width: 1, color: .black)
@@ -156,10 +168,10 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
                 }
                 
                 if indexPath.column ==  2 && indexPath.row >= 30 {
-                    cell?.label.text = self.bidList[indexPath.row-30].quantity
-                    cell?.label.textAlignment = .left
+                    cell?.priceLabel.text = self.bidList[bidListIndex].quantity?.rounded
+                    cell?.priceLabel.textAlignment = .left
                     cell?.contentView.backgroundColor = Color.backgroundRed
-                    cell?.label.textColor = self.prevClosePrice <= self.bidList[indexPath.row - 30].price ?? "" ? .systemRed : .systemBlue
+                    cell?.priceLabel.textColor = .black
                 }
             }
             return cell

@@ -1,8 +1,8 @@
 //
-//  OrderBookCell.swift
+//  TransactionSingleCell.swift
 //  BithumbProject
 //
-//  Created by 최다빈 on 2022/02/26.
+//  Created by 최다빈 on 2022/03/09.
 //
 
 import Foundation
@@ -10,7 +10,7 @@ import SpreadsheetView
 import Then
 import SnapKit
 
-class OrderBookCell: Cell {
+class TransactionSingleCell: Cell {
     
     let label = UILabel().then {
         $0.textColor = .black
@@ -30,8 +30,8 @@ class OrderBookCell: Cell {
         contentView.addSubview(label)
         label.snp.makeConstraints {
             $0.centerY.equalTo(contentView)
-            $0.leading.equalTo(contentView).offset(5)
-            $0.trailing.equalTo(contentView).offset(-5)
+            $0.left.equalTo(contentView).offset(5)
+            $0.right.equalTo(contentView).offset(-5)
         }
     }
     

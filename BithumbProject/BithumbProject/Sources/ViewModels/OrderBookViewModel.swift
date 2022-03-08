@@ -22,7 +22,9 @@ final class OrderBookViewModel: ViewModelType {
         let bidList = PublishRelay<[BidAsk]>()
         let askList = PublishRelay<[BidAsk]>()
         let realtimeOrderBookData = PublishRelay<RealtimeOrderBook>()
-        let tickerData = PublishRelay<RealtimeTicker>()
+        let tickerData = PublishRelay<Ticker>()
+        let prevClosingPrice = PublishRelay<String>()
+        let closePrice = PublishRelay<String>()
     }
     
     struct Output {
@@ -30,8 +32,9 @@ final class OrderBookViewModel: ViewModelType {
         let bidList = BehaviorRelay<[BidAsk]>(value: [])
         let askList = BehaviorRelay<[BidAsk]>(value: [])
         let realtimeOrderBookData = BehaviorRelay<RealtimeOrderBook>(value: RealtimeOrderBook())
-        let tickerData = BehaviorRelay<RealtimeTicker>(value: RealtimeTicker())
-        let prevClosePrice = BehaviorRelay<String>(value: "")
+        let tickerData = BehaviorRelay<Ticker>(value: Ticker())
+        let prevClosingPrice = BehaviorRelay<String>(value: "")
+        let closePrice = BehaviorRelay<String>(value: "")
     }
     
     init() {
@@ -53,40 +56,40 @@ final class OrderBookViewModel: ViewModelType {
               "tickTypes": [TickType.oneHour].map { $0.rawValue }
              ]
         
-        input.orderBookData
-            .bind(to: output.orderBookData)
+        webSocketManager.requestRealtime(parameter: tickerParameter, type: RealtimeTicker.self)
+            .map { $0.closePrice }
+            .filterNil()
+            .bind(to: input.closePrice)
             .disposed(by: disposeBag)
         
-        input.bidList
-            .bind(to: output.bidList)
+        input.closePrice
+            .bind(to: output.closePrice)
             .disposed(by: disposeBag)
         
-        input.askList
-            .bind(to: output.askList)
-            .disposed(by: disposeBag)
-        
-        input.realtimeOrderBookData
-            .bind(to: output.realtimeOrderBookData)
+        httpManager.request(httpServiceType: .ticker("BTC"), model: Ticker.self)
+            .bind(to: input.tickerData)
             .disposed(by: disposeBag)
         
         input.tickerData
             .bind(to: output.tickerData)
             .disposed(by: disposeBag)
         
-        webSocketManager.requestRealtime(parameter: tickerParameter, type: RealtimeTicker.self)
-            .filter { $0.prevClosePrice != nil }
-            .bind(to: input.tickerData)
+        input.tickerData
+            .map { $0.prevClosingPrice }
+            .filterNil()
+            .bind(to: input.prevClosingPrice)
             .disposed(by: disposeBag)
         
-        input.tickerData
-            .map { $0.prevClosePrice }
-            .filterNil()
-            .distinctUntilChanged()
-            .bind(to: output.prevClosePrice)
+        input.prevClosingPrice
+            .bind(to: output.prevClosingPrice)
             .disposed(by: disposeBag)
         
         httpManager.request(httpServiceType: .orderBook("BTC"), model: OrderBook.self)
             .bind(to: input.orderBookData)
+            .disposed(by: disposeBag)
+        
+        input.orderBookData
+            .bind(to: output.orderBookData)
             .disposed(by: disposeBag)
         
         output.orderBookData
@@ -95,14 +98,26 @@ final class OrderBookViewModel: ViewModelType {
             .bind(to: input.bidList)
             .disposed(by: disposeBag)
         
+        input.bidList
+            .bind(to: output.bidList)
+            .disposed(by: disposeBag)
+        
         output.orderBookData
             .map { $0.asks ?? [] }
             .map { $0.sorted { $0.price ?? "" > $1.price ?? "" } }
             .bind(to: input.askList)
             .disposed(by: disposeBag)
+        
+        input.askList
+            .bind(to: output.askList)
+            .disposed(by: disposeBag)
 
         webSocketManager.requestRealtime(parameter: orderBookParameter, type: RealtimeOrderBook.self)
             .bind(to: input.realtimeOrderBookData)
+            .disposed(by: disposeBag)
+        
+        input.realtimeOrderBookData
+            .bind(to: output.realtimeOrderBookData)
             .disposed(by: disposeBag)
         
         output.realtimeOrderBookData
@@ -110,6 +125,7 @@ final class OrderBookViewModel: ViewModelType {
             .withUnretained(output.bidList) {( $0, $1 )}
             .map { self.reflectRealtimeData(previousList: $0.value, realtimeList: $1) }
             .map { $0.sorted { $0.price ?? "" > $1.price ?? "" }}
+//            .map { $0.filter { $0.quantity != "0" } }
             .bind(to: input.bidList)
             .disposed(by: disposeBag)
         
@@ -118,6 +134,7 @@ final class OrderBookViewModel: ViewModelType {
             .withUnretained(output.askList) {( $0, $1 )}
             .map { self.reflectRealtimeData(previousList: $0.value, realtimeList: $1) }
             .map { $0.sorted { $0.price ?? "" > $1.price ?? "" }}
+//            .map { $0.filter { $0.quantity != "0" } }
             .bind(to: input.askList)
             .disposed(by: disposeBag)
     }
