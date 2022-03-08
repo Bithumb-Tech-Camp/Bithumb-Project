@@ -12,7 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let coinListService = CoinListService()
+        
         let tempRootViewModel = CoinListViewModel(coinListService: coinListService)
         let tempRootView = CoinListViewController(viewModel: tempRootViewModel)
         let navigationController = UINavigationController(rootViewController: tempRootView)
