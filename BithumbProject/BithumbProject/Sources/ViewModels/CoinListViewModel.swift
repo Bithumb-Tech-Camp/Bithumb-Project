@@ -53,8 +53,8 @@ final class CoinListViewModel: ViewModelType {
                     switch ticker {
                     case .string:
                         return nil
-                    case .ticker(let ticker):
-                        let coin = ticker.toDomain()
+                    case .ticker(let newTicker):
+                        let coin = newTicker.toDomain()
                         coin.krName = "\(acronyms)코인"
                         coin.acronyms = acronyms
                         return coin

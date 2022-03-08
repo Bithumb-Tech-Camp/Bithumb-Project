@@ -23,6 +23,17 @@ enum CoinListType: String, CaseIterable {
             return "My"
         }
     }
+    
+    var row: Int {
+        switch self {
+        case .KRW:
+            return 0
+        case .popularity:
+            return 1
+        case .favorite:
+            return 2
+        }
+    }
 }
 
 extension CoinListType: Equatable {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Moya
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -13,7 +14,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        let tempRootViewModel = CoinListViewModel(coinListService: coinListService)
+        let httpProvider = MoyaProvider<HTTPService>()
+        let httpManager = HTTPManager(provider: httpProvider)
+        let webSocketManager = WebSocketManager()
+        
+        let tempRootViewModel = CoinListViewModel(httpManager: httpManager, webSocketManager: webSocketManager)
         let tempRootView = CoinListViewController(viewModel: tempRootViewModel)
         let navigationController = UINavigationController(rootViewController: tempRootView)
         navigationController.navigationBar.transparentNavigationBar()
@@ -22,7 +27,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         window?.backgroundColor = .white
-        window?.rootViewController = UINavigationController(rootViewController: tempRootView)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }

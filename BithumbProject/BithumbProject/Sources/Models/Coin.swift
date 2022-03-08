@@ -13,8 +13,8 @@ final class Coin {
         case KRW
         case BTC
     }
-    let krName: String
-    let acronyms: String
+    var krName: String
+    var acronyms: String
     var currency: Currency
     var ticker: Double
     var changeRate: ChangeRate
@@ -22,8 +22,8 @@ final class Coin {
     var isStarred: Bool
     var isHigher: Bool
     
-    init(krName: String,
-         acronyms: String,
+    init(krName: String = "비트코인",
+         acronyms: String = "BTC",
          currency: Currency = .KRW,
          ticker: Double,
          changeRate: ChangeRate,

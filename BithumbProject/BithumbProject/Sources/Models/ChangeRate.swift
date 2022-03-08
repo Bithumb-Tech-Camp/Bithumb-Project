@@ -9,7 +9,7 @@ import UIKit
 
 struct ChangeRate {
     let rate: Double
-    let amount: Int
+    let amount: Double
     
     var changeRateColor: UIColor {
         if self.rate <= 0 {
