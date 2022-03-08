@@ -44,7 +44,9 @@ extension String {
     func changeRate(from: String) -> String {
         guard let from = Double(from) else { return "" }
         guard let to = Double(self) else { return "" }
-        
+        if from < to {
+            return "+"+String(format: "%.2f", round( ((to - from) / from) * 10000 ) / 100) + "%"
+        }
         return String(format: "%.2f", round( ((to - from) / from) * 10000 ) / 100) + "%"
     }
     
