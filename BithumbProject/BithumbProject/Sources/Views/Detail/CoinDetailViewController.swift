@@ -48,13 +48,76 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
         $0.spacing = UIStackView.spacingUseDefault
     }
     
-    private let buttonBarPagerViewController: ButtonBarPagerTabStripViewController = CoinDetailButtonBarPagerViewController()
+    private lazy var customBackButtonItem: UIBarButtonItem = UIBarButtonItem(
+        image: UIImage(
+            systemName: "arrow.backward",
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: 15, weight: .regular)
+        ),
+        style: .plain,
+        target: self,
+        action: #selector(touchleftBarButton)
+    )
+    
+    private lazy var starBarButton: UIButton = UIButton().then {
+        $0.setImage(
+            UIImage(
+                systemName: "star",
+                withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
+            ),
+            for: .normal
+        )
+        $0.tintColor = .black
+    }
+    
+    private lazy var kebabMenuBarButton: UIButton = UIButton().then {
+        $0.setImage(
+            UIImage(
+                systemName: "list.bullet",
+                withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
+            ),
+            for: .normal
+        )
+        $0.tintColor = .black
+    }
+    
+    private lazy var rightBarButtonStackView: UIStackView = UIStackView(
+        arrangedSubviews: [starBarButton, kebabMenuBarButton]
+    ).then {
+        $0.axis = .horizontal
+        $0.alignment = .fill
+        $0.distribution = .fill
+        $0.spacing = 10
+    }
+    
+    private lazy var titleLabel: UILabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        $0.textColor = .black
+        $0.text = "비트코인"
+    }
+    
+    private lazy var titleSymbolLabel: UILabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        $0.textColor = .darkGray
+        $0.text = "BTC/KRW"
+    }
+    
+    private lazy var titleStackView: UIStackView = UIStackView(
+        arrangedSubviews: [titleLabel, titleSymbolLabel]
+    ).then {
+        $0.axis = .vertical
+        $0.alignment = .center
+        $0.distribution = .fill
+        $0.spacing = UIStackView.spacingUseDefault
+    }
+    
+    private let buttonBarPagerViewController: ButtonBarPagerTabStripViewController
     
     var viewModel: CoinDetailViewModel
     var disposeBag: DisposeBag = DisposeBag()
     
     init(viewModel: CoinDetailViewModel) {
         self.viewModel = viewModel
+        self.buttonBarPagerViewController = CoinDetailButtonBarPagerViewController(viewModel: viewModel)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -70,7 +133,12 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
     }
     
     private func setupNavigationBar() {
-        
+        navigationItem.leftBarButtonItem = customBackButtonItem
+        navigationItem.leftBarButtonItem?.tintColor = .darkGray
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightBarButtonStackView)
+        titleLabel.text = viewModel.coin.krName
+        titleSymbolLabel.text = viewModel.coin.symbol
+        navigationItem.titleView = titleStackView
     }
     
     private func setupViews() {
@@ -92,7 +160,7 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
         
         headerView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(100)
+            $0.height.equalTo(60)
         }
         
         priceStackView.snp.makeConstraints {
@@ -178,5 +246,9 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
                 self?.changeRateLabel.textColor = color
             })
             .disposed(by: disposeBag)
+    }
+    
+    @objc private func touchleftBarButton() {
+        self.navigationController?.popViewController(animated: true)
     }
 }

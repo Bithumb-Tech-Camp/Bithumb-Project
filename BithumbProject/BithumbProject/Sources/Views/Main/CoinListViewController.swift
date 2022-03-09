@@ -8,6 +8,7 @@
 import SafariServices
 import UIKit
 
+import Moya
 import RxCocoa
 import RxDataSources
 import RxSwift
@@ -196,16 +197,16 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             
             return cell
         } else if indexPath.column == 2 {
-//            let cell = spreadsheetView.dequeueReusableCell(
-//                withReuseIdentifier: String(describing: ChangeRateCell.self),
-//                for: indexPath) as? ChangeRateCell
-//
-//            cell?.borders.top = .none
-//            cell?.borders.left = .none
-//            cell?.borders.right = .none
-//            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
-//            cell?.rendering(coin)
-//            
+            //            let cell = spreadsheetView.dequeueReusableCell(
+            //                withReuseIdentifier: String(describing: ChangeRateCell.self),
+            //                for: indexPath) as? ChangeRateCell
+            //
+            //            cell?.borders.top = .none
+            //            cell?.borders.left = .none
+            //            cell?.borders.right = .none
+            //            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+            //            cell?.rendering(coin)
+            //
             return nil
         } else if indexPath.column == 3 {
             let cell = spreadsheetView.dequeueReusableCell(
@@ -228,7 +229,7 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
-
+            
             return cell
         }
         return nil
@@ -280,6 +281,14 @@ extension CoinListViewController: SpreadsheetViewDataSource {
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
         return 1
     }
+    
+    private func pushToCoinDetailViewController(coin: Coin) {
+        let httpManager = HTTPManager(provider: MoyaProvider<HTTPService>())
+        let wetSocketManager = WebSocketManager()
+        let coinDetailViewModel = CoinDetailViewModel(coin: coin, httpManager: httpManager, webSocketManager: wetSocketManager)
+        let coinDetailViewController = CoinDetailViewController(viewModel: coinDetailViewModel)
+        self.navigationController?.pushViewController(coinDetailViewController, animated: true)
+    }
 }
 
 extension CoinListViewController: SpreadsheetViewDelegate {
@@ -292,6 +301,9 @@ extension CoinListViewController: SpreadsheetViewDelegate {
             } else {
                 target = SortedColumn(column: indexPath.row, sorting: .ascending)
             }
+        } else {
+            let coin = self.viewModel.output.coinList[indexPath.row]
+            self.pushToCoinDetailViewController(coin: coin)
         }
     }
 }

@@ -33,7 +33,7 @@ final class SingleChartView: UIView {
         $0.xAxis.axisLineColor = UIColor.white.withAlphaComponent(0.0)
         $0.xAxis.setLabelCount(3, force: false)
         $0.xAxis.spaceMin = 0.5
-        $0.xAxis.spaceMax = 100
+        $0.xAxis.spaceMax = 50
         
         $0.rightAxis.enabled = true
         $0.rightAxis.minWidth = 60
@@ -64,7 +64,7 @@ final class SingleChartView: UIView {
         $0.xAxis.gridLineWidth = 0.5
         $0.xAxis.gridColor = .systemGray5
         $0.xAxis.spaceMin = 0.5
-        $0.xAxis.spaceMax = 100
+        $0.xAxis.spaceMax = 50
         
         $0.rightAxis.enabled = true
         $0.rightAxis.minWidth = 60
@@ -88,77 +88,90 @@ final class SingleChartView: UIView {
         $0.backgroundColor = UIColor.white.withAlphaComponent(0.0)
     }
     
-    private let candlestickMALineChartDataEntry: (Int, [Candlestick]) -> [ChartDataEntry] = { num, candlesticks in
-        if candlesticks.count <= 0 {
-            return []
-        }
-        return ((num-1)..<candlesticks.count).map { index in
-            var total: Double = 0
-            for idx in (index-(num-1)...index) {
-                total += (Double(candlesticks[idx].closePrice ?? "0") ?? 0)
-            }
-            return ChartDataEntry(x: Double(index), y: total / Double(num))
-        }
+    private lazy var candlestickChartDataEntry = self.candlesticks.enumerated().map { index, candlestick in
+        CandleChartDataEntry(
+            x: Double(index),
+            shadowH: candlestick.safeHighPrice,
+            shadowL: candlestick.safeLowPrice,
+            open: candlestick.safeOpenPrice,
+            close: candlestick.safeClosePrice
+        )
     }
     
-    private let barMALineChartDataEntry: (Int, [Candlestick]) -> [ChartDataEntry] = { num, candlesticks in
-        if candlesticks.count <= 0 {
-            return []
-        }
-        return ((num-1)..<candlesticks.count).map { index in
-            var total: Double = 0
-            for idx in (index-(num-1)...index) {
-                total += (Double(candlesticks[idx].transactionVolume ?? "0") ?? 0)
-            }
-            return ChartDataEntry(x: Double(index), y: total / Double(num))
-        }
+    private lazy var barChartDataEntry = self.candlesticks.enumerated().map { index, candlestick in
+        BarChartDataEntry(x: Double(index), y: candlestick.safeTransactionVolume)
     }
-    
-    private var draggablelineBarViewHeightConstraint: NSLayoutConstraint?
+
     var realtimeTicker: PublishRelay<RealtimeTicker> = PublishRelay<RealtimeTicker>()
     var disposeBag: DisposeBag = DisposeBag()
+    private var draggablelineBarViewHeightConstraint: NSLayoutConstraint?
+    private let candlesticks: [Candlestick]
+    private var candlestickChartDataSet: CandleChartDataSet?
+    private var barChartDataSet: BarChartDataSet?
     
-    init(candlesticks: [Candlestick]) {
+    init(candlesticks: [Candlestick], option: ChartOption) {
+        self.candlesticks = candlesticks
         super.init(frame: .zero)
-        setupViews(candlesticks: candlesticks)
+        setupViews(candlesticks: candlesticks, option: option)
         setupBindings()
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews(candlesticks: [Candlestick]) {
+    private func setupViews(candlesticks: [Candlestick], option: ChartOption) {
         
-        let candlestickChartDataEntry = candlesticks.enumerated().map { index, candlestick in
-            CandleChartDataEntry(
-                x: Double(index),
-                shadowH: Double(candlestick.highPrice ?? "0") ?? 0,
-                shadowL: Double(candlestick.lowPrice ?? "0") ?? 0,
-                open: Double(candlestick.openPrice ?? "0") ?? 0,
-                close: Double(candlestick.closePrice ?? "0") ?? 0
-            )
+        let candlestickMALineChartDataEntry: (Int, [Candlestick]) -> [ChartDataEntry] = { num, candlesticks in
+            if candlesticks.count <= 0 || candlesticks.count < num {
+                return []
+            }
+            return ((num-1)..<candlesticks.count).map { index in
+                var total: Double = 0
+                for idx in (index-(num-1)...index) {
+                    total += candlesticks[idx].safeClosePrice
+                }
+                return ChartDataEntry(x: Double(index), y: total / Double(num))
+            }
         }
         
-        let barChartDataEntry = candlesticks.enumerated().map { index, candlestick in
-            BarChartDataEntry(x: Double(index), y: Double(candlestick.transactionVolume ?? "0") ?? 0)
+        let barMALineChartDataEntry: (Int, [Candlestick]) -> [ChartDataEntry] = { num, candlesticks in
+            if candlesticks.count <= 0 || candlesticks.count < num  {
+                return []
+            }
+            return ((num-1)..<candlesticks.count).map { index in
+                var total: Double = 0
+                for idx in (index-(num-1)...index) {
+                    total += candlesticks[idx].safeTransactionVolume
+                }
+                return ChartDataEntry(x: Double(index), y: total / Double(num))
+            }
         }
         
-        let dataXAxisLabel = candlesticks.compactMap {
-            $0.standardTime?.date()
+        let dataXAxisLabel = candlesticks.compactMap { (candlestick: Candlestick) -> String? in
+            let interval = option.interval
+            var format: String = "yyyy-MM-dd"
+            switch interval {
+            case .minute, .hour:
+                format = "dd일 HH:mm"
+            case .day, .week, .month:
+                format = "yyyy-MM-dd"
+            }
+            return candlestick.standardTime?.date(format: format)
         }
         
-        let barChartColors = candlesticks.map {
-            Double($0.openPrice ?? "0") ?? 0 > Double($0.closePrice ?? "0") ?? 0 ? UIColor.systemBlue : UIColor.systemRed
-        }
+        let barChartColors = candlesticks.map { $0.updown.color }
         
-        let candlestickChartDataSet = setupCandlestickDataSet(entries: candlestickChartDataEntry)
+        self.candlestickChartDataSet = setupCandlestickDataSet(entries: candlestickChartDataEntry)
         let candlestickMA5LineChartDataSet = setupMA5LineChartDataSet(entries: candlestickMALineChartDataEntry(5, candlesticks))
         let candlestickMA10LineChartDataSet = setupMA10LineChartDataSet(entries: candlestickMALineChartDataEntry(10, candlesticks))
         let candlestickMA20LineChartDataSet = setupMA20LineChartDataSet(entries: candlestickMALineChartDataEntry(20, candlesticks))
         let candlestickMA60LineChartDataSet = setupMA60LineChartDataSet(entries: candlestickMALineChartDataEntry(60, candlesticks))
         let candlestickMA120LineChartDataSet = setupMA120LineChartDataSet(entries: candlestickMALineChartDataEntry(120, candlesticks))
         
+        guard let candlestickChartDataSet = self.candlestickChartDataSet else {
+            return
+        }
         setupTopCombinedChartView(
             candlestickChartDataSet: candlestickChartDataSet,
             candlestickMA5LineChartDataSet: candlestickMA5LineChartDataSet,
@@ -169,12 +182,16 @@ final class SingleChartView: UIView {
             dataXAxisLabel: dataXAxisLabel
         )
         
-        let barChartDataSet = setupBarDataSet(entries: barChartDataEntry, colors: barChartColors)
+        self.barChartDataSet = setupBarDataSet(entries: barChartDataEntry, colors: barChartColors)
         let barMA5LineChartDataSet = setupMA5LineChartDataSet(entries: barMALineChartDataEntry(5, candlesticks))
         let barMA10LineChartDataSet = setupMA10LineChartDataSet(entries: barMALineChartDataEntry(10, candlesticks))
         let barMA20LineChartDataSet = setupMA20LineChartDataSet(entries: barMALineChartDataEntry(20, candlesticks))
         let barMA60LineChartDataSet = setupMA60LineChartDataSet(entries: barMALineChartDataEntry(60, candlesticks))
         let barMA120LineChartDataSet = setupMA120LineChartDataSet(entries: barMALineChartDataEntry(120, candlesticks))
+        
+        guard let barChartDataSet = self.barChartDataSet else {
+            return
+        }
         
         setupBottomCombinedChartView(
             barChartDataSet: barChartDataSet,
@@ -217,8 +234,15 @@ final class SingleChartView: UIView {
         
         topCombinedChartView.moveViewToX(Double(candlestickChartDataEntry.count - 1))
         bottomCombinedChartView.moveViewToX(Double(barChartDataEntry.count - 1))
-        updateTopCombinedChartView()
-        updateBottomCombinedChartView()
+        topCombinedChartView.notifyDataSetChanged()
+        bottomCombinedChartView.notifyDataSetChanged()
+        
+        let recentCandlestick = candlesticks[candlesticks.count - 1]
+        renderLimitLineAndLimitLineLabel(
+            closePrice: recentCandlestick.safeOpenPrice,
+            volume: recentCandlestick.safeTransactionVolume,
+            updownColor: recentCandlestick.updown.color
+        )
     }
     
     private func setupBindings() {
@@ -251,21 +275,81 @@ final class SingleChartView: UIView {
         
         realtimeTicker
             .subscribe(onNext: { realtimeTicker in
+                guard let oldCandlestickChartDataEntry = self.candlestickChartDataEntry.popLast(),
+                      let oldBarChartDataEntry = self.barChartDataEntry.popLast() else {
+                    return
+                }
                 
+                let newCandlestickChartDataEntry = CandleChartDataEntry(
+                    x: oldCandlestickChartDataEntry.x,
+                    shadowH: realtimeTicker.safeHighPrice,
+                    shadowL: realtimeTicker.safeLowPrice,
+                    open: realtimeTicker.safeOpenPrice,
+                    close: realtimeTicker.safeClosePrice
+                )
+                self.candlestickChartDataEntry.append(newCandlestickChartDataEntry)
+                self.candlestickChartDataSet?.replaceEntries(self.candlestickChartDataEntry)
+                
+                let newBarChartDataEntry = BarChartDataEntry(x: oldBarChartDataEntry.x, y: realtimeTicker.safeVolume)
+                self.barChartDataEntry.append(newBarChartDataEntry)
+                self.barChartDataSet?.replaceEntries(self.barChartDataEntry)
+                if var colors = self.barChartDataSet?.colors, !colors.isEmpty {
+                    colors.removeLast()
+                    colors.append(realtimeTicker.updown.color)
+                    self.barChartDataSet?.colors = colors
+                }
+                
+                self.renderLimitLineAndLimitLineLabel(
+                    closePrice: realtimeTicker.safeClosePrice,
+                    volume: realtimeTicker.safeVolume,
+                    updownColor: realtimeTicker.updown.color
+                )
             })
             .disposed(by: disposeBag)
     }
     
-    private func updateTopCombinedChartView() {
-        DispatchQueue.main.async {
-            self.topCombinedChartView.notifyDataSetChanged()
+    private func renderLimitLineAndLimitLineLabel(
+        closePrice: Double,
+        volume: Double,
+        updownColor: UIColor
+    ) {
+        
+        let closePriceLine = ChartLimitLine(limit: closePrice)
+        closePriceLine.lineWidth = 0.5
+        closePriceLine.lineColor = updownColor
+        
+        let volumeLine = ChartLimitLine(limit: volume)
+        volumeLine.lineWidth = 0.5
+        volumeLine.lineColor = updownColor
+        
+        self.topCombinedChartView.rightYAxisRenderer = CustomYxisRenderer(
+            viewPortHandler: self.topCombinedChartView.rightYAxisRenderer.viewPortHandler,
+            yAxis: self.topCombinedChartView.rightAxis,
+            transformer: self.topCombinedChartView.getTransformer(forAxis: .right)
+        )
+        self.bottomCombinedChartView.rightYAxisRenderer = CustomYxisRenderer(
+            viewPortHandler: self.bottomCombinedChartView.rightYAxisRenderer.viewPortHandler,
+            yAxis: self.bottomCombinedChartView.rightAxis,
+            transformer: self.bottomCombinedChartView.getTransformer(forAxis: .right)
+        )
+        
+        if let customYxisRenderer = self.topCombinedChartView.rightYAxisRenderer as? CustomYxisRenderer {
+            customYxisRenderer.limitLineLabelRectColor = updownColor
+            customYxisRenderer.limitLineLabelText = String(closePrice)
         }
-    }
-    
-    private func updateBottomCombinedChartView() {
-        DispatchQueue.main.async {
-            self.bottomCombinedChartView.notifyDataSetChanged()
+        
+        if let customYxisRenderer = self.bottomCombinedChartView.rightYAxisRenderer as? CustomYxisRenderer {
+            customYxisRenderer.limitLineLabelRectColor = updownColor
+            customYxisRenderer.limitLineLabelText = String(volume)
         }
+        
+        self.topCombinedChartView.rightAxis.removeAllLimitLines()
+        self.topCombinedChartView.rightAxis.addLimitLine(closePriceLine)
+        self.topCombinedChartView.notifyDataSetChanged()
+        
+        self.bottomCombinedChartView.rightAxis.removeAllLimitLines()
+        self.bottomCombinedChartView.rightAxis.addLimitLine(volumeLine)
+        self.bottomCombinedChartView.notifyDataSetChanged()
     }
 }
 
@@ -281,7 +365,7 @@ extension SingleChartView {
         dataSet.shadowWidth = 1.0
         dataSet.shadowColorSameAsCandle = true
         dataSet.drawValuesEnabled = false
-        dataSet.highlightColor = .black
+        dataSet.highlightEnabled = false
         dataSet.barSpace = 0.1
         return dataSet
     }
@@ -289,7 +373,7 @@ extension SingleChartView {
     private func setupBarDataSet(entries: [BarChartDataEntry], colors: [UIColor]) -> BarChartDataSet {
         let dataSet = BarChartDataSet(entries: entries, label: "거래량")
         dataSet.drawValuesEnabled = false
-        dataSet.highlightColor = .black
+        dataSet.highlightEnabled = false
         dataSet.colors = colors
         return dataSet
     }
@@ -298,8 +382,10 @@ extension SingleChartView {
         let dataSet = LineChartDataSet(entries: entries, label: "5")
         dataSet.circleRadius = 0
         dataSet.drawCircleHoleEnabled = false
+        dataSet.drawValuesEnabled = false
         dataSet.lineWidth = 0.5
         dataSet.colors = [UIColor.magenta]
+        dataSet.highlightEnabled = false
         return dataSet
     }
     
@@ -307,8 +393,10 @@ extension SingleChartView {
         let dataSet = LineChartDataSet(entries: entries, label: "10")
         dataSet.circleRadius = 0
         dataSet.drawCircleHoleEnabled = false
+        dataSet.drawValuesEnabled = false
         dataSet.lineWidth = 0.5
         dataSet.colors = [UIColor.blue]
+        dataSet.highlightEnabled = false
         return dataSet
     }
     
@@ -316,8 +404,10 @@ extension SingleChartView {
         let dataSet = LineChartDataSet(entries: entries, label: "20")
         dataSet.circleRadius = 0
         dataSet.drawCircleHoleEnabled = false
+        dataSet.drawValuesEnabled = false
         dataSet.lineWidth = 0.5
         dataSet.colors = [UIColor.yellow]
+        dataSet.highlightEnabled = false
         return dataSet
     }
     
@@ -325,8 +415,10 @@ extension SingleChartView {
         let dataSet = LineChartDataSet(entries: entries, label: "60")
         dataSet.circleRadius = 0
         dataSet.drawCircleHoleEnabled = false
+        dataSet.drawValuesEnabled = false
         dataSet.lineWidth = 0.5
         dataSet.colors = [UIColor.orange]
+        dataSet.highlightEnabled = false
         return dataSet
     }
     
@@ -334,8 +426,10 @@ extension SingleChartView {
         let dataSet = LineChartDataSet(entries: entries, label: "120")
         dataSet.circleRadius = 0
         dataSet.drawCircleHoleEnabled = false
+        dataSet.drawValuesEnabled = false
         dataSet.lineWidth = 0.5
         dataSet.colors = [UIColor.lightGray]
+        dataSet.highlightEnabled = false
         return dataSet
     }
     
@@ -402,15 +496,92 @@ extension SingleChartView: ChartViewDelegate {
         let currentMatrix = chartView.viewPortHandler.touchMatrix
         topCombinedChartView.viewPortHandler.refresh(newMatrix: currentMatrix, chart: topCombinedChartView, invalidate: true)
         bottomCombinedChartView.viewPortHandler.refresh(newMatrix: currentMatrix, chart: bottomCombinedChartView, invalidate: true)
-        updateTopCombinedChartView()
-        updateBottomCombinedChartView()
+        topCombinedChartView.notifyDataSetChanged()
+        bottomCombinedChartView.notifyDataSetChanged()
     }
     
     func chartScaled(_ chartView: ChartViewBase, scaleX: CGFloat, scaleY: CGFloat) {
         let currentMatrix = chartView.viewPortHandler.touchMatrix
         topCombinedChartView.viewPortHandler.refresh(newMatrix: currentMatrix, chart: topCombinedChartView, invalidate: true)
         bottomCombinedChartView.viewPortHandler.refresh(newMatrix: currentMatrix, chart: bottomCombinedChartView, invalidate: true)
-        updateTopCombinedChartView()
-        updateBottomCombinedChartView()
+        topCombinedChartView.notifyDataSetChanged()
+        bottomCombinedChartView.notifyDataSetChanged()
+    }
+}
+
+class CustomYxisRenderer: YAxisRenderer {
+    
+    public var limitLineLabelRectColor: UIColor = .systemRed
+    public var limitLineLabelText: String = "0000"
+    
+    override func renderLimitLines(context: CGContext) {
+        
+        guard let yAxis = self.axis as? YAxis, let transformer = self.transformer else {
+            return
+        }
+        
+        let limitLines = yAxis.limitLines
+        
+        if limitLines.count == 0 {
+            return
+        }
+        
+        context.saveGState()
+        
+        let trans = transformer.valueToPixelMatrix
+        
+        var position = CGPoint(x: 0.0, y: 0.0)
+        
+        for idx in 0 ..< limitLines.count {
+            let limitLine = limitLines[idx]
+            
+            if !limitLine.isEnabled {
+                continue
+            }
+            
+            context.saveGState()
+            
+            defer {
+                context.restoreGState()
+            }
+            
+            var clippingRect = viewPortHandler.contentRect
+            clippingRect.origin.y -= limitLine.lineWidth / 2.0
+            clippingRect.size.height += limitLine.lineWidth
+            clippingRect.size.width += 60
+            
+            context.clip(to: clippingRect)
+            
+            position.x = 0.0
+            position.y = CGFloat(limitLine.limit)
+            position = position.applying(trans)
+            
+            context.beginPath()
+            context.move(to: CGPoint(x: viewPortHandler.contentLeft, y: position.y))
+            context.addLine(to: CGPoint(x: viewPortHandler.contentRight, y: position.y))
+
+            context.setStrokeColor(limitLine.lineColor.cgColor)
+            context.setLineWidth(limitLine.lineWidth)
+            context.strokePath()
+            
+            context.setLineWidth(0.5)
+            context.setFillColor(limitLineLabelRectColor.cgColor)
+            context.setStrokeColor(limitLineLabelRectColor.cgColor)
+            context.addRect(CGRect(x: viewPortHandler.contentRight, y: position.y - 6, width: 60, height: 12))
+            context.drawPath(using: .fillStroke)
+            
+            ChartUtils.drawText(
+                context: context,
+                text: limitLineLabelText,
+                point: CGPoint(x: viewPortHandler.contentRight + 5, y: position.y - 6),
+                align: .left,
+                attributes: [
+                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10),
+                    NSAttributedString.Key.foregroundColor: UIColor.white
+                ]
+            )
+        }
+        
+        context.restoreGState()
     }
 }
