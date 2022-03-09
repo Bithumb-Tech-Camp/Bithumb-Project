@@ -49,6 +49,10 @@ extension Coin {
         return "\(self.acronyms)/\(self.currency.rawValue)"
     }
     
+    var orderCurrency: OrderCurrency {
+        return "\(self.acronyms)_\(self.currency.rawValue)"
+    }
+    
     var updateColor: UIColor? {
         if let isHigher = self.isHigher {
             let color: UIColor = isHigher ? .systemRed : .systemBlue

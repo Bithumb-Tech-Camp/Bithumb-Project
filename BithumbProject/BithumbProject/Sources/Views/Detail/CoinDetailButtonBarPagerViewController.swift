@@ -24,6 +24,16 @@ final class CoinDetailButtonBarPagerViewController: ButtonBarPagerTabStripViewCo
     private let defaultTextColor: UIColor = .systemGray
     private let selectedFont: UIFont = .systemFont(ofSize: 14, weight: .medium)
     private let selectedTextColor: UIColor = .black
+    private let viewModel: CoinDetailViewModel
+    
+    init(viewModel: CoinDetailViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         self.setupViews()
@@ -85,10 +95,12 @@ final class CoinDetailButtonBarPagerViewController: ButtonBarPagerTabStripViewCo
     
     override public func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         
-        let httpManager = HTTPManager(provider: MoyaProvider<HTTPService>())
-        let webSocketManager = WebSocketManager()
-        let chartViewModel = ChartViewModel(orderCurrency: "BTC_KRW", httpManager: httpManager, webSocketManager: webSocketManager)
-        var chartViewController = ChartViewController(viewModel: chartViewModel)
+        let chartViewModel = ChartViewModel(
+            coin: viewModel.coin,
+            httpManager: viewModel.httpManager,
+            webSocketManager: viewModel.webSockerManager
+        )
+        let chartViewController = ChartViewController(viewModel: chartViewModel)
         
         return [
             chartViewController

@@ -14,7 +14,7 @@ final class TransactionViewController: UIViewController {
     let viewModel = TransactionViewModel()
     
     let spreadSheetView = SpreadsheetView().then {
-        $0.register(OrderBookCell.self, forCellWithReuseIdentifier: String(describing: OrderBookCell.self))
+        $0.register(TransactionSingleCell.self, forCellWithReuseIdentifier: String(describing: TransactionSingleCell.self))
         $0.bounces = false
         $0.showsHorizontalScrollIndicator = false
     }
@@ -70,7 +70,7 @@ extension TransactionViewController: SpreadsheetViewDataSource {
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
-        let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookCell.self), for: indexPath) as? OrderBookCell
+        let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TransactionSingleCell.self), for: indexPath) as? TransactionSingleCell
         if self.transactionList.count > 20 {
             if indexPath.column == 0 {
                 cell?.label.text = self.transactionList[indexPath.row].transactionDate?.changeDateFormat(from: "YYYY-MM-DD HH:mm:ss", to: "HH:mm:ss") ?? "시간"

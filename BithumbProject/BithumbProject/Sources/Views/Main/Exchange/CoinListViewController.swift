@@ -8,6 +8,7 @@
 import SafariServices
 import UIKit
 
+import Moya
 import RxCocoa
 import RxDataSources
 import RxSwift
@@ -284,6 +285,14 @@ extension CoinListViewController: SpreadsheetViewDataSource {
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
         return 1
     }
+    
+    private func pushToCoinDetailViewController(coin: Coin) {
+        let httpManager = HTTPManager(provider: MoyaProvider<HTTPService>())
+        let wetSocketManager = WebSocketManager()
+        let coinDetailViewModel = CoinDetailViewModel(coin: coin, httpManager: httpManager, webSocketManager: wetSocketManager)
+        let coinDetailViewController = CoinDetailViewController(viewModel: coinDetailViewModel)
+        self.navigationController?.pushViewController(coinDetailViewController, animated: true)
+    }
 }
 
 extension CoinListViewController: SpreadsheetViewDelegate {
@@ -296,6 +305,9 @@ extension CoinListViewController: SpreadsheetViewDelegate {
             } else {
                 target = SortedColumn(column: indexPath.row, sorting: .ascending)
             }
+        } else {
+            let coin = self.viewModel.output.coinList[indexPath.row]
+            self.pushToCoinDetailViewController(coin: coin)
         }
     }
 }

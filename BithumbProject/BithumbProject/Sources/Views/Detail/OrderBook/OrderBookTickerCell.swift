@@ -51,6 +51,10 @@ class OrderBookTickerCell: Cell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        self.separateView.snp.makeConstraints {
+            $0.height.equalTo(0.5)
+        }
+        
         let contentStackView = UIStackView(
             arrangedSubviews: [
                 self.unitsTradedLabel,
@@ -70,8 +74,8 @@ class OrderBookTickerCell: Cell {
         
         contentView.addSubview(contentStackView)
         contentStackView.snp.makeConstraints {
-            $0.leading.equalTo(self.contentView)
-            $0.trailing.equalTo(self.contentView)
+            $0.leading.equalTo(self.contentView).offset(5)
+            $0.trailing.equalTo(self.contentView).offset(-5)
             $0.bottom.equalTo(self.contentView).offset(-5)
         }
     }
@@ -99,12 +103,12 @@ final class LeftTitleLabel: UIView {
     }
     
     private let titleLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .light)
         $0.textColor = .lightGray
         $0.textAlignment = .left
     }
     private let contentLabel = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .light)
         $0.textColor = .lightGray
         $0.numberOfLines = 0
         $0.textAlignment = .right
@@ -120,7 +124,7 @@ final class LeftTitleLabel: UIView {
             ])
             .then {
                 $0.axis = .horizontal
-                $0.alignment = .fill
+                $0.alignment = .top
                 $0.distribution = .fill
                 $0.spacing = 10
             }
@@ -128,8 +132,8 @@ final class LeftTitleLabel: UIView {
         self.addSubview(contentStackView)
         contentStackView.snp.makeConstraints {
             $0.top.equalTo(self)
-            $0.leading.equalTo(self).offset(3)
-            $0.trailing.equalTo(self).offset(-3)
+            $0.leading.equalTo(self)
+            $0.trailing.equalTo(self)
             $0.bottom.equalTo(self)
         }
     }

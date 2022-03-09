@@ -401,9 +401,10 @@ final class ChartViewController: UIViewController, ViewModelBindable {
     
     private func addChartView(candlesticks: [Candlestick]) {
         let currentLayout = self.viewModel.output.option.value.layout
+        let currentOption = self.viewModel.output.option.value
         switch currentLayout {
         case .single:
-            let chartView = SingleChartView(candlesticks: candlesticks)
+            let chartView = SingleChartView(candlesticks: candlesticks, option: currentOption)
             chartView.tag = currentLayout.rawValue
             chartBackgroundView.addSubview(chartView)
         default:

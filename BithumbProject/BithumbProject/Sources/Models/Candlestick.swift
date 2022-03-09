@@ -86,6 +86,28 @@ struct Candlestick {
     var highPrice: String?
     var transactionVolume: String?
     
+    var safeStandardTime: UInt64 {
+        standardTime ?? 0
+    }
+    var safeOpenPrice: Double {
+        Double(openPrice ?? "0") ?? 0
+    }
+    var safeClosePrice: Double {
+        Double(closePrice ?? "0") ?? 0
+    }
+    var safeLowPrice: Double {
+        Double(lowPrice ?? "0") ?? 0
+    }
+    var safeHighPrice: Double {
+        Double(highPrice ?? "0") ?? 0
+    }
+    var safeTransactionVolume: Double {
+        Double(transactionVolume ?? "0") ?? 0
+    }
+    var updown: UpDown {
+        safeOpenPrice <= safeClosePrice ? .up : .down
+    }
+    
     init(
         standardTime: UInt64?,
         openPrice: String?,
