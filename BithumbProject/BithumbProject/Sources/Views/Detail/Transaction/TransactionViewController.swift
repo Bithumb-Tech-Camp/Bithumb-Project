@@ -8,10 +8,9 @@
 import UIKit
 import RxSwift
 import SpreadsheetView
+import XLPagerTabStrip
 
-final class TransactionViewController: UIViewController {
-    var disposeBag: DisposeBag = DisposeBag()
-    let viewModel = TransactionViewModel()
+final class TransactionViewController: UIViewController, ViewModelBindable {
     
     let spreadSheetView = SpreadsheetView().then {
         $0.register(TransactionSingleCell.self, forCellWithReuseIdentifier: String(describing: TransactionSingleCell.self))
@@ -20,9 +19,22 @@ final class TransactionViewController: UIViewController {
     }
     var transactionList: [TransactionHistory] = []
     
+    var disposeBag: DisposeBag = DisposeBag()
+    var viewModel: TransactionViewModel
+    
+    init(viewModel: TransactionViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        bind()
     }
     
     private func configureUI() {
@@ -32,7 +44,9 @@ final class TransactionViewController: UIViewController {
         spreadSheetView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets.zero)
         }
-        
+    }
+    
+    func bind() {
         self.viewModel.output.transactionData
             .map { $0.sorted { $0.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() > $1.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() }}
             .map { [TransactionHistory(transactionDate: "시간", unitsTraded: "체결량(BTC)", price: "가격(KRW)")] + $0 }
@@ -94,5 +108,11 @@ extension TransactionViewController: SpreadsheetViewDataSource {
             }
         }
         return cell
+    }
+}
+
+extension TransactionViewController: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        IndicatorInfo(title: "시세")
     }
 }

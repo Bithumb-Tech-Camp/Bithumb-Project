@@ -10,9 +10,7 @@ import UIKit
 import RxSwift
 import RxDataSources
 
-class TransactionCellViewController: UIViewController {
-    let disposeBag = DisposeBag()
-    let viewModel = TransactionViewModel()
+final class TransactionCellViewController: UIViewController, ViewModelBindable {
     
     let tableView = UITableView().then {
         $0.separatorStyle = .none
@@ -23,10 +21,22 @@ class TransactionCellViewController: UIViewController {
         $0.isScrollEnabled = false
         $0.allowsSelection = false
     }
+    
+    var disposeBag: DisposeBag = DisposeBag()
+    var viewModel: TransactionViewModel
  
+    init(viewModel: TransactionViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
-        bindViewModel()
+        bind()
     }
     
     func setup(to target: UIViewController) {
@@ -51,7 +61,7 @@ class TransactionCellViewController: UIViewController {
         }
     }
     
-    private func bindViewModel() {
+    func bind() {
         viewModel.output.transactionData
             .map { $0.sorted { $0.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() > $1.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() }}
             .map { [TransactionHistory(unitsTraded: "체결량", price: "체결가")] + $0[0..<20] }

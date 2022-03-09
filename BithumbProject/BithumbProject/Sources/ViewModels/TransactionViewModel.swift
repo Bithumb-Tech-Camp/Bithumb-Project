@@ -12,10 +12,6 @@ import Moya
 
 final class TransactionViewModel: ViewModelType {
     
-    var input: Input
-    var output: Output
-    var disposeBag: DisposeBag = DisposeBag()
-
     struct Input {
         let transactionData = PublishRelay<[TransactionHistory]>()
         let realtimeTransationData = PublishRelay<RealtimeTransaction>()
@@ -26,17 +22,17 @@ final class TransactionViewModel: ViewModelType {
         let realtimeTransationData = BehaviorRelay<RealtimeTransaction>(value: RealtimeTransaction())
     }
     
-    init() {
+    var input: Input
+    var output: Output
+    var disposeBag: DisposeBag = DisposeBag()
+    
+    init(coin: Coin, httpManager: HTTPManager, webSocketManager: WebSocketManager) {
         self.input = Input()
         self.output = Output()
         
-        let provider = MoyaProvider<HTTPService>()
-        let httpManager = HTTPManager(provider: provider)
-        let webSocketManager = WebSocketManager()
-        
         let transactionParameter: [String: Any] = [
                "type": BithumbWebSocketRequestType.transaction.rawValue,
-               "symbols": ["BTC_KRW"]
+               "symbols": ["BTC"]
             ]
 
         httpManager.request(httpServiceType: .transactionHistory("BTC"), model: [TransactionHistory].self)

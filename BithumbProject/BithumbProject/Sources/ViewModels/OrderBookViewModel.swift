@@ -12,11 +12,7 @@ import Moya
 import RxOptional
 
 final class OrderBookViewModel: ViewModelType {
-
-    var input: Input
-    var output: Output
-    var disposeBag: DisposeBag = DisposeBag()
-
+    
     struct Input {
         let orderBookData = PublishRelay<OrderBook>()
         let bidList = PublishRelay<[BidAsk]>()
@@ -37,22 +33,22 @@ final class OrderBookViewModel: ViewModelType {
         let closePrice = BehaviorRelay<String>(value: "")
     }
     
-    init() {
+    var input: Input
+    var output: Output
+    var disposeBag: DisposeBag = DisposeBag()
+    
+    init(coin: Coin, httpManager: HTTPManager, webSocketManager: WebSocketManager) {
         self.input = Input()
         self.output = Output()
         
-        let provider = MoyaProvider<HTTPService>()
-        let httpManager = HTTPManager(provider: provider)
-        let webSocketManager = WebSocketManager()
-        
         let orderBookParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.orderBookDepth.rawValue,
-              "symbols": ["BTC_KRW"]
+              "symbols": ["BTC"]
             ]
         
         let tickerParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.ticker.rawValue,
-              "symbols": ["BTC_KRW"],
+              "symbols": ["BTC"],
               "tickTypes": [TickType.oneHour].map { $0.rawValue }
              ]
         
@@ -125,7 +121,6 @@ final class OrderBookViewModel: ViewModelType {
             .withUnretained(output.bidList) {( $0, $1 )}
             .map { self.reflectRealtimeData(previousList: $0.value, realtimeList: $1) }
             .map { $0.sorted { $0.price ?? "" > $1.price ?? "" }}
-//            .map { $0.filter { $0.quantity != "0" } }
             .bind(to: input.bidList)
             .disposed(by: disposeBag)
         
@@ -134,7 +129,6 @@ final class OrderBookViewModel: ViewModelType {
             .withUnretained(output.askList) {( $0, $1 )}
             .map { self.reflectRealtimeData(previousList: $0.value, realtimeList: $1) }
             .map { $0.sorted { $0.price ?? "" > $1.price ?? "" }}
-//            .map { $0.filter { $0.quantity != "0" } }
             .bind(to: input.askList)
             .disposed(by: disposeBag)
     }
