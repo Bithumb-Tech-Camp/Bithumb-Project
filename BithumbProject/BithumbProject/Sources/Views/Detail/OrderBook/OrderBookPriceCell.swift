@@ -15,6 +15,7 @@ class OrderBookPriceCell: Cell {
     let priceLabel = UILabel().then {
         $0.textColor = .black
         $0.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        $0.textAlignment = .right
     }
     
     let percentLabel = UILabel().then {

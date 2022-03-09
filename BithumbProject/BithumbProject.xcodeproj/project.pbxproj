@@ -79,6 +79,7 @@
 		E592A96A27D5362A008BE814 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A96927D5362A008BE814 /* Color+Extension.swift */; };
 		E592A97227D64B08008BE814 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A97127D64B08008BE814 /* Data.swift */; };
 		E5B13FF127D7E23D00288641 /* TransactionSingleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B13FF027D7E23D00288641 /* TransactionSingleCell.swift */; };
+		E5B13FF327D8CDB500288641 /* OrderBookQuantityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B13FF227D8CDB500288641 /* OrderBookQuantityCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +181,7 @@
 		E592A96927D5362A008BE814 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		E592A97127D64B08008BE814 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		E5B13FF027D7E23D00288641 /* TransactionSingleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSingleCell.swift; sourceTree = "<group>"; };
+		E5B13FF227D8CDB500288641 /* OrderBookQuantityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookQuantityCell.swift; sourceTree = "<group>"; };
 		ECEC5EB2399A967136BEEFBB /* Pods-BithumbProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BithumbProjectTests.debug.xcconfig"; path = "Target Support Files/Pods-BithumbProjectTests/Pods-BithumbProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -459,6 +461,7 @@
 				E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */,
 				E592A95C27D10E08008BE814 /* OrderBookTransactionCell.swift */,
 				E592A96227D335AE008BE814 /* TransactionSmallCell.swift */,
+				E5B13FF227D8CDB500288641 /* OrderBookQuantityCell.swift */,
 			);
 			path = OrderBook;
 			sourceTree = "<group>";
@@ -765,6 +768,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5B13FF327D8CDB500288641 /* OrderBookQuantityCell.swift in Sources */,
 				03C4743127D18A1A002AC4D2 /* CoinCell.swift in Sources */,
 				1C9CFE2A27C7C8F200647FCE /* NetworkError.swift in Sources */,
 				E592A96A27D5362A008BE814 /* Color+Extension.swift in Sources */,
