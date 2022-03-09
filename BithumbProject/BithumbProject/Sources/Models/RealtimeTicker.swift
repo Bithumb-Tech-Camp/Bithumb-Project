@@ -5,11 +5,15 @@
 //  Created by 최다빈 on 2022/02/23.
 //
 
-import Foundation
+import UIKit
 
 enum UpDown {
     case up
     case down
+    
+    var color: UIColor {
+        self == .up ? .systemRed : .systemBlue
+    }
 }
 
 struct RealtimeTicker: Codable {
@@ -29,6 +33,31 @@ struct RealtimeTicker: Codable {
     var changeRate: String?
     var changeAmount: String?
     var volumePower: String?
+    
+    var safeOpenPrice: Double {
+        Double(openPrice ?? "0") ?? 0
+    }
+    var safeClosePrice: Double {
+        Double(closePrice ?? "0") ?? 0
+    }
+    var safeLowPrice: Double {
+        Double(lowPrice ?? "0") ?? 0
+    }
+    var safeHighPrice: Double {
+        Double(highPrice ?? "0") ?? 0
+    }
+    var safeChangeRate: Double {
+        Double(changeRate ?? "0") ?? 0
+    }
+    var safeChangeAmount: Double {
+        Double(changeAmount ?? "0") ?? 0
+    }
+    var safeVolume: Double {
+        Double(volume ?? "0") ?? 0
+    }
+    var updown: UpDown {
+        safeOpenPrice <= safeClosePrice ? .up : .down
+    }
     
     enum CodingKeys: String, CodingKey {
         case symbol
