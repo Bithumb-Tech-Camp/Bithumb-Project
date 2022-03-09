@@ -31,15 +31,21 @@ final class CoinDetailViewModel: ViewModelType {
     
     let input: Input
     let output: Output
+    var httpManager: HTTPManager
+    var coin: Coin
+    var webSockerManager: WebSocketManager
     var disposeBag: DisposeBag = DisposeBag()
     
-    init(orderCurrency: OrderCurrency, httpManager: HTTPManager, webSocketManager: WebSocketManager) {
+    init(coin: Coin, httpManager: HTTPManager, webSocketManager: WebSocketManager) {
         self.input = Input()
         self.output = Output()
+        self.coin = coin
+        self.httpManager = httpManager
+        self.webSockerManager = webSocketManager
         
         input.fetchTicker
             .flatMap { _ -> Observable<Ticker> in
-                httpManager.request(httpServiceType: .ticker(orderCurrency), model: Ticker.self)
+                httpManager.request(httpServiceType: .ticker(coin.orderCurrency), model: Ticker.self)
             }
             .subscribe(onNext: { ticker in
                 let changeAmountSign = Double(ticker.fluctate24H ?? "0") ?? 0 >= 0 ? "+" : ""
@@ -60,7 +66,7 @@ final class CoinDetailViewModel: ViewModelType {
             .flatMap { _ -> Observable<RealtimeTicker> in
                 let parameter: [String: Any] = [
                     "type": BithumbWebSocketRequestType.ticker.rawValue,
-                    "symbols": [orderCurrency],
+                    "symbols": [coin.orderCurrency],
                     "tickTypes": [TickType.thirtyMinute].map { $0.rawValue }
                 ]
                 return webSocketManager.requestRealtime(parameter: parameter, type: RealtimeTicker.self)

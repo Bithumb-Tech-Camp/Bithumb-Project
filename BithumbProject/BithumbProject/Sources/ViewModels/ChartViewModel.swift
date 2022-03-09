@@ -33,15 +33,15 @@ final class ChartViewModel: ViewModelType {
     var output: Output
     var disposeBag: DisposeBag = DisposeBag()
     
-    init(orderCurrency: OrderCurrency, httpManager: HTTPManager, webSocketManager: WebSocketManager) {
+    init(coin: Coin, httpManager: HTTPManager, webSocketManager: WebSocketManager) {
         self.input = Input()
         self.output = Output()
         
         input.changeOption = BehaviorSubject<ChartOption>(
-            value: ChartOption(orderCurrency: orderCurrency, interval: .day, layout: .single)
+            value: ChartOption(orderCurrency: coin.orderCurrency, interval: .day, layout: .single)
         )
         output.option = BehaviorRelay<ChartOption>(
-            value: ChartOption(orderCurrency: orderCurrency, interval: .day, layout: .single)
+            value: ChartOption(orderCurrency: coin.orderCurrency, interval: .day, layout: .single)
         )
         
         Observable.combineLatest(input.fetchCandlestick, input.changeOption)
@@ -71,7 +71,7 @@ final class ChartViewModel: ViewModelType {
                 let parameter: [String: Any] = [
                     "type": BithumbWebSocketRequestType.ticker.rawValue,
                     "symbols": [option.orderCurrency],
-                    "tickTypes": [TickType.thirtyMinute].map { $0.rawValue }
+                    "tickTypes": [TickType(rawValue: option.interval.toAPI)].compactMap { $0?.rawValue }
                 ]
                 return webSocketManager.requestRealtime(parameter: parameter, type: RealtimeTicker.self)
             }
