@@ -404,10 +404,6 @@
 				DA12008027D7A06F00FF3FE5 /* ChangeRateCell.swift */,
 				03C4744227D2DF39002AC4D2 /* TransactionCell.swift */,
 				03C4744A27D39E73002AC4D2 /* StarCell.swift */,
-				03C4744827D396FC002AC4D2 /* StarButton.swift */,
-				03C4743827D1BBF3002AC4D2 /* ButtonBarController.swift */,
-				03C4743427D19184002AC4D2 /* ButtonBarCollectionView.swift */,
-				03C4743627D1AE1B002AC4D2 /* ButtonBarCell.swift */,
 				03F2EC8D27D0726E00CEC21E /* ChangeRateSettingViewController.swift */,
 				249C3E7A27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift */,
 				249C3E7827D0A9250069E131 /* PeriodCell.swift */,
@@ -421,6 +417,18 @@
 				DA4E75BA27D7AFFA006A5C86 /* HoldingsViewController.swift */,
 			);
 			path = Holdings;
+			sourceTree = "<group>";
+		};
+		DA4E75BF27D839C3006A5C86 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				03C4743827D1BBF3002AC4D2 /* ButtonBarController.swift */,
+				03C4743427D19184002AC4D2 /* ButtonBarCollectionView.swift */,
+				03C4743627D1AE1B002AC4D2 /* ButtonBarCell.swift */,
+				DA4E75B827D7AE84006A5C86 /* MainTabBarController.swift */,
+				03C4744827D396FC002AC4D2 /* StarButton.swift */,
+			);
+			path = CustomView;
 			sourceTree = "<group>";
 		};
 		E592A91B27C672E8008BE814 /* Models */ = {
@@ -449,9 +457,9 @@
 		E592A96B27D649CA008BE814 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				DA4E75B827D7AE84006A5C86 /* MainTabBarController.swift */,
 				DA4E75B627D7ADFD006A5C86 /* Exchange */,
 				DA4E75B727D7AE4C006A5C86 /* Holdings */,
+				DA4E75BF27D839C3006A5C86 /* CustomView */,
 			);
 			path = Main;
 			sourceTree = "<group>";

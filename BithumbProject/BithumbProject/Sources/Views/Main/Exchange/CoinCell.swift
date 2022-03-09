@@ -27,13 +27,11 @@ final class CoinCell: Cell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.configureUI()
         self.makeConstraints()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.configureUI()
         self.makeConstraints()
     }
     
@@ -55,15 +53,21 @@ final class CoinCell: Cell {
             make.centerY.equalToSuperview()
         }
     }
-    
-    private func configureUI() {
-        self.contentView.backgroundColor = .white
-    }
 }
 
 extension CoinCell {
     func rendering(_ coin: Coin) {
         self.nameLabel.text = coin.krName
         self.symbolLabel.text = coin.symbol
+        if let isHigher = coin.isHigher {
+            let changeBackColor: UIColor = isHigher ? .systemRed : .systemBlue
+            UIView.animate(withDuration: 0.2) {
+                self.contentView.backgroundColor = changeBackColor.withAlphaComponent(0.1)
+            } completion: { _ in
+                self.contentView.backgroundColor = .systemBackground
+            }
+        } else {
+            self.contentView.backgroundColor = .systemBackground
+        }
     }
 }

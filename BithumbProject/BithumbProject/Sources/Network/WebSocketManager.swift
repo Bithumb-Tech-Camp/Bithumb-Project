@@ -37,6 +37,7 @@ final class WebSocketManager: WebSocketService {
             guard let self = self else {
                 return Disposables.create()
             }
+            print(parameter)
             self.response
                 .subscribe(onNext: { event in
                     switch event {

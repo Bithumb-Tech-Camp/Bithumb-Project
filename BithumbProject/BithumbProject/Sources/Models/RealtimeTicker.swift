@@ -58,6 +58,7 @@ extension RealtimeTicker {
         let amount = Double(self.changeAmount ?? "") ?? 0
         let changeRate = ChangeRate(rate: rate, amount: amount)
         let transaction = Double(self.value ?? "") ?? 0.0
-        return .init(acronyms: acronyms, currency: .KRW, ticker: ticker, changeRate: changeRate, transaction: transaction)
+        let tickType = ChangeRatePeriod(rawValue: self.tickType ?? "") ?? .MID
+        return .init(acronyms: acronyms, currency: .KRW, ticker: ticker, changeRate: changeRate, transaction: transaction, tickType: tickType)
     }
 }

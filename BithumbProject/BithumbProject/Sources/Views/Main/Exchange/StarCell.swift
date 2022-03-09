@@ -19,7 +19,6 @@ final class StarCell: Cell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.configureUI()
         self.makeConstraints()
     }
     
@@ -30,8 +29,19 @@ final class StarCell: Cell {
             make.centerY.centerX.equalToSuperview()
         }
     }
-    
-    private func configureUI() {
-        self.contentView.backgroundColor = .white
+}
+
+extension StarCell {
+    func rendering(_ coin: Coin) {
+        if let isHigher = coin.isHigher {
+            let changeBackColor: UIColor = isHigher ? .systemRed : .systemBlue
+            UIView.animate(withDuration: 0.2) {
+                self.contentView.backgroundColor = changeBackColor.withAlphaComponent(0.1)
+            } completion: { _ in
+                self.contentView.backgroundColor = .systemBackground
+            }
+        } else {
+            self.contentView.backgroundColor = .systemBackground
+        }
     }
 }

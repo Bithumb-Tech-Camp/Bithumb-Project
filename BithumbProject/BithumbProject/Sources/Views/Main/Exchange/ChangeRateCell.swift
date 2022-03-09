@@ -29,13 +29,11 @@ final class ChangeRateCell: Cell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.configureUI()
         self.makeConstraints()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.configureUI()
         self.makeConstraints()
     }
     
@@ -57,10 +55,6 @@ final class ChangeRateCell: Cell {
             make.centerY.equalToSuperview()
         }
     }
-    
-    private func configureUI() {
-        self.contentView.backgroundColor = .white
-    }
 }
 
 extension ChangeRateCell {
@@ -71,6 +65,17 @@ extension ChangeRateCell {
         self.changeRateLabel.textColor = changeRateColor
         self.changeAmountLabel.text = changeRatePrefix + coin.changeRate.amount.changeRateDecimal
         self.changeAmountLabel.textColor = changeRateColor
+        
+        if let isHigher = coin.isHigher {
+            let changeBackColor: UIColor = isHigher ? .systemRed : .systemBlue
+            UIView.animate(withDuration: 0.2) {
+                self.contentView.backgroundColor = changeBackColor.withAlphaComponent(0.1)
+            } completion: { _ in
+                self.contentView.backgroundColor = .systemBackground
+            }
+        } else {
+            self.contentView.backgroundColor = .systemBackground
+        }
         
     }
 }

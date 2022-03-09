@@ -76,7 +76,7 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         
         // output
         self.viewModel.output.coinListUpdate = {
-            print("wfwef")
+            print("reloadData")
             self.coinSpreadsheetView.reloadData()
         }
         
@@ -148,9 +148,9 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
 extension CoinListViewController: SpreadsheetViewDataSource {
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
-        
-        let coin = self.viewModel.output.coinList[indexPath.row]
-        print(coin)
+        let dummyCoin = Coin.init(ticker: 0.0, changeRate: ChangeRate(rate: 0.0, amount: 0.0), transaction: 0.0)
+        let validCoinList = [dummyCoin] + self.viewModel.output.coinList
+        let coin = validCoinList[indexPath.row]
         
         if indexPath.row == 0 {
             let cell = spreadsheetView.dequeueReusableCell(
@@ -231,6 +231,7 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+            cell?.rendering(coin)
 
             return cell
         }
@@ -277,15 +278,11 @@ extension CoinListViewController: SpreadsheetViewDataSource {
     }
     
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
-        return self.viewModel.output.coinList.count
+        return self.viewModel.output.coinList.count + 1
     }
     
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
-        if viewModel.output.coinList.isEmpty {
-            return 0
-        } else {
-            return 1
-        }
+        return 1
     }
 }
 
