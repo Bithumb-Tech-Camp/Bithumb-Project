@@ -16,82 +16,132 @@ final class CoinListViewModel: ViewModelType {
     struct Input {
         let inputQuery = PublishRelay<String>()
         let searchButtonClicked = PublishRelay<Void>()
-        // 이 세가지 기본 옵션을 UserDefault에서 받아오기
-        let selectedSortedColumn = BehaviorRelay<SortedColumn>(value: .init(column: 0, sorting: .ascending))
-        let selectedCoinListType = BehaviorRelay<CoinListType>(value: .KRW)
-        let selectedChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .MID)
+        let coinList = PublishRelay<[Coin]>()
+        let selectedSortedColumn = PublishRelay<SortedColumn>()
+        let selectedCoinListType = PublishRelay<CoinListType>()
+        let selectedChangeRatePeriod = PublishRelay<ChangeRatePeriod>()
     }
     
     struct Output {
-        var update: (() -> Void)?
-        let headerList: [SortedColumn]
+        var coinListUpdate: (() -> Void)?
         var coinList = [Coin]()
-        let requestList = BehaviorRelay<[CoinListType]>(value: CoinListType.allCases)
-        let changeRatePeriodList = BehaviorRelay<[ChangeRatePeriod]>(value: ChangeRatePeriod.allCases)
-        let currentChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .MID)
+        let currentSortedColumn = BehaviorRelay<SortedColumn>(value: .init(column: 3, sorting: .descending))
+        
+        // 이 두 가지 기본 옵션을 UserDefault에서 받아오기
+        let currentCoinListType = BehaviorRelay<CoinListType>(value: .popularity)
+        let currentChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .day)
     }
     
     var input: Input
     var output: Output
     var disposeBag = DisposeBag()
-    let coinListService: CoinListService
+    let httpManager: HTTPManager
+    let webSocketManager: WebSocketManager
     
-    private let sortedColums: [SortedColumn] = (0...4).map { .init(column: $0) }
-    
-    init(coinListService: CoinListService) {
+    init(httpManager: HTTPManager,
+         webSocketManager: WebSocketManager) {
         self.input = Input()
-        self.output = Output(headerList: self.sortedColums)
-        self.coinListService = coinListService
+        self.output = Output()
+        self.httpManager = httpManager
+        self.webSocketManager = webSocketManager
+        self.inoutBinding()
         
-        self.inputBinding(self.input)
-        self.outputBinding(self.output)
+        let httpObservable = httpManager.request(httpServiceType: .ticker("All"), model: [String: TickerString].self)
+            .map({ $0.compactMap { acronyms, ticker -> Coin? in
+                switch ticker {
+                case .string:
+                    return nil
+                case .ticker(let newTicker):
+                    let coin = newTicker.toDomain()
+                    coin.krName = "\(acronyms)코인"
+                    coin.acronyms = acronyms
+                    return coin
+                }
+            }})
         
-        Observable.combineLatest(
-            self.input.selectedCoinListType,
-            self.input.selectedChangeRatePeriod,
-            self.input.selectedSortedColumn)
-            .flatMap { [weak self] type, period, standard -> Observable<[Coin]> in
-                guard let self = self else {
-                    return .empty()
-                }
-                return self.coinListService.fetchCoinList(type, period)
-                    .map { self.sort(coinList: $0, by: standard) }
-            }
-            .bind(onNext: { [weak self] coinList in
-                self?.output.coinList = coinList
-                if let update = self?.output.update {
-                    update()
-                }
+//        Observable.combineLatest(
+//            self.output.currentCoinListType.map { $0.query },
+//            self.output.currentChangeRatePeriod.map { [$0.rawValue] })
+//        map { self.httpManager.request(httpServiceType: .ticker($0), model: [String: TickerString].self)}
+        
+        httpObservable
+            .withLatestFrom(self.output.currentSortedColumn) { ($0, $1) }
+            .map { self.sort(coinList: $0, by: $1) }
+            .subscribe(onNext: { coinList in
+                self.input.coinList.accept(coinList)
             })
             .disposed(by: self.disposeBag)
+        
+        let tickerParameter: [String: Any] = [
+            "type": BithumbWebSocketRequestType.ticker.rawValue,
+            "symbols": ["BTC_KRW", "ETH_KRW", "YFI_KRW"], // 모든 값을 가져오거나 내가 관심있는 값을 가져오도록 구현
+            "tickTypes": [self.output.currentChangeRatePeriod.value.param]// 모든 값
+        ]
+        
+        webSocketManager.requestRealtime(parameter: tickerParameter, type: RealtimeTicker.self)
+            .map { [$0.toDomain()] }
+            .withLatestFrom(self.input.coinList) { ($0, $1) }
+            .map { self.updateCoinList($1, $0) }
+            .bind(to: self.input.coinList)
+            .disposed(by: self.disposeBag)
+        
     }
     
-    func inputBinding(_ event: Input) {
-        event.selectedChangeRatePeriod
+    func inoutBinding() {
+        self.input.selectedChangeRatePeriod
             .bind(onNext: { period in
-                // 이렇게 바로 바인딩 하지 않고 Service 단에 들어갔다가 output에서 나오도록 구현
                 self.output.currentChangeRatePeriod.accept(period)
             })
             .disposed(by: self.disposeBag)
         
-        event.searchButtonClicked
-            .withLatestFrom(event.inputQuery)
+        self.input.selectedCoinListType
+            .bind(onNext: { coinListType in
+                self.output.currentCoinListType.accept(coinListType)
+            })
+            .disposed(by: self.disposeBag)
+        
+        self.input.selectedSortedColumn
+            .bind(to: self.output.currentSortedColumn)
+            .disposed(by: self.disposeBag)
+        
+        self.input.searchButtonClicked
+            .withLatestFrom(self.input.inputQuery)
             .bind(onNext: { query in
                 // 검색 쿼리 서버로 연동
                 print(query)
             })
             .disposed(by: self.disposeBag)
         
-        event.selectedCoinListType
-            .bind(onNext: { coinListType in
-                // 쿼리를 날려서 데이터 받아오기
-//                print(coinListType.rawValue)
+        self.input.coinList
+            .bind(onNext: { coinList in
+                self.output.coinList = coinList
+                if let coinListUpdate = self.output.coinListUpdate {
+                    coinListUpdate()
+                }
             })
+            .disposed(by: self.disposeBag)
+        
+        self.output.currentSortedColumn
+            .withLatestFrom(self.input.coinList) { ($0, $1) }
+            .map { self.sort(coinList: $1, by: $0) }
+            .bind(to: self.input.coinList)
             .disposed(by: self.disposeBag)
     }
     
-    func outputBinding(_ event: Output) {
-        
+    func updateCoinList(_ previousList: [Coin], _ afterList: [Coin]) -> [Coin] {
+        var previous = previousList
+        afterList.forEach { realtime in
+            if let index = previous.firstIndex(where: { coin in
+                coin.isHigher = nil
+                return coin == realtime
+            }) {
+                let isHigher = realtime > previous[index] ? true : false
+                previous.remove(at: index)
+                previous.insert(realtime, at: index)
+                previous[index].isHigher = isHigher
+            }
+        }
+        return previous
     }
     
     func sort(coinList: [Coin], by standard: SortedColumn) -> [Coin] {

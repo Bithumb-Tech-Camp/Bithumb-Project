@@ -16,7 +16,6 @@ import SnapKit
 import SpreadsheetView
 import Then
 
-#warning("Constant 관리 필요")
 final class CoinListViewController: UIViewController, ViewModelBindable {
     
     // MARK: - View Properties
@@ -37,11 +36,13 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         $0.tintColor = .black
     }
     
+    private let headerList: [SortedColumn] = (0...4).map { .init(column: $0) }
+    
     private let coinSpreadsheetView = SpreadsheetView().then {
         $0.register(TitleCell.self, forCellWithReuseIdentifier: String(describing: TitleCell.self))
         $0.register(CoinCell.self, forCellWithReuseIdentifier: String(describing: CoinCell.self))
         $0.register(TickerCell.self, forCellWithReuseIdentifier: String(describing: TickerCell.self))
-        // $0.register(ChangeRateCell.self, forCellWithReuseIdentifier: String(describing: ChangeRateCell.self))
+        $0.register(ChangeRateCell.self, forCellWithReuseIdentifier: String(describing: ChangeRateCell.self))
         $0.register(TransactionCell.self, forCellWithReuseIdentifier: String(describing: TransactionCell.self))
         $0.register(StarCell.self, forCellWithReuseIdentifier: String(describing: StarCell.self))
     }
@@ -75,8 +76,9 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
     func bind() {
         
         // output
-        self.viewModel.output.update = {[weak self] in
-            self?.coinSpreadsheetView.reloadData()
+        self.viewModel.output.coinListUpdate = {
+            print("reloadData")
+            self.coinSpreadsheetView.reloadData()
         }
         
         // input
@@ -147,15 +149,16 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
 extension CoinListViewController: SpreadsheetViewDataSource {
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
-        
-        let coin = self.viewModel.output.coinList[indexPath.row]
+        let dummyCoin = Coin.init(ticker: 0.0, changeRate: ChangeRate(rate: 0.0, amount: 0.0), transaction: 0.0)
+        let validCoinList = [dummyCoin] + self.viewModel.output.coinList
+        let coin = validCoinList[indexPath.row]
         
         if indexPath.row == 0 {
             let cell = spreadsheetView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: TitleCell.self),
                 for: indexPath) as? TitleCell
             
-            let target = self.viewModel.output.headerList[indexPath.column]
+            let target = headerList[indexPath.column]
             cell?.sortTypeLabel.text = target.name + target.sorting.symbol
             cell?.borders.top = .none
             cell?.borders.left = .none
@@ -197,17 +200,17 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             
             return cell
         } else if indexPath.column == 2 {
-            //            let cell = spreadsheetView.dequeueReusableCell(
-            //                withReuseIdentifier: String(describing: ChangeRateCell.self),
-            //                for: indexPath) as? ChangeRateCell
-            //
-            //            cell?.borders.top = .none
-            //            cell?.borders.left = .none
-            //            cell?.borders.right = .none
-            //            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
-            //            cell?.rendering(coin)
-            //
-            return nil
+            let cell = spreadsheetView.dequeueReusableCell(
+                withReuseIdentifier: String(describing: ChangeRateCell.self),
+                for: indexPath) as? ChangeRateCell
+
+            cell?.borders.top = .none
+            cell?.borders.left = .none
+            cell?.borders.right = .none
+            cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+            cell?.rendering(coin)
+            
+            return cell
         } else if indexPath.column == 3 {
             let cell = spreadsheetView.dequeueReusableCell(
                 withReuseIdentifier: String(describing: TransactionCell.self),
@@ -229,7 +232,8 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
-            
+            cell?.rendering(coin)
+
             return cell
         }
         return nil
@@ -275,7 +279,7 @@ extension CoinListViewController: SpreadsheetViewDataSource {
     }
     
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
-        return self.viewModel.output.coinList.count
+        return self.viewModel.output.coinList.count + 1
     }
     
     func frozenRows(in spreadsheetView: SpreadsheetView) -> Int {
@@ -294,7 +298,7 @@ extension CoinListViewController: SpreadsheetViewDataSource {
 extension CoinListViewController: SpreadsheetViewDelegate {
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            var target = self.viewModel.output.headerList[indexPath.column]
+            var target = self.headerList[indexPath.column]
             if target.column == indexPath.column {
                 target.toggling(indexPath.column)
                 self.viewModel.input.selectedSortedColumn.accept(target)

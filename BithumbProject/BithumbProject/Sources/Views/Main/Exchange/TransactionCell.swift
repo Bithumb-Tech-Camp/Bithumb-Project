@@ -23,7 +23,6 @@ final class TransactionCell: Cell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.configureUI()
         self.makeConstraints()
     }
     
@@ -31,18 +30,25 @@ final class TransactionCell: Cell {
       
         self.contentView.addSubview(self.transactionLabel)
         self.transactionLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview()
             make.centerY.equalToSuperview()
         }
-    }
-    
-    private func configureUI() {
-        self.contentView.backgroundColor = .white
     }
 }
 
 extension TransactionCell {
     func rendering(_ coin: Coin) {
-        self.transactionLabel.text = String(describing: coin.transaction)
+        self.transactionLabel.text = coin.transaction.transactionDecimal
+        if let isHigher = coin.isHigher {
+            let changeBackColor: UIColor = isHigher ? .systemRed : .systemBlue
+            UIView.animate(withDuration: 0.2) {
+                self.contentView.backgroundColor = changeBackColor.withAlphaComponent(0.1)
+            } completion: { _ in
+                self.contentView.backgroundColor = .systemBackground
+            }
+        } else {
+            self.contentView.backgroundColor = .systemBackground
+        }
     }
 }

@@ -13,23 +13,25 @@ final class Coin {
         case KRW
         case BTC
     }
-    let krName: String
-    let acronyms: String
+    var krName: String
+    var acronyms: String
     var currency: Currency
     var ticker: Double
     var changeRate: ChangeRate
     var transaction: Double
     var isStarred: Bool
-    var isHigher: Bool
+    var isHigher: Bool?
+    var tickType: ChangeRatePeriod
     
-    init(krName: String,
-         acronyms: String,
+    init(krName: String = "비트코인",
+         acronyms: String = "BTC",
          currency: Currency = .KRW,
          ticker: Double,
          changeRate: ChangeRate,
          transaction: Double,
          isStarred: Bool = false,
-         isHigher: Bool = false) {
+         isHigher: Bool? = nil,
+         tickType: ChangeRatePeriod = .MID) {
         self.krName = krName
         self.acronyms = acronyms
         self.currency = currency
@@ -38,6 +40,7 @@ final class Coin {
         self.transaction = transaction
         self.isStarred = isStarred
         self.isHigher = isHigher
+        self.tickType = tickType
     }
 }
 
@@ -50,18 +53,19 @@ extension Coin {
         return "\(self.acronyms)_\(self.currency.rawValue)"
     }
     
-    var updateColor: UIColor {
-        if self.isHigher {
-            return .systemRed
+    var updateColor: UIColor? {
+        if let isHigher = self.isHigher {
+            let color: UIColor = isHigher ? .systemRed : .systemBlue
+            return color
         } else {
-            return .systemBlue
+            return nil
         }
     }
 }
 
 extension Coin: Equatable {
     static func == (lhs: Coin, rhs: Coin) -> Bool {
-        return lhs.acronyms == rhs.acronyms && lhs.krName == rhs.krName
+        return lhs.acronyms == rhs.acronyms
     }
 }
 

@@ -13,4 +13,34 @@ enum ChangeRatePeriod: String, CaseIterable {
     case halfDay = "12시간"
     case hour = "1시간"
     case halfHour = "30분"
+    
+    var param: String {
+        switch self {
+        case .MID:
+            return "MID"
+        case .day:
+            return "24H"
+        case .halfDay:
+            return "12H"
+        case .hour:
+            return "1H"
+        case .halfHour:
+            return "30M"
+        }
+    }
+}
+
+extension ChangeRatePeriod: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        switch (lhs, rhs) {
+        case (.MID, .MID),
+            (.day, .day),
+            (.halfDay, .halfDay),
+            (.hour, .hour),
+            (.halfHour, .halfHour):
+            return true
+        default:
+            return false
+        }
+    }
 }

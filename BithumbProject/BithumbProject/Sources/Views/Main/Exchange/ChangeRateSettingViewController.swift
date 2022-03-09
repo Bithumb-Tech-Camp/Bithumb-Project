@@ -33,6 +33,8 @@ class ChangeRateSettingViewController: UIViewController, ViewModelBindable {
         $0.separatorStyle = .none
     }
     
+    private let changeRatePeriodList: [ChangeRatePeriod] = ChangeRatePeriod.allCases
+    
     var viewModel: CoinListViewModel
     var disposeBag: DisposeBag = DisposeBag()
     
@@ -53,11 +55,6 @@ class ChangeRateSettingViewController: UIViewController, ViewModelBindable {
     }
     
     func bind() {
-        
-        self.viewModel.output.changeRatePeriodList
-            .map { [SectionModel.init(model: 0, items: $0)] }
-            .bind(to: self.periodTableView.rx.items(dataSource: self.createDataSource()))
-            .disposed(by: self.disposeBag)
         
         self.periodTableView.rx.modelSelected(ChangeRatePeriod.self)
             .withUnretained(self)
@@ -109,8 +106,12 @@ class ChangeRateSettingViewController: UIViewController, ViewModelBindable {
     
     private func configureUI() {
         self.view.backgroundColor = .systemBackground
+        
+        Observable.of(self.changeRatePeriodList)
+            .map { [SectionModel.init(model: 0, items: $0)] }
+            .bind(to: self.periodTableView.rx.items(dataSource: self.createDataSource()))
+            .disposed(by: self.disposeBag)
     }
-
 }
 
 extension ChangeRateSettingViewController: PanModalPresentable {

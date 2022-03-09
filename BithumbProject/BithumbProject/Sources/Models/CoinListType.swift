@@ -20,7 +20,18 @@ enum CoinListType: String, CaseIterable {
         case .favorite:
             return "All"
         case .popularity:
-            return "My"
+            return "BTC_KRW"// UserDefault로 변경
+        }
+    }
+    
+    var row: Int {
+        switch self {
+        case .KRW:
+            return 0
+        case .popularity:
+            return 1
+        case .favorite:
+            return 2
         }
     }
 }

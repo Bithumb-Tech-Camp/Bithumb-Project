@@ -36,3 +36,14 @@ struct Ticker: Codable {
         case date
     }
 }
+
+extension Ticker {
+    func toDomain() -> Coin {
+        let ticker = Double(self.closingPrice ?? "") ?? 0.0
+        let rate = Double(self.fluctateRate24H ?? "") ?? 0.0
+        let amount = Double(self.fluctate24H ?? "") ?? 0
+        let changeRate = ChangeRate(rate: rate, amount: amount)
+        let transaction = Double(self.accTradeValue24H ?? "") ?? 0.0
+        return .init(ticker: ticker, changeRate: changeRate, transaction: transaction)
+    }
+}

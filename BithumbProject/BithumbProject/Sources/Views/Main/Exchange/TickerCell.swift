@@ -23,7 +23,6 @@ final class TickerCell: Cell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.configureUI()
         self.makeConstraints()
     }
     
@@ -35,14 +34,22 @@ final class TickerCell: Cell {
             make.centerY.equalToSuperview()
         }
     }
-    
-    private func configureUI() {
-        self.contentView.backgroundColor = .white
-    }
 }
 
 extension TickerCell {
     func rendering(_ coin: Coin) {
-        self.tickerLabel.text = String(describing: coin.ticker)
+        self.tickerLabel.text = coin.ticker.tickerDecimal
+        
+        if let isHigher = coin.isHigher {
+            let changeBackColor: UIColor = isHigher ? .systemRed : .systemBlue
+            self.tickerLabel.textColor = changeBackColor
+            UIView.animate(withDuration: 0.2) {
+                self.contentView.backgroundColor = changeBackColor.withAlphaComponent(0.1)
+            } completion: { _ in
+                self.contentView.backgroundColor = .systemBackground
+            }
+        } else {
+            self.contentView.backgroundColor = .systemBackground
+        }
     }
 }

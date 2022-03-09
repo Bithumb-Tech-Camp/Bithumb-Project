@@ -9,6 +9,7 @@ import UIKit
 
 import RxCocoa
 import RxSwift
+import RxViewController
 
 final class ButtonBarController: UIViewController, ViewModelBindable {
     
@@ -57,6 +58,8 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
         }
     }
     
+    public var requestList: [CoinListType] = CoinListType.allCases
+    
     // MARK: - Private View Properties
     private let flowLayout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
@@ -96,8 +99,12 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureUI()
         self.makeConstraints()
+        self.configureUI()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         self.bind()
     }
     
@@ -112,16 +119,12 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
             })
             .disposed(by: self.disposeBag)
         
-        self.viewModel.output.requestList
-            .bind(to: self.buttonBarCollectionView.rx.items(
-                cellIdentifier: ButtonBarCell.idetifier,
-                cellType: ButtonBarCell.self)) { row, item, cell in
-                    cell.contentLabel.text = item.rawValue
-                    if row == 0 {
-                        self.initialSetting(row)
-                    }
-                }
-                .disposed(by: self.disposeBag)
+        self.viewModel.output.currentCoinListType
+            .withUnretained(self)
+            .bind(onNext: { owner, type in
+                owner.barSetting(type)
+            })
+            .disposed(by: self.disposeBag)
         
         // input
         self.changeRateSettingButton.rx.tap
@@ -131,19 +134,19 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
             })
             .disposed(by: disposeBag)
         
-        Observable.zip(
-            self.buttonBarCollectionView.rx.itemSelected
-                .distinctUntilChanged(),
-            self.buttonBarCollectionView.rx.modelSelected(CoinListType.self)
-                .distinctUntilChanged())
-            .bind(onNext: { [weak self] indexPath, listType in
-                guard let self = self else {
-                    return
-                }
-                self.viewModel.input.selectedCoinListType.accept(listType)
-                self.buttonBarCollectionView.moveTo(index: indexPath.row, animated: true)
-            })
+        self.buttonBarCollectionView.rx.modelSelected(CoinListType.self)
+            .distinctUntilChanged()
+            .bind(to: self.viewModel.input.selectedCoinListType)
             .disposed(by: self.disposeBag)
+    }
+    
+    private func barSetting(_ type: CoinListType) {
+        self.buttonBarCollectionView.selectItem(
+            at: IndexPath(row: type.row, column: 0),
+            animated: false,
+            scrollPosition: .init())
+        self.buttonBarCollectionView.moveTo(index: type.row, animated: true)
+        self.buttonBarCollectionView.selectedBar.layoutIfNeeded()
     }
     
     // MARK: - View Methods
@@ -177,11 +180,14 @@ final class ButtonBarController: UIViewController, ViewModelBindable {
     
     private func configureUI() {
         self.view.backgroundColor = .systemBackground
+        
+        Observable.of(self.requestList)
+            .bind(to: self.buttonBarCollectionView.rx.items(
+                cellIdentifier: ButtonBarCell.idetifier,
+                cellType: ButtonBarCell.self)) { _, item, cell in
+                    cell.contentLabel.text = item.rawValue
+                }
+                .disposed(by: self.disposeBag)
     }
     
-    private func initialSetting(_ row: Int) {
-        self.buttonBarCollectionView.moveTo(index: row, animated: false)
-        self.buttonBarCollectionView.selectItem(at: IndexPath(row: row, column: 0), animated: false, scrollPosition: .init())
-        
-    }
 }
