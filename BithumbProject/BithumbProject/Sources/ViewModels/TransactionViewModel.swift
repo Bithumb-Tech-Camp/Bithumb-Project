@@ -32,10 +32,10 @@ final class TransactionViewModel: ViewModelType {
         
         let transactionParameter: [String: Any] = [
                "type": BithumbWebSocketRequestType.transaction.rawValue,
-               "symbols": ["BTC"]
+               "symbols": [coin.orderCurrency]
             ]
 
-        httpManager.request(httpServiceType: .transactionHistory("BTC"), model: [TransactionHistory].self)
+        httpManager.request(httpServiceType: .transactionHistory(coin.orderCurrency), model: [TransactionHistory].self)
             .map { self.addUpdownColumn($0) }
             .bind(to: input.transactionData)
             .disposed(by: disposeBag)

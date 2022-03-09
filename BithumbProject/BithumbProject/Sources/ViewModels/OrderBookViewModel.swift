@@ -43,12 +43,12 @@ final class OrderBookViewModel: ViewModelType {
         
         let orderBookParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.orderBookDepth.rawValue,
-              "symbols": ["BTC"]
+              "symbols": [coin.acronyms]
             ]
         
         let tickerParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.ticker.rawValue,
-              "symbols": ["BTC"],
+              "symbols": [coin.acronyms],
               "tickTypes": [TickType.oneHour].map { $0.rawValue }
              ]
         
@@ -62,7 +62,7 @@ final class OrderBookViewModel: ViewModelType {
             .bind(to: output.closePrice)
             .disposed(by: disposeBag)
         
-        httpManager.request(httpServiceType: .ticker("BTC"), model: Ticker.self)
+        httpManager.request(httpServiceType: .ticker(coin.acronyms), model: Ticker.self)
             .bind(to: input.tickerData)
             .disposed(by: disposeBag)
         
@@ -80,7 +80,7 @@ final class OrderBookViewModel: ViewModelType {
             .bind(to: output.prevClosingPrice)
             .disposed(by: disposeBag)
         
-        httpManager.request(httpServiceType: .orderBook("BTC"), model: OrderBook.self)
+        httpManager.request(httpServiceType: .orderBook(coin.acronyms), model: OrderBook.self)
             .bind(to: input.orderBookData)
             .disposed(by: disposeBag)
         

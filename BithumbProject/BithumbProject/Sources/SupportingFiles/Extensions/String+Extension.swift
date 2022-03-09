@@ -30,10 +30,10 @@ extension String {
     }
     
     var decimal: String? {
-        guard let number = Int(self) else { return nil }
+        guard let number = Double(self) else { return nil }
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        return formatter.string(for: Int(number))
+        return formatter.string(for: Double(number))
     }
     
     var rounded: String? {
