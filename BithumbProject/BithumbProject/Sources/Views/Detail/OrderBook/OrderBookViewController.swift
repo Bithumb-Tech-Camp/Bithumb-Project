@@ -10,13 +10,11 @@ import UIKit
 import RxSwift
 import SpreadsheetView
 import RxDataSources
+import XLPagerTabStrip
 
-class OrderBookViewController: UIViewController {
-    var disposeBag = DisposeBag()
-    let viewModel = OrderBookViewModel()
-    let transactionCellViewController = TransactionCellViewController()
-    
-    let spreadSheetView = SpreadsheetView().then {
+final class OrderBookViewController: UIViewController, ViewModelBindable {
+
+    private let spreadSheetView = SpreadsheetView().then {
         $0.register(OrderBookPriceCell.self, forCellWithReuseIdentifier: String(describing: OrderBookPriceCell.self))
         $0.register(OrderBookTickerCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTickerCell.self))
         $0.register(OrderBookTransactionCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTransactionCell.self))
@@ -31,9 +29,28 @@ class OrderBookViewController: UIViewController {
     var prevClosePrice: String = ""
     var closePrice: String = ""
     
+    var disposeBag: DisposeBag = DisposeBag()
+    var viewModel: OrderBookViewModel
+    var transactionCellViewController: TransactionCellViewController
+    
+    init(viewModel: OrderBookViewModel, transactionViewModel: TransactionViewModel) {
+        self.viewModel = viewModel
+        self.transactionCellViewController = TransactionCellViewController(viewModel: transactionViewModel)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(viewModel: OrderBookViewModel) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        bind()
     }
     
     private func configureUI() {
@@ -43,7 +60,9 @@ class OrderBookViewController: UIViewController {
         spreadSheetView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets.zero)
         }
-        
+    }
+    
+    func bind() {
         self.viewModel.output.bidList
             .subscribe(onNext: { bidList in
                 self.bidList = bidList
@@ -176,5 +195,11 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
             }
             return cell
         }
+    }
+}
+
+extension OrderBookViewController: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        IndicatorInfo(title: "호가")
     }
 }

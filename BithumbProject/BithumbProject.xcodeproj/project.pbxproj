@@ -492,6 +492,7 @@
 		E592A96E27D64A3A008BE814 /* OrderBook */ = {
 			isa = PBXGroup;
 			children = (
+				E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */,
 				E592A93227C9340F008BE814 /* OrderBookViewController.swift */,
 				E592A93627C94741008BE814 /* OrderBookPriceCell.swift */,
 				E592A94927CE791E008BE814 /* OrderBookTickerCell.swift */,
@@ -505,7 +506,6 @@
 		E592A96F27D64A40008BE814 /* Transaction */ = {
 			isa = PBXGroup;
 			children = (
-				E592A95E27D124D0008BE814 /* TransactionCellViewController.swift */,
 				E592A96427D3C095008BE814 /* TransactionViewController.swift */,
 				E5B13FF027D7E23D00288641 /* TransactionSingleCell.swift */,
 			);
