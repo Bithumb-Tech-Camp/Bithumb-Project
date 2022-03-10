@@ -77,7 +77,6 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         
         // output
         self.viewModel.output.coinListUpdate = {
-            print("reloadData")
             self.coinSpreadsheetView.reloadData()
         }
         

@@ -15,8 +15,8 @@ final class TickerCell: Cell {
     
     private let tickerLabel = UILabel().then {
         $0.text = "49,230,124"
-        $0.textColor = .systemBlue
         $0.textAlignment = .right
+        $0.textColor = .label
         $0.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         $0.minimumScaleFactor = 0.5
     }
@@ -39,6 +39,12 @@ final class TickerCell: Cell {
 extension TickerCell {
     func rendering(_ coin: Coin) {
         self.tickerLabel.text = coin.ticker.tickerDecimal
+        if let wasHigher = coin.wasHigher {
+            
+            
+        } else {
+            
+        }
         
         if let isHigher = coin.isHigher {
             let changeBackColor: UIColor = isHigher ? .systemRed : .systemBlue
@@ -49,6 +55,7 @@ extension TickerCell {
                 self.contentView.backgroundColor = .systemBackground
             }
         } else {
+            self.tickerLabel.textColor = .label
             self.contentView.backgroundColor = .systemBackground
         }
     }

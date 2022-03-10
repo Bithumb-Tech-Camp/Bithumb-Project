@@ -25,7 +25,7 @@ final class CoinListViewModel: ViewModelType {
     struct Output {
         var coinListUpdate: (() -> Void)?
         var coinList = [Coin]()
-        let currentSortedColumn = BehaviorRelay<SortedColumn>(value: .init(column:1))
+        let currentSortedColumn = BehaviorRelay<SortedColumn>(value: .init(column: 1))
         
         // 이 두 가지 기본 옵션을 UserDefault에서 받아오기
         let currentCoinListType = BehaviorRelay<CoinListType>(value: .KRW)
@@ -50,8 +50,12 @@ final class CoinListViewModel: ViewModelType {
     
     func connectionToManager() {
         // HTTP는 ChangeRatePeriod에 대한 24H 값만 제공, 해당 데이터만 요청 받을 수 있음
-        // 변동률 기간에서는 처음 데이터를 불러오는 것 이외의 데이터 요청은 의미가 없다. 그래서 방출 X
-        self.output.currentCoinListType
+        // 변동률 기간에서는 처음 데이터를 불러오는 것 이외의 데이터 요청은 의미가 없다.
+        // 그래도 반응은 하게 만들었
+        Observable.combineLatest(
+        self.output.currentChangeRatePeriod,
+        self.output.currentCoinListType,
+        resultSelector: { $1})
             .map { $0.param }
             .flatMap { self.httpManager.request(
                 httpServiceType: .ticker($0),
@@ -127,7 +131,7 @@ final class CoinListViewModel: ViewModelType {
     func makeWebSocketParameters(_ changeRatePeriod: ChangeRatePeriod) -> [String: Any] {
         let tickerParameter: [String: Any] = [
             "type": BithumbWebSocketRequestType.ticker.rawValue,
-            "symbols": ["BTC_KRW", "ETH_KRW", "YFI_KRW"], // 모든 값을 가져오거나 내가 관심있는 값을 가져오도록 구현
+            "symbols": Constant.Parameters.coinList,
             "tickTypes": [changeRatePeriod.param]
         ]
         return tickerParameter
@@ -136,14 +140,14 @@ final class CoinListViewModel: ViewModelType {
     func updateCoinList(_ previousList: [Coin], _ afterList: [Coin]) -> [Coin] {
         var previous = previousList
         afterList.forEach { realtime in
-            if let index = previous.firstIndex(where: { coin in
-                coin.isHigher = nil
-                return coin == realtime
-            }) {
-                let isHigher = realtime > previous[index] ? true : false
+            if let index = previous.firstIndex(where: { $0 == realtime}) {
+                realtime.wasHigher = previous[index].isHigher
+                let isHigher = realtime > previous[index]
+                realtime.isHigher = isHigher
                 previous.remove(at: index)
                 previous.insert(realtime, at: index)
-                previous[index].isHigher = isHigher
+            } else {
+                realtime.isHigher = nil
             }
         }
         return previous

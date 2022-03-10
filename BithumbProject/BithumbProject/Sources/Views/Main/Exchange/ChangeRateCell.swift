@@ -65,7 +65,6 @@ extension ChangeRateCell {
         self.changeRateLabel.textColor = changeRateColor
         self.changeAmountLabel.text = changeRatePrefix + coin.changeRate.amount.changeRateDecimal
         self.changeAmountLabel.textColor = changeRateColor
-        
         if let isHigher = coin.isHigher {
             let changeBackColor: UIColor = isHigher ? .systemRed : .systemBlue
             UIView.animate(withDuration: 0.2) {
