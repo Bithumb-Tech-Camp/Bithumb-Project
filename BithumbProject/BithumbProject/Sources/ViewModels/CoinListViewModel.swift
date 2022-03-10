@@ -25,10 +25,10 @@ final class CoinListViewModel: ViewModelType {
     struct Output {
         var coinListUpdate: (() -> Void)?
         var coinList = [Coin]()
-        let currentSortedColumn = BehaviorRelay<SortedColumn>(value: .init(column: 3, sorting: .descending))
+        let currentSortedColumn = BehaviorRelay<SortedColumn>(value: .init(column:1))
         
         // 이 두 가지 기본 옵션을 UserDefault에서 받아오기
-        let currentCoinListType = BehaviorRelay<CoinListType>(value: .popularity)
+        let currentCoinListType = BehaviorRelay<CoinListType>(value: .KRW)
         let currentChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .day)
     }
     
@@ -45,26 +45,25 @@ final class CoinListViewModel: ViewModelType {
         self.httpManager = httpManager
         self.webSocketManager = webSocketManager
         self.inoutBinding()
-        
-        let httpObservable = httpManager.request(httpServiceType: .ticker("All"), model: [String: TickerString].self)
-            .map({ $0.compactMap { acronyms, ticker -> Coin? in
-                switch ticker {
-                case .string:
+        self.connectionToManager()
+    }
+    
+    func connectionToManager() {
+        // HTTP는 ChangeRatePeriod에 대한 24H 값만 제공, 해당 데이터만 요청 받을 수 있음
+        // 변동률 기간에서는 처음 데이터를 불러오는 것 이외의 데이터 요청은 의미가 없다. 그래서 방출 X
+        self.output.currentCoinListType
+            .map { $0.param }
+            .flatMap { self.httpManager.request(
+                httpServiceType: .ticker($0),
+                model: [String: TickerString].self) }
+            .map { $0.compactMap { acronyms, tickerString -> Coin? in
+                guard let coin = tickerString.toDomain() else {
                     return nil
-                case .ticker(let newTicker):
-                    let coin = newTicker.toDomain()
-                    coin.krName = "\(acronyms)코인"
-                    coin.acronyms = acronyms
-                    return coin
                 }
-            }})
-        
-//        Observable.combineLatest(
-//            self.output.currentCoinListType.map { $0.query },
-//            self.output.currentChangeRatePeriod.map { [$0.rawValue] })
-//        map { self.httpManager.request(httpServiceType: .ticker($0), model: [String: TickerString].self)}
-        
-        httpObservable
+                coin.krName = "\(acronyms)코인"
+                coin.acronyms = acronyms
+                return coin
+            }}
             .withLatestFrom(self.output.currentSortedColumn) { ($0, $1) }
             .map { self.sort(coinList: $0, by: $1) }
             .subscribe(onNext: { coinList in
@@ -72,19 +71,16 @@ final class CoinListViewModel: ViewModelType {
             })
             .disposed(by: self.disposeBag)
         
-        let tickerParameter: [String: Any] = [
-            "type": BithumbWebSocketRequestType.ticker.rawValue,
-            "symbols": ["BTC_KRW", "ETH_KRW", "YFI_KRW"], // 모든 값을 가져오거나 내가 관심있는 값을 가져오도록 구현
-            "tickTypes": [self.output.currentChangeRatePeriod.value.param]// 모든 값
-        ]
-        
-        webSocketManager.requestRealtime(parameter: tickerParameter, type: RealtimeTicker.self)
+        // WebSocket 데이터는 반대로 기간에만 영향을 받도록 구현
+        // 인기, 검색 내역, 관심, 원화 모두에 영향을 미치기 때문
+        self.output.currentChangeRatePeriod
+            .map { self.makeWebSocketParameters($0) }
+            .flatMap {  self.webSocketManager.requestRealtime(parameter: $0, type: RealtimeTicker.self) }
             .map { [$0.toDomain()] }
             .withLatestFrom(self.input.coinList) { ($0, $1) }
             .map { self.updateCoinList($1, $0) }
             .bind(to: self.input.coinList)
             .disposed(by: self.disposeBag)
-        
     }
     
     func inoutBinding() {
@@ -126,6 +122,15 @@ final class CoinListViewModel: ViewModelType {
             .map { self.sort(coinList: $1, by: $0) }
             .bind(to: self.input.coinList)
             .disposed(by: self.disposeBag)
+    }
+    
+    func makeWebSocketParameters(_ changeRatePeriod: ChangeRatePeriod) -> [String: Any] {
+        let tickerParameter: [String: Any] = [
+            "type": BithumbWebSocketRequestType.ticker.rawValue,
+            "symbols": ["BTC_KRW", "ETH_KRW", "YFI_KRW"], // 모든 값을 가져오거나 내가 관심있는 값을 가져오도록 구현
+            "tickTypes": [changeRatePeriod.param]
+        ]
+        return tickerParameter
     }
     
     func updateCoinList(_ previousList: [Coin], _ afterList: [Coin]) -> [Coin] {

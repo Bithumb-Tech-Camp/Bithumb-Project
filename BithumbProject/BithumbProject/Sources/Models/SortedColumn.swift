@@ -40,7 +40,7 @@ final class SortedColumn {
     }
     
     init(column: Int,
-         sorting: Sorting = .ascending ) {
+         sorting: Sorting = .descending ) {
         self.column = column
         self.sorting = sorting
     }
