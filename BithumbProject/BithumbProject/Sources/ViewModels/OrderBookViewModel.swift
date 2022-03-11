@@ -49,7 +49,7 @@ final class OrderBookViewModel: ViewModelType {
         let tickerParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.ticker.rawValue,
               "symbols": [coin.acronyms],
-              "tickTypes": [TickType.oneHour].map { $0.rawValue }
+              "tickTypes": [TickType.twentyFourHour].map { $0.rawValue }
              ]
         
         webSocketManager.requestRealtime(parameter: tickerParameter, type: RealtimeTicker.self)
@@ -117,17 +117,17 @@ final class OrderBookViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         output.realtimeOrderBookData
-            .map { $0.list?.filter { $0.orderType == "bid" } ?? [] }
-            .withUnretained(output.bidList) {( $0, $1 )}
-            .map { self.reflectRealtimeData(previousList: $0.value, realtimeList: $1) }
+            .map { $0.list?.filter { $0.orderType == "bid" } }
+            .withLatestFrom(output.bidList) {( $0, $1 )}
+            .map { self.reflectRealtimeData(previousList: $0.1, realtimeList: $0.0.value ?? [] ) }
             .map { $0.sorted { $0.price ?? "" > $1.price ?? "" }}
             .bind(to: input.bidList)
             .disposed(by: disposeBag)
         
         output.realtimeOrderBookData
-            .map { $0.list?.filter { $0.orderType == "ask" } ?? [] }
-            .withUnretained(output.askList) {( $0, $1 )}
-            .map { self.reflectRealtimeData(previousList: $0.value, realtimeList: $1) }
+            .map { $0.list?.filter { $0.orderType == "ask" } }
+            .withLatestFrom(output.askList) {( $0, $1 )}
+            .map { self.reflectRealtimeData(previousList: $0.1, realtimeList: $0.0.value ?? [] ) }
             .map { $0.sorted { $0.price ?? "" > $1.price ?? "" }}
             .bind(to: input.askList)
             .disposed(by: disposeBag)

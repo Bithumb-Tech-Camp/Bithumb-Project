@@ -44,7 +44,7 @@ final class TransactionCellViewController: UIViewController, ViewModelBindable {
     
     var disposeBag: DisposeBag = DisposeBag()
     var viewModel: TransactionViewModel
- 
+    
     init(viewModel: TransactionViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -82,7 +82,7 @@ final class TransactionCellViewController: UIViewController, ViewModelBindable {
             $0.leading.equalTo(self.view).offset(3)
             $0.trailing.equalTo(self.view).offset(-3)
         }
-
+        
         self.view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints {
             $0.top.equalTo(self.volumeStackView.snp.bottom).offset(10)
@@ -95,15 +95,13 @@ final class TransactionCellViewController: UIViewController, ViewModelBindable {
     func bind() {
         viewModel.output.transactionData
             .map { $0.sorted { $0.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() > $1.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() }}
-//            .map { [TransactionHistory(unitsTraded: "체결량", price: "체결가")] + $0[0..<20] }
+        //            .map { [TransactionHistory(unitsTraded: "체결량", price: "체결가")] + $0[0..<20] }
             .map { $0[0..<20] }
-            .bind(to: self.tableView.rx.items(cellIdentifier: String(describing: TransactionSmallCell.self), cellType: TransactionSmallCell.self)) { (row, dataSource, cell) in
+            .bind(to: self.tableView.rx.items(cellIdentifier: String(describing: TransactionSmallCell.self), cellType: TransactionSmallCell.self)) { (_, dataSource, cell) in
                 cell.contractPriceLabel.text = dataSource.price?.decimal ?? "체결가"
-                cell.contractQuantityLabel.text = dataSource.unitsTraded?.rounded ?? "체결량"
-                if row != 0 {
-                    cell.contractPriceLabel.textColor = dataSource.updown == "dn" ? .blue : .red
-                    cell.contractQuantityLabel.textColor = dataSource.updown == "dn" ? .blue : .red
-                }
+                cell.contractQuantityLabel.text = dataSource.unitsTraded?.roundedDecimal ?? "체결량"
+                cell.contractPriceLabel.textColor = dataSource.updown == "dn" ? .blue : .red
+                cell.contractQuantityLabel.textColor = dataSource.updown == "dn" ? .blue : .red
             }
             .disposed(by: disposeBag)
         

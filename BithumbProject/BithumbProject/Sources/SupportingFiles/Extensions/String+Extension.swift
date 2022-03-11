@@ -41,6 +41,14 @@ extension String {
         return String(format: "%.4f", round(number * 10000) / 10000)
     }
     
+    var roundedDecimal: String? {
+        guard let number = Double(self) else { return nil }
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 4
+        return formatter.string(for: round(number * 10000) / 10000)
+    }
+    
     func changeRate(from: String) -> String {
         guard let from = Double(from) else { return "" }
         guard let to = Double(self) else { return "" }
@@ -62,5 +70,10 @@ extension String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         return formatter.string(for: number)
+    }
+    
+    func quantityPercent(by max:Double) -> Double {
+        guard let num = Double(self) else { return 0.0 }
+        return num / max
     }
 }
