@@ -72,7 +72,7 @@ extension String {
         return formatter.string(for: number)
     }
     
-    func quantityPercent(by max:Double) -> Double {
+    func quantityPercent(by max: Double) -> Double {
         guard let num = Double(self) else { return 0.0 }
         return num / max
     }

@@ -36,10 +36,12 @@ final class OrderBookViewModel: ViewModelType {
     var input: Input
     var output: Output
     var disposeBag: DisposeBag = DisposeBag()
+    var coin: Coin
     
     init(coin: Coin, httpManager: HTTPManager, webSocketManager: WebSocketManager) {
         self.input = Input()
         self.output = Output()
+        self.coin = coin
         
         let orderBookParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.orderBookDepth.rawValue,

@@ -135,9 +135,8 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
             cell?.openPriceLabel.content = self.tickerData.openingPrice?.decimal
             cell?.prevClosePriceLabel.content = self.tickerData.prevClosingPrice?.decimal
             cell?.accTradeValueLabel.content = self.tickerData.accTradeValue24H?.displayToBillions
-#warning("코인 이름에 맞춰 넣어주기")
             if let unitsTraded = self.tickerData.unitsTraded24H?.displayToCoin {
-                cell?.unitsTradedLabel.content = unitsTraded + " BTC"
+                cell?.unitsTradedLabel.content = unitsTraded + " \(self.viewModel.coin.acronyms)"
             }
             return cell
             
@@ -176,7 +175,7 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
                     cell?.contentView.backgroundColor = Color.backgroundRed
                     cell?.quantityBar.backgroundColor = .systemRed
                     
-                    let width: CGFloat = CGFloat( self.bidList[bidListIndex].quantity?.quantityPercent(by: maxAsk) ?? 0.0)
+                    let width: CGFloat = CGFloat( self.bidList[bidListIndex].quantity?.quantityPercent(by: maxBid) ?? 0.0)
                     
                     cell?.quantityBar.snp.remakeConstraints {
                         $0.centerY.equalToSuperview()
@@ -204,6 +203,11 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
                         cell?.borders.left = .solid(width: 1, color: .black)
                         cell?.borders.right = .solid(width: 1, color: .black)
                         cell?.borders.bottom = .solid(width: 1, color: .black)
+                    } else {
+                        cell?.borders.top = .none
+                        cell?.borders.left = .none
+                        cell?.borders.right = .none
+                        cell?.borders.bottom = .none
                     }
                 } else {
                     cell?.priceLabel.text = self.bidList[bidListIndex].price?.decimal
@@ -217,6 +221,11 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
                         cell?.borders.left = .solid(width: 1, color: .black)
                         cell?.borders.right = .solid(width: 1, color: .black)
                         cell?.borders.bottom = .solid(width: 1, color: .black)
+                    } else {
+                        cell?.borders.top = .none
+                        cell?.borders.left = .none
+                        cell?.borders.right = .none
+                        cell?.borders.bottom = .none
                     }
                 }
             }
