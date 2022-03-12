@@ -49,25 +49,25 @@ final class CoinListViewModel: ViewModelType {
     }
     
     func connectionToManager() {
+        
+        self.input.searchButtonClicked
+            .withLatestFrom(self.input.inputQuery)
+            .compactMap { "\($0.uppercased())_KRW" }
+            .flatMap { self.httpManager.request(httpServiceType: .ticker($0), model: Ticker.self) }
+            .map { [$0.toDomain()] }
+            .subscribe(onNext: { coinlist in
+                self.input.coinList.accept(coinlist)
+            })
+            .disposed(by: self.disposeBag)
+        
         // HTTP는 ChangeRatePeriod에 대한 24H 값만 제공, 해당 데이터만 요청 받을 수 있음
         // 변동률 기간에서는 처음 데이터를 불러오는 것 이외의 데이터 요청은 의미가 없다.
         // 그래도 반응은 하게 만들었
         Observable.combineLatest(
-        self.output.currentChangeRatePeriod,
-        self.output.currentCoinListType,
-        resultSelector: { $1})
-            .map { $0.param }
-            .flatMap { self.httpManager.request(
-                httpServiceType: .ticker($0),
-                model: [String: TickerString].self) }
-            .map { $0.compactMap { acronyms, tickerString -> Coin? in
-                guard let coin = tickerString.toDomain() else {
-                    return nil
-                }
-                coin.krName = "\(acronyms)코인"
-                coin.acronyms = acronyms
-                return coin
-            }}
+            self.output.currentChangeRatePeriod,
+            self.output.currentCoinListType,
+            resultSelector: { $1 })
+            .flatMap { self.fetchCoinList($0) }
             .withLatestFrom(self.output.currentSortedColumn) { ($0, $1) }
             .map { self.sort(coinList: $0, by: $1) }
             .subscribe(onNext: { coinList in
@@ -80,6 +80,7 @@ final class CoinListViewModel: ViewModelType {
         self.output.currentChangeRatePeriod
             .map { self.makeWebSocketParameters($0) }
             .flatMap {  self.webSocketManager.requestRealtime(parameter: $0, type: RealtimeTicker.self) }
+            .filter { $0.closePrice != nil }
             .map { [$0.toDomain()] }
             .withLatestFrom(self.input.coinList) { ($0, $1) }
             .map { self.updateCoinList($1, $0) }
@@ -128,6 +129,56 @@ final class CoinListViewModel: ViewModelType {
             .disposed(by: self.disposeBag)
     }
     
+    func fetchCoinList(_ coinListType: CoinListType) -> Observable<[Coin]> {
+        switch coinListType {
+        case .KRW:
+            return self.httpManager.request(
+                httpServiceType: .ticker(coinListType.param),
+                model: [String: TickerString].self)
+                .map { $0.compactMap { acronyms, tickerString -> Coin? in
+                    guard let coin = tickerString.toDomain() else {
+                        return nil
+                    }
+                    coin.krName = "\(acronyms)코인"
+                    coin.acronyms = acronyms
+                    return coin
+                }}
+        case .popularity:
+            return self.httpManager.request(
+                httpServiceType: .ticker(coinListType.param),
+                model: [String: TickerString].self)
+                .map { $0.compactMap { acronyms, tickerString -> Coin? in
+                    guard let coin = tickerString.toDomain() else {
+                        return nil
+                    }
+                    coin.krName = "\(acronyms)코인"
+                    coin.acronyms = acronyms
+                    return coin
+                }}
+                .do(onNext: { [weak self] _ in
+                    self?.input.selectedSortedColumn.accept(.init(column: 3, sorting: .descending))
+                })
+        case .favorite:
+            let favoriteCoinParams = CommonUserDefault<String>.fetch(.star(""))
+            return Observable.zip(
+                favoriteCoinParams
+                    .map { [weak self] param -> Observable<Coin> in
+                        guard let self = self else {
+                            return .empty()
+                        }
+                        print(param)
+                        return self.httpManager.request(httpServiceType: .ticker(param), model: Ticker.self)
+                            .map { ticker in
+                                let coin = ticker.toDomain()
+                                let acronyms = param.components(separatedBy: "_").first ?? ""
+                                coin.krName = "\(acronyms)코인"
+                                coin.acronyms = acronyms
+                                return coin
+                            }
+                    })
+        }
+    }
+    
     func makeWebSocketParameters(_ changeRatePeriod: ChangeRatePeriod) -> [String: Any] {
         let tickerParameter: [String: Any] = [
             "type": BithumbWebSocketRequestType.ticker.rawValue,
@@ -140,14 +191,15 @@ final class CoinListViewModel: ViewModelType {
     func updateCoinList(_ previousList: [Coin], _ afterList: [Coin]) -> [Coin] {
         var previous = previousList
         afterList.forEach { realtime in
-            if let index = previous.firstIndex(where: { $0 == realtime}) {
-                realtime.wasHigher = previous[index].isHigher
+            if let index = previous.firstIndex(where: { coin in
+                coin.isHigher = nil
+                return coin == realtime
+            }) {
                 let isHigher = realtime > previous[index]
+                
                 realtime.isHigher = isHigher
                 previous.remove(at: index)
                 previous.insert(realtime, at: index)
-            } else {
-                realtime.isHigher = nil
             }
         }
         return previous
