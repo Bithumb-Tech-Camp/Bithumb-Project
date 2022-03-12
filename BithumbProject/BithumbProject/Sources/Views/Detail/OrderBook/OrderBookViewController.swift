@@ -21,6 +21,7 @@ final class OrderBookViewController: UIViewController, ViewModelBindable {
         $0.register(OrderBookQuantityCell.self, forCellWithReuseIdentifier: String(describing: OrderBookQuantityCell.self))
         $0.bounces = false
         $0.showsHorizontalScrollIndicator = false
+        $0.intercellSpacing = CGSize(width: 0, height: 0)
     }
     
     var bidList: [BidAsk] = []  // 매수
@@ -59,7 +60,8 @@ final class OrderBookViewController: UIViewController, ViewModelBindable {
         
         view.addSubview(self.spreadSheetView)
         spreadSheetView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets.zero)
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
         }
     }
     
@@ -98,7 +100,7 @@ final class OrderBookViewController: UIViewController, ViewModelBindable {
 extension OrderBookViewController: SpreadsheetViewDataSource {
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
-        return Screen.width / 3
+        return self.spreadSheetView.frame.width / 3
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow row: Int) -> CGFloat {

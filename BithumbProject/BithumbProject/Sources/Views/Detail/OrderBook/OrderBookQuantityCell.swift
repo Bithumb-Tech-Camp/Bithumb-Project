@@ -17,9 +17,7 @@ class OrderBookQuantityCell: Cell {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .regular)
     }
     
-    let quantityBar = UIView().then { _ in
-//        $0.backgroundColor = .red
-    }
+    let quantityBar = UIView()
     
     override func prepareForReuse() {
         super.prepareForReuse()
