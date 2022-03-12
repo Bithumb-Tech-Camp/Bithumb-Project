@@ -51,7 +51,7 @@ final class OrderBookViewModel: ViewModelType {
         let tickerParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.ticker.rawValue,
               "symbols": [coin.acronyms],
-              "tickTypes": [TickType.twentyFourHour].map { $0.rawValue }
+              "tickTypes": [RealtimeTickType.oneHour].map { $0.rawValue }
              ]
         
         webSocketManager.requestRealtime(parameter: tickerParameter, type: RealtimeTicker.self)

@@ -5,16 +5,7 @@
 //  Created by 최다빈 on 2022/02/23.
 //
 
-import UIKit
-
-enum UpDown {
-    case up
-    case down
-    
-    var color: UIColor {
-        self == .up ? .systemRed : .systemBlue
-    }
-}
+import Foundation
 
 struct RealtimeTicker: Codable {
     var symbol: String?
@@ -57,6 +48,44 @@ struct RealtimeTicker: Codable {
     }
     var updown: UpDown {
         safeOpenPrice <= safeClosePrice ? .up : .down
+    }
+    var isEmpty: Bool {
+        symbol == nil &&
+        tickType == nil &&
+        date == nil &&
+        time == nil &&
+        openPrice == nil &&
+        closePrice == nil &&
+        lowPrice == nil &&
+        highPrice == nil &&
+        value == nil &&
+        volume == nil &&
+        sellVolume == nil &&
+        buyVolume == nil &&
+        prevClosePrice == nil &&
+        changeRate == nil &&
+        changeAmount == nil &&
+        volumePower == nil
+    }
+    static var empty: RealtimeTicker {
+        RealtimeTicker(
+            symbol: nil,
+            tickType: nil,
+            date: nil,
+            time: nil,
+            openPrice: nil,
+            closePrice: nil,
+            lowPrice: nil,
+            highPrice: nil,
+            value: nil,
+            volume: nil,
+            sellVolume: nil,
+            buyVolume: nil,
+            prevClosePrice: nil,
+            changeRate: nil,
+            changeAmount: nil,
+            volumePower: nil
+        )
     }
     
     enum CodingKeys: String, CodingKey {

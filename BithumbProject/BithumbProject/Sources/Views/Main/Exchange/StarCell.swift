@@ -13,9 +13,7 @@ import SpreadsheetView
 
 final class StarCell: Cell {
     
-    let starButton = StarButton().then {
-        $0.setState(false)
-    }
+    let starButton = StarButton(isActivated: false)
 
     override func layoutSubviews() {
         super.layoutSubviews()
