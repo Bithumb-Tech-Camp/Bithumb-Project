@@ -64,6 +64,9 @@
 		DA4E75BD27D7B010006A5C86 /* HoldingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E75BC27D7B010006A5C86 /* HoldingsViewModel.swift */; };
 		DA814BFC27DC514400E0F084 /* CommonUserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814BFB27DC514400E0F084 /* CommonUserDefault.swift */; };
 		DA814BFE27DC51DE00E0F084 /* DataRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814BFD27DC51DE00E0F084 /* DataRepositoryProtocol.swift */; };
+		DA814C0227DCC07100E0F084 /* HoldingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814C0127DCC07100E0F084 /* HoldingsTableViewCell.swift */; };
+		DA814C0427DCC0E400E0F084 /* HoldingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814C0327DCC0E400E0F084 /* HoldingsHeaderView.swift */; };
+		DA814C0627DCD3CF00E0F084 /* Holdings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814C0527DCD3CF00E0F084 /* Holdings.swift */; };
 		E592A91D27C67303008BE814 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A91C27C67303008BE814 /* APIResponse.swift */; };
 		E592A91F27C6764E008BE814 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A91E27C6764E008BE814 /* Ticker.swift */; };
 		E592A92127C678E3008BE814 /* AssetsStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A92027C678E3008BE814 /* AssetsStatus.swift */; };
@@ -171,6 +174,9 @@
 		DA4E75BC27D7B010006A5C86 /* HoldingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingsViewModel.swift; sourceTree = "<group>"; };
 		DA814BFB27DC514400E0F084 /* CommonUserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUserDefault.swift; sourceTree = "<group>"; };
 		DA814BFD27DC51DE00E0F084 /* DataRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepositoryProtocol.swift; sourceTree = "<group>"; };
+		DA814C0127DCC07100E0F084 /* HoldingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingsTableViewCell.swift; sourceTree = "<group>"; };
+		DA814C0327DCC0E400E0F084 /* HoldingsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingsHeaderView.swift; sourceTree = "<group>"; };
+		DA814C0527DCD3CF00E0F084 /* Holdings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Holdings.swift; sourceTree = "<group>"; };
 		E592A91C27C67303008BE814 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		E592A91E27C6764E008BE814 /* Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		E592A92027C678E3008BE814 /* AssetsStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsStatus.swift; sourceTree = "<group>"; };
@@ -421,6 +427,8 @@
 			isa = PBXGroup;
 			children = (
 				DA4E75BA27D7AFFA006A5C86 /* HoldingsViewController.swift */,
+				DA814C0127DCC07100E0F084 /* HoldingsTableViewCell.swift */,
+				DA814C0327DCC0E400E0F084 /* HoldingsHeaderView.swift */,
 			);
 			path = Holdings;
 			sourceTree = "<group>";
@@ -451,6 +459,7 @@
 				E592A94027CA8381008BE814 /* TransactionHistory.swift */,
 				1C192EE527D34BF100BCDAA0 /* IntOrString.swift */,
 				03D6C6BD27C91F620028A7E0 /* Coin.swift */,
+				DA814C0527DCD3CF00E0F084 /* Holdings.swift */,
 				03C4743A27D1C75C002AC4D2 /* CoinListType.swift */,
 				24E4FAC727D34F4900EEC4AC /* ChangeRate.swift */,
 				0320AF2027D1066300B3B83B /* ChangeRatePeriod.swift */,
@@ -833,6 +842,7 @@
 				1C192EED27D3C69200BCDAA0 /* UInt64+Extension.swift in Sources */,
 				1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */,
 				E592A93D27CA1FE8008BE814 /* OrderBookViewModel.swift in Sources */,
+				DA814C0227DCC07100E0F084 /* HoldingsTableViewCell.swift in Sources */,
 				03F2EC8E27D0726E00CEC21E /* ChangeRateSettingViewController.swift in Sources */,
 				03C4744927D396FC002AC4D2 /* StarButton.swift in Sources */,
 				E592A92B27C67E8C008BE814 /* RealtimeTransaction.swift in Sources */,
@@ -841,6 +851,7 @@
 				03D6C6BA27C91DE70028A7E0 /* HTTPService.swift in Sources */,
 				E592A91F27C6764E008BE814 /* Ticker.swift in Sources */,
 				E592A96527D3C095008BE814 /* TransactionViewController.swift in Sources */,
+				DA814C0627DCD3CF00E0F084 /* Holdings.swift in Sources */,
 				E592A93F27CA81E1008BE814 /* OrderBook.swift in Sources */,
 				E5B13FF127D7E23D00288641 /* TransactionSingleCell.swift in Sources */,
 				0320AF2127D1066300B3B83B /* ChangeRatePeriod.swift in Sources */,
@@ -853,6 +864,7 @@
 				E592A92127C678E3008BE814 /* AssetsStatus.swift in Sources */,
 				1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */,
 				03C4743F27D27462002AC4D2 /* TickerCell.swift in Sources */,
+				DA814C0427DCC0E400E0F084 /* HoldingsHeaderView.swift in Sources */,
 				03C4744B27D39E73002AC4D2 /* StarCell.swift in Sources */,
 				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
 				0320AF2327D11AC800B3B83B /* UIVIewController+Extension.swift in Sources */,

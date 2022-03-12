@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let firstTabBarItem = UITabBarItem(title: "거래소", image: UIImage(systemName: "bolt.horizontal"), selectedImage: UIImage(systemName: "bolt.horizontal.fill"))
         coinListViewController.tabBarItem = firstTabBarItem
         
-        let holdingsViewModel = HoldingsViewModel(httpManager: httpManager, webSocketManager: webSocketManager)
+        let holdingsViewModel = HoldingsViewModel(httpManager: httpManager)
         let holdingsViewController = HoldingsViewController(viewModel: holdingsViewModel)
         let secondTabBarItem = UITabBarItem(title: "입출금", image: UIImage(systemName: "repeat"), selectedImage: UIImage(systemName: "repeat.1"))
         holdingsViewController.tabBarItem = secondTabBarItem
@@ -49,7 +49,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func dummyuserAutoLogin() {
         CommonUserDefault<String>.initialSetting([
             .holdings: "2000000",
-            .username: "헨다폴"
+            .username: "헨다폴",
+            .changeRatePeriod: "24H"
         ])
     }
 }

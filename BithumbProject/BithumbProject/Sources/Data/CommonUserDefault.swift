@@ -16,6 +16,7 @@ struct CommonUserDefault<OUTPUT>: DataRepositoryProtocol {
         case holdings
         case star(String)
         case initialLaunchKey
+        case changeRatePeriod
         
         var forKey: String {
             switch self {
@@ -27,6 +28,8 @@ struct CommonUserDefault<OUTPUT>: DataRepositoryProtocol {
                 return "stars"
             case .initialLaunchKey:
                 return "initialLaunchKey"
+            case .changeRatePeriod:
+                return "changeRatePeriod"
             }
         }
     }
@@ -45,7 +48,7 @@ struct CommonUserDefault<OUTPUT>: DataRepositoryProtocol {
     
     static func delete(_ key: KEY) {
         switch key {
-        case .username, .initialLaunchKey, .holdings:
+        case .username, .initialLaunchKey, .holdings, .changeRatePeriod:
             UserDefaults.standard.set(nil, forKey: key.forKey)
             UserDefaults.standard.removeObject(forKey: key.forKey)
         case .star(let coinName):
