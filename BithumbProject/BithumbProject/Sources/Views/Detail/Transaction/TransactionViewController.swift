@@ -16,6 +16,7 @@ final class TransactionViewController: UIViewController, ViewModelBindable {
         $0.register(TransactionSingleCell.self, forCellWithReuseIdentifier: String(describing: TransactionSingleCell.self))
         $0.bounces = false
         $0.showsHorizontalScrollIndicator = false
+        $0.intercellSpacing = CGSize(width: 0, height: 0)
     }
     var transactionList: [TransactionHistory] = []
     
@@ -42,17 +43,16 @@ final class TransactionViewController: UIViewController, ViewModelBindable {
         
         view.addSubview(self.spreadSheetView)
         spreadSheetView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets.zero)
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
     func bind() {
         self.viewModel.output.transactionData
-            .map { $0.sorted { $0.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() > $1.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() }}
             .map { [TransactionHistory(transactionDate: "시간", unitsTraded: "체결량(BTC)", price: "가격(KRW)")] + $0 }
-            .subscribe(onNext: { transactionList in
-                self.transactionList = transactionList
-                self.spreadSheetView.reloadData()
+            .subscribe(onNext: { [weak self] transactionList in
+                self?.transactionList = transactionList
+                self?.spreadSheetView.reloadData()
             })
             .disposed(by: disposeBag)
     }

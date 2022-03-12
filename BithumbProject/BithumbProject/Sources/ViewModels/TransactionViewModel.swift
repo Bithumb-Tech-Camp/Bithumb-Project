@@ -59,6 +59,8 @@ final class TransactionViewModel: ViewModelType {
         input.realtimeTransationData
             .withLatestFrom(input.transactionData) {( $0, $1 )}
             .map { self.updateTransationData(realtimeList: $0.0.list, previousList: $0.1) }
+            .map { $0.sorted { $0.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() > $1.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() }}
+            .map { Array($0.prefix(40)) }
             .bind(to: input.transactionData)
             .disposed(by: disposeBag)
         
