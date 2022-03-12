@@ -199,6 +199,10 @@ final class ChartViewController: UIViewController, ViewModelBindable {
         view.addSubview(optionMinuteIntervalStackView)
         view.addSubview(optionHourIntervalStackView)
         
+        removeChartView()
+        addChartView()
+        setupChartView()
+        
         optionMinuteIntervalStackView.isHidden = true
         optionHourIntervalStackView.isHidden = true
         
@@ -268,7 +272,7 @@ final class ChartViewController: UIViewController, ViewModelBindable {
     
     func bind() {
         
-        Observable.just(())
+        rx.viewWillAppear
             .bind(onNext: {[weak self] _ in
                 self?.viewModel.input.fetchCandlestick.onNext(())
                 self?.viewModel.input.fetchRealtimeTicker.onNext(())
@@ -364,33 +368,6 @@ final class ChartViewController: UIViewController, ViewModelBindable {
                 }
             })
             .disposed(by: disposeBag)
-        
-        viewModel.output
-            .candlesticks
-            .subscribe(onNext: {[weak self] candlesticks in
-                self?.removeChartView()
-                self?.addChartView(candlesticks: candlesticks)
-                self?.setupChartView()
-            })
-            .disposed(by: disposeBag)
-        
-        viewModel.output
-            .realtimeTicker
-            .bind(onNext: {[weak self] realtimeTicker in
-                guard let self = self else {
-                    return
-                }
-                let currentLayout = self.viewModel.output.option.value.layout
-                switch currentLayout {
-                case .single:
-                    if let chartView = self.chartBackgroundView.viewWithTag(ChartLayout.single.rawValue) as? SingleChartView {
-                        chartView.realtimeTicker.accept(realtimeTicker)
-                    }
-                default:
-                    return
-                }
-            })
-            .disposed(by: disposeBag)
     }
     
     private func removeChartView() {
@@ -399,12 +376,11 @@ final class ChartViewController: UIViewController, ViewModelBindable {
         }
     }
     
-    private func addChartView(candlesticks: [Candlestick]) {
+    private func addChartView() {
         let currentLayout = self.viewModel.output.option.value.layout
-        let currentOption = self.viewModel.output.option.value
         switch currentLayout {
         case .single:
-            let chartView = SingleChartView(candlesticks: candlesticks, option: currentOption)
+            let chartView = SingleChartView(viewModel: viewModel)
             chartView.tag = currentLayout.rawValue
             chartBackgroundView.addSubview(chartView)
         default:
