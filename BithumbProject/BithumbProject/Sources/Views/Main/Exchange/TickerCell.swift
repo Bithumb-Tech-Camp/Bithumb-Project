@@ -39,23 +39,26 @@ final class TickerCell: Cell {
 extension TickerCell {
     func rendering(_ coin: Coin) {
         self.tickerLabel.text = coin.ticker.tickerDecimal
-        if let wasHigher = coin.wasHigher {
-            
-            
-        } else {
-            
-        }
+        let basicColor: UIColor = coin.changeRate.rate > 0 ? .systemRed : .systemBlue
+        self.tickerLabel.textColor = basicColor
         
         if let isHigher = coin.isHigher {
+            
             let changeBackColor: UIColor = isHigher ? .systemRed : .systemBlue
             self.tickerLabel.textColor = changeBackColor
-            UIView.animate(withDuration: 0.2) {
+            coin.wasHigher = isHigher
+            
+            UIView.animate(withDuration: 0.25) {
                 self.contentView.backgroundColor = changeBackColor.withAlphaComponent(0.1)
             } completion: { _ in
                 self.contentView.backgroundColor = .systemBackground
             }
+        } else if let wasHigher = coin.wasHigher {
+            let textColor: UIColor = wasHigher ? .systemRed : .systemBlue
+            self.tickerLabel.textColor = textColor
+            coin.wasHigher = wasHigher
+            self.contentView.backgroundColor = .systemBackground
         } else {
-            self.tickerLabel.textColor = .label
             self.contentView.backgroundColor = .systemBackground
         }
     }

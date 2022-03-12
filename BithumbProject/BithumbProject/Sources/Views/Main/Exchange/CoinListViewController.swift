@@ -20,7 +20,7 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
     
     // MARK: - View Properties
     private lazy var coinSearchBar = UISearchBar().then {
-        $0.placeholder = "코인명 또는 심볼 검색"
+        $0.placeholder = "심볼(BTC) 검색"
         $0.keyboardType = .webSearch
         $0.searchTextField.backgroundColor = .systemBackground
         $0.addDoneButtonOnKeyboard()
@@ -91,7 +91,7 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         
         self.alarmBarButton.rx.tap
             .bind(onNext: {
-                self.alertMessage(message: "알림으로 가는 탭")
+                self.alertMessage(message: "알림!")
             })
             .disposed(by: self.disposeBag)
         
@@ -231,6 +231,7 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+            cell?.coin = coin
             cell?.rendering(coin)
 
             return cell
