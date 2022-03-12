@@ -49,17 +49,6 @@ final class CoinListViewModel: ViewModelType {
     }
     
     func connectionToManager() {
-        
-        self.input.searchButtonClicked
-            .withLatestFrom(self.input.inputQuery)
-            .compactMap { "\($0.uppercased())_KRW" }
-            .flatMap { self.httpManager.request(httpServiceType: .ticker($0), model: Ticker.self) }
-            .map { [$0.toDomain()] }
-            .subscribe(onNext: { coinlist in
-                self.input.coinList.accept(coinlist)
-            })
-            .disposed(by: self.disposeBag)
-        
         // HTTP는 ChangeRatePeriod에 대한 24H 값만 제공, 해당 데이터만 요청 받을 수 있음
         // 변동률 기간에서는 처음 데이터를 불러오는 것 이외의 데이터 요청은 의미가 없다.
         // 그래도 반응은 하게 만들었
@@ -107,9 +96,11 @@ final class CoinListViewModel: ViewModelType {
         
         self.input.searchButtonClicked
             .withLatestFrom(self.input.inputQuery)
-            .bind(onNext: { query in
-                // 검색 쿼리 서버로 연동
-                print(query)
+            .compactMap { "\($0.uppercased())_KRW" }
+            .flatMap { self.httpManager.request(httpServiceType: .ticker($0), model: Ticker.self) }
+            .map { [$0.toDomain()] }
+            .subscribe(onNext: { coinlist in
+                self.input.coinList.accept(coinlist)
             })
             .disposed(by: self.disposeBag)
         

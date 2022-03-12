@@ -58,6 +58,9 @@ final class Coin {
         let holdings = CommonUserDefault<String>.fetch(.holdings)
         print("👺 \(holdings)")
         
+        let periode = CommonUserDefault<String>.fetch(.changeRatePeriod)
+        print("👺 \(periode)")
+        
         let stars = CommonUserDefault<String>.fetch(.star(""))
         print("👺 \(stars)")
     }
