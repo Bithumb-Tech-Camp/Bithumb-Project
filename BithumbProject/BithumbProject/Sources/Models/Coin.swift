@@ -20,7 +20,6 @@ final class Coin {
     var ticker: Double
     var changeRate: ChangeRate
     var transaction: Double
-    var isStarred: Bool
     var isHigher: Bool?
     var wasHigher: Bool?
     var tickType: ChangeRatePeriod
@@ -31,7 +30,6 @@ final class Coin {
          ticker: Double,
          changeRate: ChangeRate,
          transaction: Double,
-         isStarred: Bool = false,
          isHigher: Bool? = nil,
          wasHigher: Bool? = nil,
          tickType: ChangeRatePeriod = .MID) {
@@ -41,10 +39,27 @@ final class Coin {
         self.ticker = ticker
         self.changeRate = changeRate
         self.transaction = transaction
-        self.isStarred = isStarred
         self.isHigher = isHigher
         self.wasHigher = wasHigher
         self.tickType = tickType
+    }
+    
+    func star(_ isSelected: Bool) {
+        let coinName = "\(self.acronyms)_\(self.currency.rawValue)"
+        if isSelected {
+            CommonUserDefault<String>.save(coinName, key: .star(coinName))
+        } else {
+            CommonUserDefault<String>.delete(.star(coinName))
+        }
+        
+        let names = CommonUserDefault<String>.fetch(.username)
+        print("👺 \(names)")
+        
+        let holdings = CommonUserDefault<String>.fetch(.holdings)
+        print("👺 \(holdings)")
+        
+        let stars = CommonUserDefault<String>.fetch(.star(""))
+        print("👺 \(stars)")
     }
 }
 

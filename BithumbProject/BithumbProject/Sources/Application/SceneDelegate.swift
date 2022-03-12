@@ -14,18 +14,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
+        self.dummyuserAutoLogin()
+        
         let httpProvider = MoyaProvider<HTTPService>()
         let httpManager = HTTPManager(provider: httpProvider)
         let webSocketManager = WebSocketManager()
         
         let coinListViewModel = CoinListViewModel(httpManager: httpManager, webSocketManager: webSocketManager)
         let coinListViewController = CoinListViewController(viewModel: coinListViewModel)
-        let firstTabBarItem = UITabBarItem(title: "거래소", image: UIImage(systemName: "magnifyingglass.circle"), selectedImage: UIImage(systemName: "magnifyingglass.circle.fill"))
+        let firstTabBarItem = UITabBarItem(title: "거래소", image: UIImage(systemName: "bolt.horizontal"), selectedImage: UIImage(systemName: "bolt.horizontal.fill"))
         coinListViewController.tabBarItem = firstTabBarItem
         
         let holdingsViewModel = HoldingsViewModel(httpManager: httpManager, webSocketManager: webSocketManager)
         let holdingsViewController = HoldingsViewController(viewModel: holdingsViewModel)
-        let secondTabBarItem = UITabBarItem(title: "입출금", image: UIImage(systemName: "magnifyingglass.circle"), selectedImage: UIImage(systemName: "magnifyingglass.circle.fill"))
+        let secondTabBarItem = UITabBarItem(title: "입출금", image: UIImage(systemName: "repeat"), selectedImage: UIImage(systemName: "repeat.1"))
         holdingsViewController.tabBarItem = secondTabBarItem
         
         let coinListNavigationController = UINavigationController(rootViewController: coinListViewController)
@@ -43,4 +45,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
-}       
+    
+    func dummyuserAutoLogin() {
+        CommonUserDefault<String>.initialSetting([
+            .holdings: "2000000",
+            .username: "헨다폴"
+        ])
+    }
+}
