@@ -14,17 +14,17 @@ import UIKit
 class OrderBookTickerCell: Cell {
     
     let lowPriceLabel = LeftTitleLabel().then {
-        $0.title = "저가(1H)"
+        $0.title = "저가(24H)"
         $0.content("", color: .blue)
     }
     
     let highPriceLabel = LeftTitleLabel().then {
-        $0.title = "고가(1H)"
+        $0.title = "고가(24H)"
         $0.content("", color: .red)
     }
     
     let openPriceLabel = LeftTitleLabel().then {
-        $0.title = "시가(1H)"
+        $0.title = "시가(24H)"
     }
     
     let prevClosePriceLabel = LeftTitleLabel().then {

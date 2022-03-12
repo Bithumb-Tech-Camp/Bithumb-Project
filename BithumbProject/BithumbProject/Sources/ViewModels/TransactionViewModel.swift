@@ -40,7 +40,7 @@ final class TransactionViewModel: ViewModelType {
         let tickerParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.ticker.rawValue,
               "symbols": [coin.acronyms],
-              "tickTypes": [TickType.oneHour].map { $0.rawValue }
+              "tickTypes": [TickType.twentyFourHour].map { $0.rawValue }
              ]
 
         httpManager.request(httpServiceType: .transactionHistory(coin.orderCurrency), model: [TransactionHistory].self)

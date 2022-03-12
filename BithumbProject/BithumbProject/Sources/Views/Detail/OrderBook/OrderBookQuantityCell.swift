@@ -17,8 +17,8 @@ class OrderBookQuantityCell: Cell {
         $0.font = UIFont.systemFont(ofSize: 12, weight: .regular)
     }
     
-    let quantityBar = UIView().then {
-        $0.backgroundColor = .red
+    let quantityBar = UIView().then { _ in
+//        $0.backgroundColor = .red
     }
     
     override func prepareForReuse() {
@@ -33,12 +33,10 @@ class OrderBookQuantityCell: Cell {
         contentView.backgroundColor = .white
         
         contentView.addSubview(quantityBar)
-//        quantityBar.snp.makeConstraints {
-//            $0.centerY.equalTo(contentView)
-//            $0.leading.equalTo(contentView)
-//            $0.trailing.equalTo(contentView)
-//            $0.height.equalTo(contentView.snp.height / 3)
-//        }
+        quantityBar.snp.makeConstraints {
+            $0.centerY.equalTo(contentView)
+            $0.height.equalTo(10)
+        }
         
         contentView.addSubview(quantityLabel)
         quantityLabel.snp.makeConstraints {

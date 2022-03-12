@@ -91,7 +91,7 @@ extension TransactionViewController: SpreadsheetViewDataSource {
             } else if indexPath.column == 1 {
                 cell?.label.text = self.transactionList[indexPath.row].price?.decimal ?? "가격"
             } else if indexPath.column == 2 {
-                cell?.label.text = self.transactionList[indexPath.row].unitsTraded?.rounded ?? "체결량"
+                cell?.label.text = self.transactionList[indexPath.row].unitsTraded?.roundedDecimal ?? "체결량"
             }
             
             if indexPath.row == 0 || indexPath.column == 0 {
