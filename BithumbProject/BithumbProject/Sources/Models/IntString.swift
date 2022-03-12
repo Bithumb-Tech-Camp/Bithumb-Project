@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum IntOrString: Codable {
+enum IntString: Codable {
 
     case int(UInt64)
     case string(String)
