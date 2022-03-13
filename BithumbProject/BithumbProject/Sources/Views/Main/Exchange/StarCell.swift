@@ -18,11 +18,7 @@ protocol CellAction {
 }
 
 final class StarCell: Cell {
-    
-    let starButton = StarButton().then {
-        $0.setState(false)
-    }
-    
+   
     var coin: Coin?
     
     var disposeBag = DisposeBag()
