@@ -13,7 +13,7 @@ import RxDataSources
 final class TransactionCellViewController: UIViewController, ViewModelBindable {
     
     let volumePowerTitleLabel = UILabel().then {
-        $0.textColor = .black
+        $0.textColor = .darkGray
         $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
         $0.textAlignment = .left
         $0.text = "체결강도"
@@ -94,12 +94,12 @@ final class TransactionCellViewController: UIViewController, ViewModelBindable {
     
     func bind() {
         viewModel.output.transactionData
-            .map { $0[0..<20] }
+            .map { $0.prefix(26) }
             .bind(to: self.tableView.rx.items(cellIdentifier: String(describing: TransactionSmallCell.self), cellType: TransactionSmallCell.self)) { (_, dataSource, cell) in
-                cell.contractPriceLabel.text = dataSource.price?.decimal ?? ""
-                cell.contractQuantityLabel.text = dataSource.unitsTraded?.roundedDecimal ?? ""
-                cell.contractPriceLabel.textColor = dataSource.updown == "dn" ? .blue : .red
-                cell.contractQuantityLabel.textColor = dataSource.updown == "dn" ? .blue : .red
+                cell.contractPriceLabel.text = dataSource.formattedPrice ?? ""
+                cell.contractQuantityLabel.text = dataSource.formattedUnitsTraded ?? ""
+                cell.contractPriceLabel.textColor = dataSource.formattedUpdown.color
+                cell.contractQuantityLabel.textColor = dataSource.formattedUpdown.color
             }
             .disposed(by: disposeBag)
         

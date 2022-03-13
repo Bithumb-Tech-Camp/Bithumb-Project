@@ -15,14 +15,14 @@ class TransactionSmallCell: UITableViewCell {
     
     let contractPriceLabel = UILabel().then {
         $0.text = "체결가격"
-        $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .light)
         $0.textColor = .black
         $0.textAlignment = .left
     }
     
     let contractQuantityLabel = UILabel().then {
         $0.text = "체결수량"
-        $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        $0.font = UIFont.systemFont(ofSize: 10, weight: .light)
         $0.textColor = .black
         $0.textAlignment = .right
     }

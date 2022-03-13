@@ -46,4 +46,16 @@ extension Ticker {
         let transaction = Double(self.accTradeValue24H ?? "") ?? 0.0
         return .init(ticker: ticker, changeRate: changeRate, transaction: transaction)
     }
+    
+    func minPriceWithPercent(by prevClosePrice: String) -> String {
+        return "\(self.minPrice?.decimal ?? "")\n\(self.minPrice?.changeRate(from: prevClosePrice) ?? "")"
+    }
+    
+    func maxPriceWithPercent(by prevClosePrice: String) -> String {
+        return "\(self.maxPrice?.decimal ?? "")\n\(self.maxPrice?.changeRate(from: prevClosePrice) ?? "")"
+    }
+    
+    func formattedUnitTraded(with coin: String) -> String {
+        return "\(self.unitsTraded24H?.displayToCoin ?? "") \(coin)"
+    }
 }
