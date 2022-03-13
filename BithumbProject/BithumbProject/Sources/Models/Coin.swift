@@ -51,18 +51,6 @@ final class Coin {
         } else {
             CommonUserDefault<String>.delete(.star(coinName))
         }
-        
-        let names = CommonUserDefault<String>.fetch(.username)
-        print("👺 \(names)")
-        
-        let holdings = CommonUserDefault<String>.fetch(.holdings)
-        print("👺 \(holdings)")
-        
-        let periode = CommonUserDefault<String>.fetch(.changeRatePeriod)
-        print("👺 \(periode)")
-        
-        let stars = CommonUserDefault<String>.fetch(.star(""))
-        print("👺 \(stars)")
     }
 }
 
