@@ -14,8 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        self.dummyuserAutoLogin()
-        
         let httpProvider = MoyaProvider<HTTPService>()
         let httpManager = HTTPManager(provider: httpProvider)
         let webSocketManager = WebSocketManager()
@@ -44,13 +42,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.backgroundColor = .white
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
-    }
-    
-    func dummyuserAutoLogin() {
-        CommonUserDefault<String>.initialSetting([
-            .holdings: "2000000",
-            .username: "헨다폴",
-            .changeRatePeriod: "24H"
-        ])
     }
 }
