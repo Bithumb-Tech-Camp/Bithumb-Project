@@ -201,8 +201,8 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
                 cell?.priceLabel.text = ask.price?.decimal
                 cell?.percentLabel.text = ask.price?.changeRate(from: self.prevClosePrice)
                 cell?.contentView.backgroundColor = Color.backgroundBlue
-                cell?.priceLabel.textColor = self.prevClosePrice <= ask.price ?? "" ? .systemRed : .systemBlue
-                cell?.percentLabel.textColor = self.prevClosePrice <= ask.price ?? "" ? .systemRed : .systemBlue
+                cell?.priceLabel.textColor = Double(self.prevClosePrice) ?? 0.0 <= ask.doubleTypePrice ? .systemRed : .systemBlue
+                cell?.percentLabel.textColor = Double(self.prevClosePrice) ?? 0.0 <= ask.doubleTypePrice ? .systemRed : .systemBlue
                 
                 if ask.price ?? "" == self.closePrice {
                     cell?.borders.top = .solid(width: 1, color: .black)
@@ -225,8 +225,8 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
                 cell?.priceLabel.text = bid.price?.decimal
                 cell?.percentLabel.text = bid.price?.changeRate(from: self.prevClosePrice)
                 cell?.contentView.backgroundColor = Color.backgroundRed
-                cell?.priceLabel.textColor = self.prevClosePrice <= bid.price ?? "" ? .systemRed : .systemBlue
-                cell?.percentLabel.textColor = self.prevClosePrice <= bid.price ?? "" ? .systemRed : .systemBlue
+                cell?.priceLabel.textColor = Double(self.prevClosePrice) ?? 0.0 <= bid.doubleTypePrice ? .systemRed : .systemBlue
+                cell?.percentLabel.textColor = Double(self.prevClosePrice) ?? 0.0 <= bid.doubleTypePrice ? .systemRed : .systemBlue
                 
                 if bid.price ?? "" == self.closePrice {
                     cell?.borders.top = .solid(width: 1, color: .black)
