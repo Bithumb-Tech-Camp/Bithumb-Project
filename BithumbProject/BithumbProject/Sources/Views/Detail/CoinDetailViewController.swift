@@ -8,6 +8,7 @@
 import UIKit
 
 import RxSwift
+import RxViewController
 import SnapKit
 import Then
 import XLPagerTabStrip
@@ -58,16 +59,7 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
         action: #selector(touchleftBarButton)
     )
     
-    private lazy var starBarButton: UIButton = UIButton().then {
-        $0.setImage(
-            UIImage(
-                systemName: "star",
-                withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
-            ),
-            for: .normal
-        )
-        $0.tintColor = .black
-    }
+    private lazy var starBarButton: StarButton = StarButton(pointSize: 20)
     
     private lazy var kebabMenuBarButton: UIButton = UIButton().then {
         $0.setImage(
@@ -154,6 +146,7 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
         
         view.addSubview(headerView)
         view.addSubview(buttonBarPagerViewController.view)
+        view.backgroundColor = .white
         
         closePriceLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         changeAmountLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -178,8 +171,8 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
     
     func bind() {
         
-        Observable.just(())
-            .bind(onNext: { _ in
+        rx.viewWillAppear
+            .subscribe(onNext: { _ in
                 self.viewModel.input.fetchTicker.onNext(())
                 self.viewModel.input.fetchRealtimeTicker.onNext(())
             })

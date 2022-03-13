@@ -31,8 +31,8 @@ final class CoinDetailViewModel: ViewModelType {
     
     let input: Input
     let output: Output
-    var httpManager: HTTPManager
     var coin: Coin
+    var httpManager: HTTPManager
     var webSockerManager: WebSocketManager
     var disposeBag: DisposeBag = DisposeBag()
     
@@ -47,7 +47,8 @@ final class CoinDetailViewModel: ViewModelType {
             .flatMap { _ -> Observable<Ticker> in
                 httpManager.request(httpServiceType: .ticker(coin.orderCurrency), model: Ticker.self)
             }
-            .subscribe(onNext: { ticker in
+            .subscribe(onNext: {[weak self] ticker in
+                guard let self = self else { return }
                 let changeAmountSign = Double(ticker.fluctate24H ?? "0") ?? 0 >= 0 ? "+" : ""
                 let changeRateSign = Double(ticker.fluctateRate24H ?? "0") ?? 0 >= 0 ? "▲" : "▼"
                 let upDown: UpDown = Double(ticker.fluctate24H ?? "0") ?? 0 >= 0 ? .up : .down
@@ -67,11 +68,13 @@ final class CoinDetailViewModel: ViewModelType {
                 let parameter: [String: Any] = [
                     "type": BithumbWebSocketRequestType.ticker.rawValue,
                     "symbols": [coin.orderCurrency],
-                    "tickTypes": [TickType.thirtyMinute].map { $0.rawValue }
+                    "tickTypes": [RealtimeTickType.twentyFourHour].map { $0.rawValue }
                 ]
                 return webSocketManager.requestRealtime(parameter: parameter, type: RealtimeTicker.self)
             }
-            .subscribe(onNext: { realtimeTicker in
+            .filter { !$0.isEmpty }
+            .subscribe(onNext: {[weak self] realtimeTicker in
+                guard let self = self else { return }
                 let changeAmountSign = Double(realtimeTicker.changeAmount ?? "0") ?? 0 >= 0 ? "+" : ""
                 let changeRateSign = Double(realtimeTicker.changeRate ?? "0") ?? 0 >= 0 ? "▲" : "▼"
                 let upDown: UpDown = Double(realtimeTicker.changeAmount ?? "0") ?? 0 >= 0 ? .up : .down
@@ -81,7 +84,8 @@ final class CoinDetailViewModel: ViewModelType {
                 self.output.realtimeChangeRateText.accept("\(changeRateSign)\(Double(realtimeTicker.changeRate ?? "0") ?? 0)%")
                 self.output.realtimeUpDown.accept(upDown)
                 
-            }, onError: { error in
+            }, onError: {[weak self] error in
+                guard let self = self else { return }
                 self.output.error.accept(error as NSError)
             })
             .disposed(by: disposeBag)

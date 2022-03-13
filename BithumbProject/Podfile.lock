@@ -9,6 +9,11 @@ PODS:
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
   - PanModal (1.2.7)
+  - Realm (10.24.0):
+    - Realm/Headers (= 10.24.0)
+  - Realm/Headers (10.24.0)
+  - RealmSwift (10.24.0):
+    - Realm (= 10.24.0)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -44,6 +49,7 @@ DEPENDENCIES:
   - Charts
   - Moya
   - PanModal
+  - RealmSwift
   - RxCocoa
   - RxDataSources
   - RxGesture
@@ -66,6 +72,8 @@ SPEC REPOS:
     - Differentiator
     - Moya
     - PanModal
+    - Realm
+    - RealmSwift
     - RxCocoa
     - RxDataSources
     - RxGesture
@@ -88,6 +96,8 @@ SPEC CHECKSUMS:
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
+  Realm: 5d6f84e3f65d4efa204d46b461e5bbbbbbf84c6c
+  RealmSwift: 9022754b93fad23e1ffc950c93574c5b7899bd51
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxGesture: abadd243fc36db74df43dfc893829ddde94f1a3d
@@ -104,6 +114,6 @@ SPEC CHECKSUMS:
   Then: acfe0be7e98221c6204e12f8161459606d5d822d
   XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: b1e3505fcc3b30da505471b34a44426844ebf68b
+PODFILE CHECKSUM: cebf211d7b074387705286e4a53d7ba3e4fbbb24
 
 COCOAPODS: 1.11.2

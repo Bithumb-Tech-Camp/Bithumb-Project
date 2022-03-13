@@ -16,30 +16,6 @@ enum BithumbWebSocketRequestType: String {
     case orderBookDepth = "orderbookdepth"
 }
 
-enum TickType: String {
-    case thirtyMinute = "30M"
-    case oneHour = "1H"
-    case twelveHour = "12H"
-    case twentyFourHour = "24H"
-    case mid = "MID"
-    
-    init?(rawValue: String) {
-        let value = rawValue.lowercased()
-        switch value {
-        case "1m", "3m", "5m", "10m", "30m":
-            self = .thirtyMinute
-        case "1h", "6h":
-            self = .oneHour
-        case "12h":
-            self = .twelveHour
-        case "24h", "mid":
-            self = .twentyFourHour
-        default:
-            return nil
-        }
-    }
-}
-
 final class WebSocketManager: WebSocketService {
     
     private var disposeBag: DisposeBag = DisposeBag()
@@ -99,6 +75,7 @@ final class WebSocketManager: WebSocketService {
                 .disposed(by: self.disposeBag)
             return Disposables.create()
         }
+        .share(replay: 1, scope: .whileConnected)
     }
     // swiftlint:enable all
 }

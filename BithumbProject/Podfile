@@ -24,6 +24,7 @@ target 'BithumbProject' do
   pod 'SpreadsheetView'
   pod 'XLPagerTabStrip'
   pod 'PanModal'
+  pod 'RealmSwift'
 
   target 'BithumbProjectTests' do
     inherit! :search_paths
