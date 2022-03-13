@@ -41,7 +41,7 @@ final class TransactionViewModel: ViewModelType {
         
         let tickerParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.ticker.rawValue,
-              "symbols": [coin.acronyms],
+              "symbols": [coin.orderCurrency],
               "tickTypes": [RealtimeTickType.twentyFourHour].map { $0.rawValue }
              ]
 
