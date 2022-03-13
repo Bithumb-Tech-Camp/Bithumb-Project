@@ -20,7 +20,7 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
     
     // MARK: - View Properties
     private lazy var coinSearchBar = UISearchBar().then {
-        $0.placeholder = "코인명 또는 심볼 검색"
+        $0.placeholder = "심볼(BTC) 검색"
         $0.keyboardType = .webSearch
         $0.searchTextField.backgroundColor = .systemBackground
         $0.addDoneButtonOnKeyboard()
@@ -75,9 +75,18 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
     // MARK: - CoinListViewController Bind
     func bind() {
         
+        self.rx.viewDidAppear
+            .bind { _ in
+                if !UserDefaults.standard.bool(forKey: CommonUserDefault<String>.DataKey.initialLaunchKey.forKey) {
+                    let signUpViewController = SignUpViewController()
+                    signUpViewController.modalPresentationStyle = .overFullScreen
+                    self.present(signUpViewController, animated: true, completion: nil)
+                }
+            }
+            .disposed(by: self.disposeBag)
+        
         // output
         self.viewModel.output.coinListUpdate = {
-            print("reloadData")
             self.coinSpreadsheetView.reloadData()
         }
         
@@ -91,8 +100,9 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
             .disposed(by: self.disposeBag)
         
         self.alarmBarButton.rx.tap
-            .bind(onNext: {
-                self.alertMessage(message: "알림으로 가는 탭")
+            .withUnretained(self)
+            .bind(onNext: { owner, _ in
+                owner.alertMessage(message: "알림이 설정되었습니다")
             })
             .disposed(by: self.disposeBag)
         
@@ -232,6 +242,7 @@ extension CoinListViewController: SpreadsheetViewDataSource {
             cell?.borders.left = .none
             cell?.borders.right = .none
             cell?.borders.bottom = .solid(width: 1, color: .systemGray6)
+            cell?.coin = coin
             cell?.rendering(coin)
 
             return cell

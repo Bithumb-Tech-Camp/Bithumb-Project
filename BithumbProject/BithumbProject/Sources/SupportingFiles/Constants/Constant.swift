@@ -60,4 +60,10 @@ enum Constant {
         static let orderBookPath = "/orderbook"
         static let transationHistoryPath = "/transaction_history"
     }
+    
+    enum Parameters {
+        // swiftlint:disable all
+        static let coinList = ["CHZ", "ALGO", "ICX", "BNT", "RSR", "COLA", "SRM", "KSM", "SSX", "ONT", "UOS", "ETC", "ORBS", "C98", "BIOT", "PUNDIX", "BTT", "LOOM", "MANA", "ALICE", "CRO", "STRAX", "1INCH", "XVS", "CTK", "DOT", "MAP", "XPR", "CELR", "CAKE", "ORC", "COMP", "BTC", "OBSR", "WOO", "WEMIX", "MXC", "ONG", "AQT", "CTC", "XEM", "KLAY", "SOL", "VRA", "WOZX", "ADP", "TFUEL", "ARPA", "BCH", "NU", "ETH", "TRX", "LRC", "SUSHI", "BASIC", "CTSI", "BFC", "GLM", "SPRT", "LINA", "FCT2", "ATOM", "MBL", "DAO", "MLK", "AMO", "WIKEN", "QKC", "BNB", "MKR", "EGLD", "QTCON", "GHX", "ZRX", "ELF", "CWD", "SOC", "BAT", "BURGER", "AAVE", "THETA", "AWO", "BTG", "CON", "MATIC", "DAD", "GRT", "HIBS", "CENNZ", "CYCLUB", "CHR", "XYM", "QTUM", "APM", "COTI", "POLA", "LINK", "GALA", "ANV", "ENJ", "GXC", "DAI", "ZIL", "JST", "CKB", "ANW", "WOM", "DOGE", "OXT", "MM", "NMR", "EL", "LUNA", "DVI", "BORA", "FRONT", "PCI", "VET", "BLY", "COS", "BSV", "MIR", "TRV", "WAVES", "XTZ", "BAKE", "BCD", "XNO", "STEEM", "SNT", "SXP", "MVC", "UMA", "BEL", "EOS", "AERGO", "IOST", "MTL", "WAXP", "MED", "BOA", "REN", "LTC", "FIT", "KNC", "ARW", "SNX", "GOM2", "TEMCO", "VALOR", "XEC", "SOFI", "ADA", "MIX", "GO", "RLC", "MEV", "XRP", "HIVE", "REP", "VSYS", "OCEAN", "APIX", "CTXC", "OMG", "VELO", "FX", "SAND", "BAL", "EGG", "TDROP", "EVZ", "AXS", "BOBA", "YFI", "WICC", "NFT", "TMTG", "ANKR", "ASM", "AION", "RINGX", "IPX", "XLM", "WTC", "RLY", "SUN", "META", "LPT", "UNI", "POWR", "ATOLO"].map { "\($0)_KRW"}
+        // swiftline:enable all
+    }
 }

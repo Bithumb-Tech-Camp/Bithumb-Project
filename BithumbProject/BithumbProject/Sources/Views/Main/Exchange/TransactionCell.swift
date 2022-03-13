@@ -42,7 +42,7 @@ extension TransactionCell {
         self.transactionLabel.text = coin.transaction.transactionDecimal
         if let isHigher = coin.isHigher {
             let changeBackColor: UIColor = isHigher ? .systemRed : .systemBlue
-            UIView.animate(withDuration: 0.2) {
+            UIView.animate(withDuration: 0.25) {
                 self.contentView.backgroundColor = changeBackColor.withAlphaComponent(0.1)
             } completion: { _ in
                 self.contentView.backgroundColor = .systemBackground

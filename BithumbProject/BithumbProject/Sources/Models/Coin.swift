@@ -13,14 +13,15 @@ final class Coin {
         case KRW
         case BTC
     }
+    
     var krName: String
     var acronyms: String
     var currency: Currency
     var ticker: Double
     var changeRate: ChangeRate
     var transaction: Double
-    var isStarred: Bool
     var isHigher: Bool?
+    var wasHigher: Bool?
     var tickType: ChangeRatePeriod
     
     init(krName: String = "비트코인",
@@ -29,8 +30,8 @@ final class Coin {
          ticker: Double,
          changeRate: ChangeRate,
          transaction: Double,
-         isStarred: Bool = false,
          isHigher: Bool? = nil,
+         wasHigher: Bool? = nil,
          tickType: ChangeRatePeriod = .MID) {
         self.krName = krName
         self.acronyms = acronyms
@@ -38,9 +39,18 @@ final class Coin {
         self.ticker = ticker
         self.changeRate = changeRate
         self.transaction = transaction
-        self.isStarred = isStarred
         self.isHigher = isHigher
+        self.wasHigher = wasHigher
         self.tickType = tickType
+    }
+    
+    func star(_ isSelected: Bool) {
+        let coinName = "\(self.acronyms)_\(self.currency.rawValue)"
+        if isSelected {
+            CommonUserDefault<String>.save(coinName, key: .star(coinName))
+        } else {
+            CommonUserDefault<String>.delete(.star(coinName))
+        }
     }
 }
 
@@ -51,15 +61,6 @@ extension Coin {
     
     var orderCurrency: OrderCurrency {
         return "\(self.acronyms)_\(self.currency.rawValue)"
-    }
-    
-    var updateColor: UIColor? {
-        if let isHigher = self.isHigher {
-            let color: UIColor = isHigher ? .systemRed : .systemBlue
-            return color
-        } else {
-            return nil
-        }
     }
 }
 
