@@ -42,24 +42,53 @@ final class HoldingsViewController: UIViewController, ViewModelBindable {
         super.viewDidLoad()
         self.bind()
         self.configureNavigationBarUI()
+        self.makeConstraints()
     }
     
     func bind() {
         
+        self.rx.viewWillAppear
+            .bind { _ in
+                let user = User(
+                    name: CommonUserDefault<String>.fetch(.username).first ?? "",
+                    assets: Double(CommonUserDefault<String>.fetch(.holdings).first ?? "") ?? 0.0)
+                self.viewModel.output.userInfo.accept(user)
+            }
+            .disposed(by: self.disposeBag)
+        
         self.alarmBarButton.rx.tap
             .bind { _ in
-                
+                self.alertMessage(message: "알림이 설정되었습니다")
             }
             .disposed(by: self.disposeBag)
         
         self.viewModel.output.holdings
-            .bind(to: holdingsTableView.rx.items(cellIdentifier: String(describing: HoldingsTableViewCell.self), cellType: HoldingsTableViewCell.self)) { row, item, cell in
-                
+            .bind(to: holdingsTableView.rx.items(cellIdentifier: String(describing: HoldingsTableViewCell.self), cellType: HoldingsTableViewCell.self)) { _, item, cell in
+                cell.selectionStyle = .none
+                cell.rendering(holdings: item)
             }
+            .disposed(by: self.disposeBag)
+        
+        self.viewModel.output.userInfo
+            .bind(onNext: { [weak self] user in
+                guard let self = self,
+                let user = user else { return }
+                self.holdingsHeaderView.rendering(user)
+            })
             .disposed(by: self.disposeBag)
         
         self.holdingsTableView.rx.setDelegate(self)
             .disposed(by: self.disposeBag)
+    }
+    
+    private func makeConstraints() {
+        self.view.addSubview(self.holdingsTableView)
+        self.holdingsTableView.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing)
+        }
     }
     
     private func configureNavigationBarUI() {
@@ -75,6 +104,10 @@ extension HoldingsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 100
+        return 80
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
 }

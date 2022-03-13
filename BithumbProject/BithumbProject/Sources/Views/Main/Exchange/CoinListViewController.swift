@@ -75,6 +75,16 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
     // MARK: - CoinListViewController Bind
     func bind() {
         
+        self.rx.viewDidAppear
+            .bind { _ in
+                if !UserDefaults.standard.bool(forKey: CommonUserDefault<String>.DataKey.initialLaunchKey.forKey) {
+                    let signUpViewController = SignUpViewController()
+                    signUpViewController.modalPresentationStyle = .overFullScreen
+                    self.present(signUpViewController, animated: true, completion: nil)
+                }
+            }
+            .disposed(by: self.disposeBag)
+        
         // output
         self.viewModel.output.coinListUpdate = {
             self.coinSpreadsheetView.reloadData()
@@ -91,7 +101,14 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
         
         self.alarmBarButton.rx.tap
             .bind(onNext: {
-                self.alertMessage(message: "알림!")
+                CommonUserDefault<String>.delete(.initialLaunchKey)
+                CommonUserDefault<String>.delete(.username)
+                CommonUserDefault<String>.delete(.holdings)
+                CommonUserDefault<String>.delete(.changeRatePeriod)
+                
+                CommonUserDefault<Bool>.fetch(.initialLaunchKey)
+                
+//                self.alertMessage(message: "알림이 설정되었습니다")
             })
             .disposed(by: self.disposeBag)
         

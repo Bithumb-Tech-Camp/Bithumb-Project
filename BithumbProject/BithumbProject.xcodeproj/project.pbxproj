@@ -67,6 +67,9 @@
 		DA814C0227DCC07100E0F084 /* HoldingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814C0127DCC07100E0F084 /* HoldingsTableViewCell.swift */; };
 		DA814C0427DCC0E400E0F084 /* HoldingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814C0327DCC0E400E0F084 /* HoldingsHeaderView.swift */; };
 		DA814C0627DCD3CF00E0F084 /* Holdings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814C0527DCD3CF00E0F084 /* Holdings.swift */; };
+		DA814C0827DD7B5B00E0F084 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814C0727DD7B5B00E0F084 /* User.swift */; };
+		DA814C0B27DD819C00E0F084 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814C0A27DD819C00E0F084 /* SignUpViewController.swift */; };
+		DA814C0F27DD894A00E0F084 /* SignUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA814C0E27DD894A00E0F084 /* SignUpTextField.swift */; };
 		E592A91D27C67303008BE814 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A91C27C67303008BE814 /* APIResponse.swift */; };
 		E592A91F27C6764E008BE814 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A91E27C6764E008BE814 /* Ticker.swift */; };
 		E592A92127C678E3008BE814 /* AssetsStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E592A92027C678E3008BE814 /* AssetsStatus.swift */; };
@@ -177,6 +180,9 @@
 		DA814C0127DCC07100E0F084 /* HoldingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingsTableViewCell.swift; sourceTree = "<group>"; };
 		DA814C0327DCC0E400E0F084 /* HoldingsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingsHeaderView.swift; sourceTree = "<group>"; };
 		DA814C0527DCD3CF00E0F084 /* Holdings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Holdings.swift; sourceTree = "<group>"; };
+		DA814C0727DD7B5B00E0F084 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DA814C0A27DD819C00E0F084 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		DA814C0E27DD894A00E0F084 /* SignUpTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTextField.swift; sourceTree = "<group>"; };
 		E592A91C27C67303008BE814 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
 		E592A91E27C6764E008BE814 /* Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
 		E592A92027C678E3008BE814 /* AssetsStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsStatus.swift; sourceTree = "<group>"; };
@@ -441,8 +447,17 @@
 				03C4743627D1AE1B002AC4D2 /* ButtonBarCell.swift */,
 				DA4E75B827D7AE84006A5C86 /* MainTabBarController.swift */,
 				03C4744827D396FC002AC4D2 /* StarButton.swift */,
+				DA814C0E27DD894A00E0F084 /* SignUpTextField.swift */,
 			);
 			path = CustomView;
+			sourceTree = "<group>";
+		};
+		DA814C0927DD817700E0F084 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				DA814C0A27DD819C00E0F084 /* SignUpViewController.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		E592A91B27C672E8008BE814 /* Models */ = {
@@ -465,6 +480,7 @@
 				0320AF2027D1066300B3B83B /* ChangeRatePeriod.swift */,
 				03C4744427D2E28C002AC4D2 /* SortedColumn.swift */,
 				DA4E75B427D7A28A006A5C86 /* TickerString.swift */,
+				DA814C0727DD7B5B00E0F084 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -472,6 +488,7 @@
 		E592A96B27D649CA008BE814 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				DA814C0927DD817700E0F084 /* Login */,
 				DA4E75B627D7ADFD006A5C86 /* Exchange */,
 				DA4E75B727D7AE4C006A5C86 /* Holdings */,
 				DA4E75BF27D839C3006A5C86 /* CustomView */,
@@ -827,6 +844,7 @@
 				DA4E75B527D7A28A006A5C86 /* TickerString.swift in Sources */,
 				DA4E75B927D7AE84006A5C86 /* MainTabBarController.swift in Sources */,
 				1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */,
+				DA814C0F27DD894A00E0F084 /* SignUpTextField.swift in Sources */,
 				DA4E75BB27D7AFFA006A5C86 /* HoldingsViewController.swift in Sources */,
 				249C3E7B27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift in Sources */,
 				1C33CFA327D1E8F0007E91F0 /* ChartViewModel.swift in Sources */,
@@ -870,12 +888,14 @@
 				0320AF2327D11AC800B3B83B /* UIVIewController+Extension.swift in Sources */,
 				DA814BFC27DC514400E0F084 /* CommonUserDefault.swift in Sources */,
 				03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */,
+				DA814C0B27DD819C00E0F084 /* SignUpViewController.swift in Sources */,
 				1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */,
 				E592A96327D335AE008BE814 /* TransactionSmallCell.swift in Sources */,
 				1C33CF9F27CF7D84007E91F0 /* CoinDetailButtonBarPagerViewController.swift in Sources */,
 				1C33CFA127CF9F80007E91F0 /* ChartViewController.swift in Sources */,
 				03C4743B27D1C75C002AC4D2 /* CoinListType.swift in Sources */,
 				03C4743527D19184002AC4D2 /* ButtonBarCollectionView.swift in Sources */,
+				DA814C0827DD7B5B00E0F084 /* User.swift in Sources */,
 				E592A91D27C67303008BE814 /* APIResponse.swift in Sources */,
 				E592A92327C67984008BE814 /* RealtimeTicker.swift in Sources */,
 				03C4744527D2E28C002AC4D2 /* SortedColumn.swift in Sources */,

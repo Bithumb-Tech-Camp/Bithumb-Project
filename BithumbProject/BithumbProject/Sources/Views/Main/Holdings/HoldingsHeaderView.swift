@@ -9,9 +9,16 @@ import UIKit
 
 final class HoldingsHeaderView: UIView {
     
+    private let usernameTitleLabel = UILabel().then {
+        $0.text = "사용자"
+        $0.font = UIFont.systemFont(ofSize: 15, weight: .light)
+        $0.textColor = .systemGray
+    }
+    
     private let usernameLabel = UILabel().then {
         $0.text = CommonUserDefault<String>.fetch(.username).first
-        $0.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        $0.font = UIFont.systemFont(ofSize: 22, weight: .regular)
+        $0.textColor = .darkGray
     }
     
     private let titleLabel = UILabel().then {
@@ -38,10 +45,22 @@ final class HoldingsHeaderView: UIView {
     }
     
     private func makeConstraints() {
-        self.addSubview(self.usernameLabel)
-        self.usernameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.leading.equalToSuperview().offset(10)
+        
+        let userStackView = UIStackView(
+            arrangedSubviews: [
+                self.usernameTitleLabel,
+                self.usernameLabel
+            ]).then {
+                $0.axis = .vertical
+                $0.spacing = 0
+                $0.alignment = .leading
+                $0.distribution = .fillEqually
+            }
+        
+        self.addSubview(userStackView)
+        userStackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
         }
         
         let stackView = UIStackView(
@@ -50,7 +69,7 @@ final class HoldingsHeaderView: UIView {
                 self.holdingsLabel
             ]).then {
                 $0.axis = .vertical
-                $0.spacing = 10
+                $0.spacing = 5
                 $0.alignment = .trailing
                 $0.distribution = .fillEqually
             }
@@ -58,12 +77,19 @@ final class HoldingsHeaderView: UIView {
         self.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(20)
         }
     }
     
     private func configureUI() {
-        self.backgroundColor = .systemGray6
+        self.backgroundColor = .systemGray6.withAlphaComponent(0.5)
     }
 
+}
+
+extension HoldingsHeaderView {
+    func rendering(_ user: User) {
+        self.usernameLabel.text = user.name
+        self.holdingsLabel.text = user.assets.userAssetsDecimal
+    }
 }

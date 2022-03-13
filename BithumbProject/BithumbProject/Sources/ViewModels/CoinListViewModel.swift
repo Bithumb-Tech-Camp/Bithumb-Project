@@ -58,7 +58,7 @@ final class CoinListViewModel: ViewModelType {
             resultSelector: { $1 })
             .flatMap { self.fetchCoinList($0) }
             .withLatestFrom(self.output.currentSortedColumn) { ($0, $1) }
-            .map { self.sort(coinList: $0, by: $1) }
+            .map { self.sort($0, by: $1) }
             .subscribe(onNext: { coinList in
                 self.input.coinList.accept(coinList)
             })
@@ -72,7 +72,7 @@ final class CoinListViewModel: ViewModelType {
             .filter { $0.closePrice != nil }
             .map { [$0.toDomain()] }
             .withLatestFrom(self.input.coinList) { ($0, $1) }
-            .map { self.updateCoinList($1, $0) }
+            .map { self.update($1, $0) }
             .bind(to: self.input.coinList)
             .disposed(by: self.disposeBag)
     }
@@ -115,7 +115,7 @@ final class CoinListViewModel: ViewModelType {
         
         self.output.currentSortedColumn
             .withLatestFrom(self.input.coinList) { ($0, $1) }
-            .map { self.sort(coinList: $1, by: $0) }
+            .map { self.sort($1, by: $0) }
             .bind(to: self.input.coinList)
             .disposed(by: self.disposeBag)
     }
@@ -179,7 +179,7 @@ final class CoinListViewModel: ViewModelType {
         return tickerParameter
     }
     
-    func updateCoinList(_ previousList: [Coin], _ afterList: [Coin]) -> [Coin] {
+    func update(_ previousList: [Coin], _ afterList: [Coin]) -> [Coin] {
         var previous = previousList
         afterList.forEach { realtime in
             if let index = previous.firstIndex(where: { coin in
@@ -196,7 +196,7 @@ final class CoinListViewModel: ViewModelType {
         return previous
     }
     
-    func sort(coinList: [Coin], by standard: SortedColumn) -> [Coin] {
+    func sort(_ coinList: [Coin], by standard: SortedColumn) -> [Coin] {
         switch standard {
         case .init(column: 0, sorting: .ascending):
             return coinList.sorted { $0.krName < $1.krName }
