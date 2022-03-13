@@ -8,21 +8,34 @@
 import UIKit
 import RxSwift
 import SpreadsheetView
+import XLPagerTabStrip
 
-final class TransactionViewController: UIViewController {
-    var disposeBag: DisposeBag = DisposeBag()
-    let viewModel = TransactionViewModel()
+final class TransactionViewController: UIViewController, ViewModelBindable {
     
     let spreadSheetView = SpreadsheetView().then {
         $0.register(TransactionSingleCell.self, forCellWithReuseIdentifier: String(describing: TransactionSingleCell.self))
         $0.bounces = false
         $0.showsHorizontalScrollIndicator = false
+        $0.intercellSpacing = CGSize(width: 0, height: 0)
     }
     var transactionList: [TransactionHistory] = []
+    
+    var disposeBag: DisposeBag = DisposeBag()
+    var viewModel: TransactionViewModel
+    
+    init(viewModel: TransactionViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        bind()
     }
     
     private func configureUI() {
@@ -30,15 +43,16 @@ final class TransactionViewController: UIViewController {
         
         view.addSubview(self.spreadSheetView)
         spreadSheetView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets.zero)
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        
+    }
+    
+    func bind() {
         self.viewModel.output.transactionData
-            .map { $0.sorted { $0.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() > $1.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() }}
             .map { [TransactionHistory(transactionDate: "시간", unitsTraded: "체결량(BTC)", price: "가격(KRW)")] + $0 }
-            .subscribe(onNext: { transactionList in
-                self.transactionList = transactionList
-                self.spreadSheetView.reloadData()
+            .subscribe(onNext: { [weak self] transactionList in
+                self?.transactionList = transactionList
+                self?.spreadSheetView.reloadData()
             })
             .disposed(by: disposeBag)
     }
@@ -77,7 +91,7 @@ extension TransactionViewController: SpreadsheetViewDataSource {
             } else if indexPath.column == 1 {
                 cell?.label.text = self.transactionList[indexPath.row].price?.decimal ?? "가격"
             } else if indexPath.column == 2 {
-                cell?.label.text = self.transactionList[indexPath.row].unitsTraded?.rounded ?? "체결량"
+                cell?.label.text = self.transactionList[indexPath.row].unitsTraded?.roundedDecimal ?? "체결량"
             }
             
             if indexPath.row == 0 || indexPath.column == 0 {
@@ -94,5 +108,11 @@ extension TransactionViewController: SpreadsheetViewDataSource {
             }
         }
         return cell
+    }
+}
+
+extension TransactionViewController: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        IndicatorInfo(title: "시세")
     }
 }

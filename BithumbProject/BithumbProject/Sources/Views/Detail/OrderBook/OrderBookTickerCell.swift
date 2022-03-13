@@ -11,81 +11,8 @@ import Then
 import SnapKit
 import UIKit
 
-class OrderBookTickerCell: Cell {
-    
-    let lowPriceLabel = LeftTitleLabel().then {
-        $0.title = "저가(1H)"
-        $0.content("", color: .blue)
-    }
-    
-    let highPriceLabel = LeftTitleLabel().then {
-        $0.title = "고가(1H)"
-        $0.content("", color: .red)
-    }
-    
-    let openPriceLabel = LeftTitleLabel().then {
-        $0.title = "시가(1H)"
-    }
-    
-    let prevClosePriceLabel = LeftTitleLabel().then {
-        $0.title = "전일종가"
-    }
-    
-    let separateView = UIView().then {
-        $0.backgroundColor = .lightGray
-    }
-    
-    let accTradeValueLabel = LeftTitleLabel().then {
-        $0.title = "거래금"
-    }
-    
-    let unitsTradedLabel = LeftTitleLabel().then {
-        $0.title = "거래량"
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        contentView.backgroundColor = .white
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.separateView.snp.makeConstraints {
-            $0.height.equalTo(0.5)
-        }
-        
-        let contentStackView = UIStackView(
-            arrangedSubviews: [
-                self.unitsTradedLabel,
-                self.accTradeValueLabel,
-                self.separateView,
-                self.prevClosePriceLabel,
-                self.openPriceLabel,
-                self.highPriceLabel,
-                self.lowPriceLabel
-            ])
-            .then {
-                $0.axis = .vertical
-                $0.alignment = .fill
-                $0.distribution = .fill
-                $0.spacing = 5
-            }
-        
-        contentView.addSubview(contentStackView)
-        contentStackView.snp.makeConstraints {
-            $0.leading.equalTo(self.contentView).offset(5)
-            $0.trailing.equalTo(self.contentView).offset(-5)
-            $0.bottom.equalTo(self.contentView).offset(-5)
-        }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 final class LeftTitleLabel: UIView {
+    
     public var title: String? {
         get { return titleLabel.text }
         set { titleLabel.text = newValue }
@@ -146,4 +73,78 @@ final class LeftTitleLabel: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+}
+
+class OrderBookTickerCell: Cell {
+    
+    let lowPriceLabel = LeftTitleLabel().then {
+        $0.title = "저가(24H)"
+        $0.content("", color: .blue)
+    }
+    
+    let highPriceLabel = LeftTitleLabel().then {
+        $0.title = "고가(24H)"
+        $0.content("", color: .red)
+    }
+    
+    let openPriceLabel = LeftTitleLabel().then {
+        $0.title = "시가(24H)"
+    }
+    
+    let prevClosePriceLabel = LeftTitleLabel().then {
+        $0.title = "전일종가"
+    }
+    
+    let separateView = UIView().then {
+        $0.backgroundColor = .lightGray
+    }
+    
+    let accTradeValueLabel = LeftTitleLabel().then {
+        $0.title = "거래금"
+    }
+    
+    let unitsTradedLabel = LeftTitleLabel().then {
+        $0.title = "거래량"
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        contentView.backgroundColor = .white
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.separateView.snp.makeConstraints {
+            $0.height.equalTo(0.5)
+        }
+        
+        let contentStackView = UIStackView(
+            arrangedSubviews: [
+                self.unitsTradedLabel,
+                self.accTradeValueLabel,
+                self.separateView,
+                self.prevClosePriceLabel,
+                self.openPriceLabel,
+                self.highPriceLabel,
+                self.lowPriceLabel
+            ])
+            .then {
+                $0.axis = .vertical
+                $0.alignment = .fill
+                $0.distribution = .fill
+                $0.spacing = 5
+            }
+        
+        contentView.addSubview(contentStackView)
+        contentStackView.snp.makeConstraints {
+            $0.leading.equalTo(self.contentView).offset(5)
+            $0.trailing.equalTo(self.contentView).offset(-5)
+            $0.bottom.equalTo(self.contentView).offset(-5)
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

@@ -323,8 +323,10 @@ extension CoinListViewController: SpreadsheetViewDelegate {
                 target = SortedColumn(column: indexPath.row, sorting: .ascending)
             }
         } else {
-            let coin = self.viewModel.output.coinList[indexPath.row]
-            self.pushToCoinDetailViewController(coin: coin)
+            if indexPath.row - 1 < self.viewModel.output.coinList.count && indexPath.row >= 0 {
+                let coin = self.viewModel.output.coinList[indexPath.row - 1]
+                self.pushToCoinDetailViewController(coin: coin)
+            }
         }
     }
 }

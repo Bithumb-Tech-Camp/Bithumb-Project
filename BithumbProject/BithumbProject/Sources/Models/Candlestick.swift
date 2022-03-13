@@ -124,7 +124,7 @@ struct Candlestick {
         self.transactionVolume = transactionVolume
     }
     
-    init(array: [IntOrString]) {
+    init(array: [IntString]) {
         array.enumerated().forEach { index, val in
             switch (index, val) {
             case (0, .int(let data)):

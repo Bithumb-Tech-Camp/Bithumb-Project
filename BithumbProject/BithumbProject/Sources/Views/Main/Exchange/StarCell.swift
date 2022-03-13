@@ -26,6 +26,7 @@ final class StarCell: Cell {
     var coin: Coin?
     
     var disposeBag = DisposeBag()
+    let starButton = StarButton(isActivated: false)
 
     override func layoutSubviews() {
         super.layoutSubviews()

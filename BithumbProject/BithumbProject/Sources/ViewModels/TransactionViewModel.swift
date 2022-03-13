@@ -12,34 +12,38 @@ import Moya
 
 final class TransactionViewModel: ViewModelType {
     
-    var input: Input
-    var output: Output
-    var disposeBag: DisposeBag = DisposeBag()
-
     struct Input {
         let transactionData = PublishRelay<[TransactionHistory]>()
         let realtimeTransationData = PublishRelay<RealtimeTransaction>()
+        let volumePower = PublishRelay<String>()
     }
     
     struct Output {
         let transactionData = BehaviorRelay<[TransactionHistory]>(value: [])
         let realtimeTransationData = BehaviorRelay<RealtimeTransaction>(value: RealtimeTransaction())
+        let volumePower = BehaviorRelay<String>(value: "")
     }
     
-    init() {
+    var input: Input
+    var output: Output
+    var disposeBag: DisposeBag = DisposeBag()
+    
+    init(coin: Coin, httpManager: HTTPManager, webSocketManager: WebSocketManager) {
         self.input = Input()
         self.output = Output()
         
-        let provider = MoyaProvider<HTTPService>()
-        let httpManager = HTTPManager(provider: provider)
-        let webSocketManager = WebSocketManager()
-        
         let transactionParameter: [String: Any] = [
                "type": BithumbWebSocketRequestType.transaction.rawValue,
-               "symbols": ["BTC_KRW"]
+               "symbols": [coin.orderCurrency]
             ]
+        
+        let tickerParameter: [String: Any] = [
+              "type": BithumbWebSocketRequestType.ticker.rawValue,
+              "symbols": [coin.acronyms],
+              "tickTypes": [RealtimeTickType.oneHour].map { $0.rawValue }
+             ]
 
-        httpManager.request(httpServiceType: .transactionHistory("BTC"), model: [TransactionHistory].self)
+        httpManager.request(httpServiceType: .transactionHistory(coin.orderCurrency), model: [TransactionHistory].self)
             .map { self.addUpdownColumn($0) }
             .bind(to: input.transactionData)
             .disposed(by: disposeBag)
@@ -55,7 +59,19 @@ final class TransactionViewModel: ViewModelType {
         input.realtimeTransationData
             .withLatestFrom(input.transactionData) {( $0, $1 )}
             .map { self.updateTransationData(realtimeList: $0.0.list, previousList: $0.1) }
+            .map { $0.sorted { $0.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() > $1.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() }}
+            .map { Array($0.prefix(40)) }
             .bind(to: input.transactionData)
+            .disposed(by: disposeBag)
+        
+        webSocketManager.requestRealtime(parameter: tickerParameter, type: RealtimeTicker.self)
+            .map { $0.volumePower }
+            .filterNil()
+            .bind(to: input.volumePower)
+            .disposed(by: disposeBag)
+        
+        input.volumePower
+            .bind(to: output.volumePower)
             .disposed(by: disposeBag)
     }
     

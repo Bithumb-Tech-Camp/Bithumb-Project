@@ -98,12 +98,31 @@ final class CoinDetailButtonBarPagerViewController: ButtonBarPagerTabStripViewCo
         let chartViewModel = ChartViewModel(
             coin: viewModel.coin,
             httpManager: viewModel.httpManager,
-            webSocketManager: viewModel.webSockerManager
+            webSocketManager: viewModel.webSockerManager,
+            realmManager: RealmManager()
         )
         let chartViewController = ChartViewController(viewModel: chartViewModel)
         
+        let orderBookViewModel = OrderBookViewModel(
+            coin: viewModel.coin,
+            httpManager: viewModel.httpManager,
+            webSocketManager: viewModel.webSockerManager
+        )
+
+        let transactionViewModel = TransactionViewModel(
+            coin: viewModel.coin,
+            httpManager: viewModel.httpManager,
+            webSocketManager: viewModel.webSockerManager
+        )
+
+        let orderBookViewController = OrderBookViewController(viewModel: orderBookViewModel, transactionViewModel: transactionViewModel)
+
+        let transactionViewController = TransactionViewController(viewModel: transactionViewModel)
+
         return [
-            chartViewController
+            orderBookViewController,
+            chartViewController,
+            transactionViewController
         ]
     }
 }

@@ -10,18 +10,18 @@ import UIKit
 import RxSwift
 import SpreadsheetView
 import RxDataSources
+import XLPagerTabStrip
 
-class OrderBookViewController: UIViewController {
-    var disposeBag = DisposeBag()
-    let viewModel = OrderBookViewModel()
-    let transactionCellViewController = TransactionCellViewController()
+final class OrderBookViewController: UIViewController, ViewModelBindable {
     
-    let spreadSheetView = SpreadsheetView().then {
+    private let spreadSheetView = SpreadsheetView().then {
         $0.register(OrderBookPriceCell.self, forCellWithReuseIdentifier: String(describing: OrderBookPriceCell.self))
         $0.register(OrderBookTickerCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTickerCell.self))
         $0.register(OrderBookTransactionCell.self, forCellWithReuseIdentifier: String(describing: OrderBookTransactionCell.self))
+        $0.register(OrderBookQuantityCell.self, forCellWithReuseIdentifier: String(describing: OrderBookQuantityCell.self))
         $0.bounces = false
         $0.showsHorizontalScrollIndicator = false
+        $0.intercellSpacing = CGSize(width: 0, height: 0)
     }
     
     var bidList: [BidAsk] = []  // 매수
@@ -31,9 +31,28 @@ class OrderBookViewController: UIViewController {
     var prevClosePrice: String = ""
     var closePrice: String = ""
     
+    var disposeBag: DisposeBag = DisposeBag()
+    var viewModel: OrderBookViewModel
+    var transactionCellViewController: TransactionCellViewController
+    
+    init(viewModel: OrderBookViewModel, transactionViewModel: TransactionViewModel) {
+        self.viewModel = viewModel
+        self.transactionCellViewController = TransactionCellViewController(viewModel: transactionViewModel)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(viewModel: OrderBookViewModel) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        bind()
     }
     
     private func configureUI() {
@@ -41,23 +60,26 @@ class OrderBookViewController: UIViewController {
         
         view.addSubview(self.spreadSheetView)
         spreadSheetView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide).inset(UIEdgeInsets.zero)
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
         }
-        
+    }
+    
+    func bind() {
         self.viewModel.output.bidList
             .subscribe(onNext: { bidList in
                 self.bidList = bidList
                 self.spreadSheetView.reloadData()
             })
             .disposed(by: disposeBag)
-
+        
         self.viewModel.output.askList
             .subscribe(onNext: { askList in
                 self.askList = askList
                 self.spreadSheetView.reloadData()
             })
             .disposed(by: disposeBag)
-
+        
         self.viewModel.output.tickerData
             .subscribe(onNext: { ticker in
                 self.tickerData = ticker
@@ -78,7 +100,7 @@ class OrderBookViewController: UIViewController {
 extension OrderBookViewController: SpreadsheetViewDataSource {
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, widthForColumn column: Int) -> CGFloat {
-        return Screen.width / 3
+        return self.spreadSheetView.frame.width / 3
     }
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, heightForRow row: Int) -> CGFloat {
@@ -104,6 +126,9 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
         let askListIndex = self.askList.count + indexPath.row - 30
         let bidListIndex = indexPath.row - 30
         
+        let maxAsk = self.askList.map { Double($0.quantity ?? "") ?? 0.0 }.max() ?? 0.0
+        let maxBid = self.bidList.map { Double($0.quantity ?? "") ?? 0.0 }.max() ?? 0.0
+        
         if indexPath.row == 0 && indexPath.column == 2 {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookTickerCell.self), for: indexPath) as? OrderBookTickerCell
             
@@ -112,11 +137,11 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
             cell?.openPriceLabel.content = self.tickerData.openingPrice?.decimal
             cell?.prevClosePriceLabel.content = self.tickerData.prevClosingPrice?.decimal
             cell?.accTradeValueLabel.content = self.tickerData.accTradeValue24H?.displayToBillions
-            #warning("코인 이름에 맞춰 넣어주기")
             if let unitsTraded = self.tickerData.unitsTraded24H?.displayToCoin {
-                cell?.unitsTradedLabel.content = unitsTraded + " BTC"
+                cell?.unitsTradedLabel.content = unitsTraded + " \(self.viewModel.coin.acronyms)"
             }
             return cell
+            
         } else if indexPath.row == 30 && indexPath.column == 0 {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookTransactionCell.self), for: indexPath)
             
@@ -126,55 +151,94 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
             }
             transactionCellViewController.attach(to: cell.contentView)
             return cell
+            
+        } else if (indexPath.column == 0 && indexPath.row < 30) || (indexPath.column == 2 && indexPath.row >= 30) {
+            let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookQuantityCell.self), for: indexPath) as? OrderBookQuantityCell
+            
+            if !self.askList.isEmpty && !self.bidList.isEmpty {
+                if indexPath.column ==  0 && indexPath.row < 30 {
+                    cell?.quantityLabel.text = self.askList[askListIndex].quantity?.roundedDecimal
+                    cell?.quantityLabel.textAlignment = .right
+                    cell?.contentView.backgroundColor = Color.backgroundBlue
+                    cell?.quantityBar.backgroundColor = .systemBlue
+                    
+                    let width: CGFloat = CGFloat( self.askList[askListIndex].quantity?.quantityPercent(by: maxAsk) ?? 0.0)
+                    
+                    cell?.quantityBar.snp.remakeConstraints {
+                        $0.centerY.equalToSuperview()
+                        $0.trailing.equalToSuperview()
+                        $0.width.equalToSuperview().multipliedBy(width)
+                        $0.height.equalTo(10)
+                    }
+                }
+                if indexPath.column ==  2 && indexPath.row >= 30 {
+                    cell?.quantityLabel.text = self.bidList[bidListIndex].quantity?.roundedDecimal
+                    cell?.quantityLabel.textAlignment = .left
+                    cell?.contentView.backgroundColor = Color.backgroundRed
+                    cell?.quantityBar.backgroundColor = .systemRed
+                    
+                    let width: CGFloat = CGFloat( self.bidList[bidListIndex].quantity?.quantityPercent(by: maxBid) ?? 0.0)
+                    
+                    cell?.quantityBar.snp.remakeConstraints {
+                        $0.centerY.equalToSuperview()
+                        $0.leading.equalToSuperview()
+                        $0.width.equalToSuperview().multipliedBy(width)
+                        $0.height.equalTo(10)
+                    }
+                }
+            }
+            return cell
+            
         } else {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookPriceCell.self), for: indexPath) as? OrderBookPriceCell
             
             if !self.askList.isEmpty && !self.bidList.isEmpty {
-                if indexPath.column ==  0 && indexPath.row < 30 {
-                    cell?.priceLabel.text = self.askList[askListIndex].quantity?.rounded
-                    cell?.priceLabel.textAlignment = .right
+                if indexPath.row < 30 {
+                    cell?.priceLabel.text = self.askList[askListIndex].price?.decimal
+                    cell?.percentLabel.text = self.askList[askListIndex].price?.changeRate(from: self.prevClosePrice)
                     cell?.contentView.backgroundColor = Color.backgroundBlue
-                    cell?.priceLabel.textColor = .black
-                }
-                
-                if indexPath.column ==  1 {
-                    if indexPath.row < 30 {
-                        cell?.priceLabel.text = self.askList[askListIndex].price?.decimal
-                        cell?.percentLabel.text = self.askList[askListIndex].price?.changeRate(from: self.prevClosePrice)
-                        cell?.contentView.backgroundColor = Color.backgroundBlue
-                        cell?.priceLabel.textColor = self.prevClosePrice <= self.askList[askListIndex].price ?? "" ? .red : .blue
-                        cell?.percentLabel.textColor = self.prevClosePrice <= self.askList[askListIndex].price ?? "" ? .red : .blue
-                        
-                        if self.askList[self.askList.count + indexPath.row - 30].price ?? "" == self.closePrice {
-                            cell?.borders.top = .solid(width: 1, color: .black)
-                            cell?.borders.left = .solid(width: 1, color: .black)
-                            cell?.borders.right = .solid(width: 1, color: .black)
-                            cell?.borders.bottom = .solid(width: 1, color: .black)
-                        }
+                    cell?.priceLabel.textColor = self.prevClosePrice <= self.askList[askListIndex].price ?? "" ? .red : .blue
+                    cell?.percentLabel.textColor = self.prevClosePrice <= self.askList[askListIndex].price ?? "" ? .red : .blue
+                    
+                    if self.askList[self.askList.count + indexPath.row - 30].price ?? "" == self.closePrice {
+                        cell?.borders.top = .solid(width: 1, color: .black)
+                        cell?.borders.left = .solid(width: 1, color: .black)
+                        cell?.borders.right = .solid(width: 1, color: .black)
+                        cell?.borders.bottom = .solid(width: 1, color: .black)
                     } else {
-                        cell?.priceLabel.text = self.bidList[bidListIndex].price?.decimal
-                        cell?.percentLabel.text = self.bidList[bidListIndex].price?.changeRate(from: self.prevClosePrice)
-                        cell?.contentView.backgroundColor = Color.backgroundRed
-                        cell?.priceLabel.textColor = self.prevClosePrice <= self.bidList[bidListIndex].price ?? "" ? .red : .blue
-                        cell?.percentLabel.textColor = self.prevClosePrice <= self.bidList[bidListIndex].price ?? "" ? .red : .blue
-                        
-                        if self.bidList[indexPath.row - 30].price ?? "" == self.closePrice {
-                            cell?.borders.top = .solid(width: 1, color: .black)
-                            cell?.borders.left = .solid(width: 1, color: .black)
-                            cell?.borders.right = .solid(width: 1, color: .black)
-                            cell?.borders.bottom = .solid(width: 1, color: .black)
-                        }
+                        cell?.borders.top = .none
+                        cell?.borders.left = .none
+                        cell?.borders.right = .none
+                        cell?.borders.bottom = .none
+                    }
+                } else {
+                    cell?.priceLabel.text = self.bidList[bidListIndex].price?.decimal
+                    cell?.percentLabel.text = self.bidList[bidListIndex].price?.changeRate(from: self.prevClosePrice)
+                    cell?.contentView.backgroundColor = Color.backgroundRed
+                    cell?.priceLabel.textColor = self.prevClosePrice <= self.bidList[bidListIndex].price ?? "" ? .red : .blue
+                    cell?.percentLabel.textColor = self.prevClosePrice <= self.bidList[bidListIndex].price ?? "" ? .red : .blue
+                    
+                    if self.bidList[indexPath.row - 30].price ?? "" == self.closePrice {
+                        cell?.borders.top = .solid(width: 1, color: .black)
+                        cell?.borders.left = .solid(width: 1, color: .black)
+                        cell?.borders.right = .solid(width: 1, color: .black)
+                        cell?.borders.bottom = .solid(width: 1, color: .black)
+                    } else {
+                        cell?.borders.top = .none
+                        cell?.borders.left = .none
+                        cell?.borders.right = .none
+                        cell?.borders.bottom = .none
                     }
                 }
-                
-                if indexPath.column ==  2 && indexPath.row >= 30 {
-                    cell?.priceLabel.text = self.bidList[bidListIndex].quantity?.rounded
-                    cell?.priceLabel.textAlignment = .left
-                    cell?.contentView.backgroundColor = Color.backgroundRed
-                    cell?.priceLabel.textColor = .black
-                }
             }
+            
             return cell
         }
+    }
+}
+
+extension OrderBookViewController: IndicatorInfoProvider {
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        IndicatorInfo(title: "호가")
     }
 }
