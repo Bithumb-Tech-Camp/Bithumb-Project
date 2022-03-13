@@ -128,8 +128,8 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
         
         let askListIndex = self.askList.count + indexPath.row - 30
         let bidListIndex = indexPath.row - 30
-        let maxAsk = self.askList.map { Double($0.quantity ?? "") ?? 0.0 }.max() ?? 0.0
-        let maxBid = self.bidList.map { Double($0.quantity ?? "") ?? 0.0 }.max() ?? 0.0
+        let maxAsk = self.askList.suffix(30).map { Double($0.quantity ?? "") ?? 0.0 }.max() ?? 0.0
+        let maxBid = self.bidList.prefix(30).map { Double($0.quantity ?? "") ?? 0.0 }.max() ?? 0.0
         
         if indexPath.row == 0 && indexPath.column == 2 {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookTickerCell.self), for: indexPath) as? OrderBookTickerCell
