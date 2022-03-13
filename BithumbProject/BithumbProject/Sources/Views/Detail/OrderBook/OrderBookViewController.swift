@@ -128,8 +128,8 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
         
         let askListIndex = self.askList.count + indexPath.row - 30
         let bidListIndex = indexPath.row - 30
-        let maxAsk = self.askList.map { Double($0.quantity ?? "") ?? 0.0 }.max() ?? 0.0
-        let maxBid = self.bidList.map { Double($0.quantity ?? "") ?? 0.0 }.max() ?? 0.0
+        let maxAsk = self.askList.suffix(30).map { Double($0.quantity ?? "") ?? 0.0 }.max() ?? 0.0
+        let maxBid = self.bidList.prefix(30).map { Double($0.quantity ?? "") ?? 0.0 }.max() ?? 0.0
         
         if indexPath.row == 0 && indexPath.column == 2 {
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: OrderBookTickerCell.self), for: indexPath) as? OrderBookTickerCell
@@ -201,8 +201,8 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
                 cell?.priceLabel.text = ask.price?.decimal
                 cell?.percentLabel.text = ask.price?.changeRate(from: self.prevClosePrice)
                 cell?.contentView.backgroundColor = Color.backgroundBlue
-                cell?.priceLabel.textColor = self.prevClosePrice <= ask.price ?? "" ? .systemRed : .systemBlue
-                cell?.percentLabel.textColor = self.prevClosePrice <= ask.price ?? "" ? .systemRed : .systemBlue
+                cell?.priceLabel.textColor = Double(self.prevClosePrice) ?? 0.0 <= ask.doubleTypePrice ? .systemRed : .systemBlue
+                cell?.percentLabel.textColor = Double(self.prevClosePrice) ?? 0.0 <= ask.doubleTypePrice ? .systemRed : .systemBlue
                 
                 if ask.price ?? "" == self.closePrice {
                     cell?.borders.top = .solid(width: 1, color: .black)
@@ -225,8 +225,8 @@ extension OrderBookViewController: SpreadsheetViewDataSource {
                 cell?.priceLabel.text = bid.price?.decimal
                 cell?.percentLabel.text = bid.price?.changeRate(from: self.prevClosePrice)
                 cell?.contentView.backgroundColor = Color.backgroundRed
-                cell?.priceLabel.textColor = self.prevClosePrice <= bid.price ?? "" ? .systemRed : .systemBlue
-                cell?.percentLabel.textColor = self.prevClosePrice <= bid.price ?? "" ? .systemRed : .systemBlue
+                cell?.priceLabel.textColor = Double(self.prevClosePrice) ?? 0.0 <= bid.doubleTypePrice ? .systemRed : .systemBlue
+                cell?.percentLabel.textColor = Double(self.prevClosePrice) ?? 0.0 <= bid.doubleTypePrice ? .systemRed : .systemBlue
                 
                 if bid.price ?? "" == self.closePrice {
                     cell?.borders.top = .solid(width: 1, color: .black)
