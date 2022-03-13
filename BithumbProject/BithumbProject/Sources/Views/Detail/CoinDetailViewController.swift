@@ -167,6 +167,10 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
+         
+        let coinName = "\(self.viewModel.coin.acronyms)_\(self.viewModel.coin.currency.rawValue)"
+        let stars = CommonUserDefault<String>.fetch(.star(coinName))
+        self.starBarButton.setState(stars.contains(where: { $0 == coinName }))
     }
     
     func bind() {
@@ -176,6 +180,13 @@ final class CoinDetailViewController: UIViewController, ViewModelBindable {
                 self.viewModel.input.fetchTicker.onNext(())
                 self.viewModel.input.fetchRealtimeTicker.onNext(())
             })
+            .disposed(by: disposeBag)
+        
+        starBarButton.rx.tap
+            .bind { [weak self] in
+                let isSelected = self?.starBarButton.isActivated ?? false
+                self?.viewModel.coin.star(isSelected)
+            }
             .disposed(by: disposeBag)
         
         viewModel.output
