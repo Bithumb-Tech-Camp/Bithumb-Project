@@ -879,7 +879,6 @@
 				03D6C6BE27C91F620028A7E0 /* Coin.swift in Sources */,
 				1C27C1F927DD41BB00260174 /* RealmService.swift in Sources */,
 				DA814BFE27DC51DE00E0F084 /* DataRepositoryProtocol.swift in Sources */,
-				1C27C1F427DBD4EB00260174 /* BarChartObject.swift in Sources */,
 				1C33CFA527D1F862007E91F0 /* SingleChartView.swift in Sources */,
 				1C192EED27D3C69200BCDAA0 /* UInt64+Extension.swift in Sources */,
 				1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */,
