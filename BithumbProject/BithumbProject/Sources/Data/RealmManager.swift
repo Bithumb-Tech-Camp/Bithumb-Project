@@ -6,116 +6,149 @@
 //
 
 import Foundation
-
-import RealmSwift
+import RxSwift
 
 final class RealmManager {
     
-    private let realm: Realm? = try? Realm()
+    private let realmService: RealmService = RealmService()
     
-    func findCandlestickChartObject(symbol: String) -> CandlestickChartObject? {
-        guard let realm = realm,
-              let object = realm.object(ofType: CandlestickChartObject.self, forPrimaryKey: symbol) else {
-            return nil
+    func requestCandlesticks(option: ChartOption) -> Observable<[Candlestick]> {
+        let candlestickChartObject = realmService.findOrCreateIfNilCandlestickChartObject(symbol: option.orderCurrency)
+        let date = Date()
+        return Observable.create {[weak self] observer in
+            guard let self = self else { return Disposables.create() }
+            switch option.interval {
+            case .minute(let val):
+                let currentMinute = date.currentMinute
+                let beforeMinute = date.beforeMinute(minute: val)
+                
+                if let recentCandlestickObject = self.realmService.findCandlestickObject(
+                    candlestickChartObject,
+                    standardTime: currentMinute.timeIntervalSince1970ms,
+                    symbol: option.orderCurrency
+                ), let nextCandlestickObject = self.realmService.findCandlestickObject(
+                    candlestickChartObject,
+                    standardTime: beforeMinute.timeIntervalSince1970ms,
+                    symbol: option.orderCurrency
+                ) {
+                    var result: [Candlestick] = [
+                        recentCandlestickObject.toCandlestick,
+                        nextCandlestickObject.toCandlestick
+                    ]
+                    var interval = 1
+                    while true {
+                        let nextMinute = date.minuteBefore(date: beforeMinute, interval: interval, nMinute: val)
+                        if let candlestickObject = self.realmService.findCandlestickObject(
+                            candlestickChartObject,
+                            standardTime: nextMinute.timeIntervalSince1970ms,
+                            symbol: option.orderCurrency
+                        ) {
+                            result.append(candlestickObject.toCandlestick)
+                        } else {
+                            break
+                        }
+                        interval += 1
+                    }
+                    observer.onNext(result.reversed())
+                    observer.onCompleted()
+                } else {
+                    observer.onNext([])
+                }
+            case .hour(let val):
+                let currentHour = date.currentHour
+                let beforeHour = date.beforeHour(hour: val)
+                
+                if let recentCandlestickObject = self.realmService.findCandlestickObject(
+                    candlestickChartObject,
+                    standardTime: currentHour.timeIntervalSince1970ms,
+                    symbol: option.orderCurrency
+                ), let nextCandlestickObject = self.realmService.findCandlestickObject(
+                    candlestickChartObject,
+                    standardTime: beforeHour.timeIntervalSince1970ms,
+                    symbol: option.orderCurrency
+                ) {
+                    var result: [Candlestick] = [
+                        recentCandlestickObject.toCandlestick,
+                        nextCandlestickObject.toCandlestick
+                    ]
+                    var interval = 1
+                    while true {
+                        let nextHour = date.hourBefore(date: beforeHour, interval: interval, nHour: val)
+                        if let candlestickObject = self.realmService.findCandlestickObject(
+                            candlestickChartObject,
+                            standardTime: nextHour.timeIntervalSince1970ms,
+                            symbol: option.orderCurrency
+                        ) {
+                            result.append(candlestickObject.toCandlestick)
+                        } else {
+                            break
+                        }
+                        interval += 1
+                    }
+                    observer.onNext(result.reversed())
+                    observer.onCompleted()
+                } else {
+                    observer.onNext([])
+                }
+            case .day:
+                let currentHour = date.currentHour
+                let beforeHour = date.beforeHour(hour: 24)
+                
+                if let recentCandlestickObject = self.realmService.findCandlestickObject(
+                    candlestickChartObject,
+                    standardTime: currentHour.timeIntervalSince1970ms,
+                    symbol: option.orderCurrency
+                ), let nextCandlestickObject = self.realmService.findCandlestickObject(
+                    candlestickChartObject,
+                    standardTime: beforeHour.timeIntervalSince1970ms,
+                    symbol: option.orderCurrency
+                ) {
+                    var result: [Candlestick] = [
+                        recentCandlestickObject.toCandlestick,
+                        nextCandlestickObject.toCandlestick
+                    ]
+                    var interval = 1
+                    while true {
+                        let nextHour = date.hourBefore(date: beforeHour, interval: interval, nHour: 24)
+                        if let candlestickObject = self.realmService.findCandlestickObject(
+                            candlestickChartObject,
+                            standardTime: nextHour.timeIntervalSince1970ms,
+                            symbol: option.orderCurrency
+                        ) {
+                            result.append(candlestickObject.toCandlestick)
+                        } else {
+                            break
+                        }
+                        interval += 1
+                    }
+                    observer.onNext(result.reversed())
+                    observer.onCompleted()
+                } else {
+                    observer.onNext([])
+                }
+            case .month:
+                return Disposables.create()
+            case .week:
+                return Disposables.create()
+            }
+            
+            return Disposables.create()
         }
-        return object
     }
     
-    func findOrCreateIfNilCandlestickChartObject(symbol: String) -> CandlestickChartObject? {
-        if let object = findCandlestickChartObject(symbol: symbol) {
-            return object
+    func saveCandlesticks(option: ChartOption, candlesticks: [Candlestick]) {
+        let candlestickChartObject = realmService.findOrCreateIfNilCandlestickChartObject(symbol: option.orderCurrency)
+        let newDatas = candlesticks.map { candlestick in
+            CandlestickObject(
+                symbol: option.orderCurrency,
+                standardTime: Int64(candlestick.standardTime ?? 0),
+                openPrice: candlestick.safeOpenPrice,
+                closePrice: candlestick.safeClosePrice,
+                lowPrice: candlestick.safeLowPrice,
+                highPrice: candlestick.safeHighPrice,
+                volume: candlestick.safeTransactionVolume
+            )
         }
-        return createCandlestickChartObject(symbol: symbol, data: List<CandlestickObject>())
-    }
-    
-    func findCandlestickObject(symbol: String, standardTime: Int64) -> CandlestickObject? {
-        guard let object = findCandlestickChartObject(symbol: symbol) else {
-            return nil
-        }
-        return object.data
-            .where { $0.standardTime == standardTime }
-            .first
-    }
-    
-    func findCandlestickObject(candlestickChartObject: CandlestickChartObject?, standardTime: Int64) -> CandlestickObject? {
-        guard let chartObject = candlestickChartObject else {
-            return nil
-        }
-        return chartObject.data
-            .where { $0.standardTime == standardTime }
-            .first
-    }
-    
-    func findBarChartObject(symbol: String) -> BarChartObject? {
-        guard let realm = realm,
-              let object = realm.object(ofType: BarChartObject.self, forPrimaryKey: symbol) else {
-            return nil
-        }
-        return object
-    }
-    
-    func findOrCreateIfNilBarChartObject(symbol: String) -> BarChartObject? {
-        if let object = findBarChartObject(symbol: symbol) {
-            return object
-        }
-        return createBarChartObject(symbol: symbol, data: List<BarObject>())
-    }
-    
-    func findBarObject(symbol: String, standardTime: Int64) -> BarObject? {
-        guard let object = findBarChartObject(symbol: symbol) else {
-            return nil
-        }
-        return object.data
-            .where { $0.standardTime == standardTime }
-            .first
-    }
-    
-    func findBarObject(barChartObject: BarChartObject?, standardTime: Int64) -> BarObject? {
-        guard let chartObject = barChartObject else {
-            return nil
-        }
-        return chartObject.data
-            .where { $0.standardTime == standardTime }
-            .first
-    }
-    
-    func createCandlestickChartObject(symbol: String, data: List<CandlestickObject>) -> CandlestickChartObject? {
-        guard let realm = realm else {
-            return nil
-        }
-        let candlestickChartObject = CandlestickChartObject(symbol: symbol, data: data)
-        try? realm.write {
-            realm.add(candlestickChartObject)
-        }
-        return candlestickChartObject
-    }
-    
-    func createBarChartObject(symbol: String, data: List<BarObject>) -> BarChartObject? {
-        guard let realm = realm else {
-            return nil
-        }
-        let barChartObject = BarChartObject(symbol: symbol, data: data)
-        try? realm.write {
-            realm.add(barChartObject)
-        }
-        return barChartObject
-    }
-    
-    func addCandlestickObject(symbol: String, newData: CandlestickObject) {
-        guard let realm = realm, let object = findCandlestickChartObject(symbol: symbol) else {
-            return
-        }
-        try? realm.write {
-            object.data.append(newData)
-        }
-    }
-    
-    func addBarObject(symbol: String, newData: BarObject) {
-        guard let realm = realm, let object = findBarChartObject(symbol: symbol) else {
-            return
-        }
-        try? realm.write {
-            object.data.append(newData)
-        }
+        realmService.addCandlestickObject(candlestickChartObject, newDatas: newDatas)
     }
 }
