@@ -14,7 +14,7 @@ class TransactionSingleCell: Cell {
     
     let label = UILabel().then {
         $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        $0.font = UIFont.systemFont(ofSize: 12, weight: .regular)
     }
     
     override func prepareForReuse() {
@@ -30,8 +30,8 @@ class TransactionSingleCell: Cell {
         contentView.addSubview(label)
         label.snp.makeConstraints {
             $0.centerY.equalTo(contentView)
-            $0.left.equalTo(contentView).offset(5)
-            $0.right.equalTo(contentView).offset(-5)
+            $0.left.equalTo(contentView).offset(10)
+            $0.right.equalTo(contentView).offset(-10)
         }
     }
     

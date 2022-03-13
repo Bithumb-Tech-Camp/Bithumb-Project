@@ -26,11 +26,13 @@ final class TransactionViewModel: ViewModelType {
     
     var input: Input
     var output: Output
+    var coin: Coin
     var disposeBag: DisposeBag = DisposeBag()
     
     init(coin: Coin, httpManager: HTTPManager, webSocketManager: WebSocketManager) {
         self.input = Input()
         self.output = Output()
+        self.coin = coin
         
         let transactionParameter: [String: Any] = [
                "type": BithumbWebSocketRequestType.transaction.rawValue,
@@ -39,8 +41,8 @@ final class TransactionViewModel: ViewModelType {
         
         let tickerParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.ticker.rawValue,
-              "symbols": [coin.acronyms],
-              "tickTypes": [RealtimeTickType.oneHour].map { $0.rawValue }
+              "symbols": [coin.orderCurrency],
+              "tickTypes": [RealtimeTickType.twentyFourHour].map { $0.rawValue }
              ]
 
         httpManager.request(httpServiceType: .transactionHistory(coin.orderCurrency), model: [TransactionHistory].self)
@@ -59,7 +61,7 @@ final class TransactionViewModel: ViewModelType {
         input.realtimeTransationData
             .withLatestFrom(input.transactionData) {( $0, $1 )}
             .map { self.updateTransationData(realtimeList: $0.0.list, previousList: $0.1) }
-            .map { $0.sorted { $0.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() > $1.transactionDate?.stringToDate(format: "YYYY-MM-DD HH:mm:ss") ?? Date() }}
+            .map { $0.sorted { $0.date > $1.date }}
             .map { Array($0.prefix(40)) }
             .bind(to: input.transactionData)
             .disposed(by: disposeBag)

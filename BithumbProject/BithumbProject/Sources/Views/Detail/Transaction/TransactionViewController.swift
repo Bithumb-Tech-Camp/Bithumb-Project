@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import SpreadsheetView
 import XLPagerTabStrip
+import RxViewController
 
 final class TransactionViewController: UIViewController, ViewModelBindable {
     
@@ -17,9 +18,10 @@ final class TransactionViewController: UIViewController, ViewModelBindable {
         $0.bounces = false
         $0.showsHorizontalScrollIndicator = false
         $0.intercellSpacing = CGSize(width: 0, height: 0)
+        $0.gridStyle = .solid(width: 1, color: .systemGray5)
     }
-    var transactionList: [TransactionHistory] = []
     
+    var transactionList: [TransactionHistory] = []
     var disposeBag: DisposeBag = DisposeBag()
     var viewModel: TransactionViewModel
     
@@ -49,7 +51,7 @@ final class TransactionViewController: UIViewController, ViewModelBindable {
     
     func bind() {
         self.viewModel.output.transactionData
-            .map { [TransactionHistory(transactionDate: "시간", unitsTraded: "체결량(BTC)", price: "가격(KRW)")] + $0 }
+            .map { [TransactionHistory(transactionDate: "시간", unitsTraded: "체결량", price: "가격")] + $0 }
             .subscribe(onNext: { [weak self] transactionList in
                 self?.transactionList = transactionList
                 self?.spreadSheetView.reloadData()
@@ -85,20 +87,23 @@ extension TransactionViewController: SpreadsheetViewDataSource {
     
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
         let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: TransactionSingleCell.self), for: indexPath) as? TransactionSingleCell
+        
         if self.transactionList.count > 20 {
+            let transaction = self.transactionList[indexPath.row]
+            
             if indexPath.column == 0 {
-                cell?.label.text = self.transactionList[indexPath.row].transactionDate?.changeDateFormat(from: "YYYY-MM-DD HH:mm:ss", to: "HH:mm:ss") ?? "시간"
+                cell?.label.text = transaction.formattedDate ?? "시간"
             } else if indexPath.column == 1 {
-                cell?.label.text = self.transactionList[indexPath.row].price?.decimal ?? "가격"
+                cell?.label.text = transaction.formattedPrice ?? "가격(\(self.viewModel.coin.currency))"
             } else if indexPath.column == 2 {
-                cell?.label.text = self.transactionList[indexPath.row].unitsTraded?.roundedDecimal ?? "체결량"
+                cell?.label.text = transaction.formattedUnitsTraded ?? "체결량(\(self.viewModel.coin.acronyms))"
             }
             
             if indexPath.row == 0 || indexPath.column == 0 {
                 cell?.label.textColor = .black
                 cell?.label.textAlignment = .center
             } else {
-                cell?.label.textColor = self.transactionList[indexPath.row].updown == "dn" ? .systemBlue : .systemRed
+                cell?.label.textColor = transaction.formattedUpdown.color
                 cell?.label.textAlignment = .right
             }
             
@@ -106,6 +111,7 @@ extension TransactionViewController: SpreadsheetViewDataSource {
                 cell?.borders.top = .solid(width: 1, color: .darkGray)
                 cell?.borders.bottom = .solid(width: 1, color: .darkGray)
             }
+            
         }
         return cell
     }

@@ -14,7 +14,7 @@ class OrderBookQuantityCell: Cell {
     
     let quantityLabel = UILabel().then {
         $0.textColor = .black
-        $0.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        $0.font = UIFont.systemFont(ofSize: 11, weight: .regular)
     }
     
     let quantityBar = UIView()

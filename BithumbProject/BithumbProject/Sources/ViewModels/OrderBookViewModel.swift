@@ -43,15 +43,17 @@ final class OrderBookViewModel: ViewModelType {
         self.output = Output()
         self.coin = coin
         
+        let orderBookWebSocketManager = WebSocketManager()
+        
         let orderBookParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.orderBookDepth.rawValue,
-              "symbols": [coin.acronyms]
+              "symbols": [coin.orderCurrency]
             ]
         
         let tickerParameter: [String: Any] = [
               "type": BithumbWebSocketRequestType.ticker.rawValue,
-              "symbols": [coin.acronyms],
-              "tickTypes": [RealtimeTickType.oneHour].map { $0.rawValue }
+              "symbols": [coin.orderCurrency],
+              "tickTypes": [RealtimeTickType.twentyFourHour].map { $0.rawValue }
              ]
         
         webSocketManager.requestRealtime(parameter: tickerParameter, type: RealtimeTicker.self)
@@ -64,7 +66,7 @@ final class OrderBookViewModel: ViewModelType {
             .bind(to: output.closePrice)
             .disposed(by: disposeBag)
         
-        httpManager.request(httpServiceType: .ticker(coin.acronyms), model: Ticker.self)
+        httpManager.request(httpServiceType: .ticker(coin.orderCurrency), model: Ticker.self)
             .bind(to: input.tickerData)
             .disposed(by: disposeBag)
         
@@ -82,7 +84,7 @@ final class OrderBookViewModel: ViewModelType {
             .bind(to: output.prevClosingPrice)
             .disposed(by: disposeBag)
         
-        httpManager.request(httpServiceType: .orderBook(coin.acronyms), model: OrderBook.self)
+        httpManager.request(httpServiceType: .orderBook(coin.orderCurrency), model: OrderBook.self)
             .bind(to: input.orderBookData)
             .disposed(by: disposeBag)
         
@@ -92,7 +94,7 @@ final class OrderBookViewModel: ViewModelType {
         
         output.orderBookData
             .map { $0.bids ?? [] }
-            .map { $0.sorted { $0.price ?? "" > $1.price ?? "" } }
+            .map { $0.sorted { $0.doubleTypePrice > $1.doubleTypePrice } }
             .bind(to: input.bidList)
             .disposed(by: disposeBag)
         
@@ -102,7 +104,7 @@ final class OrderBookViewModel: ViewModelType {
         
         output.orderBookData
             .map { $0.asks ?? [] }
-            .map { $0.sorted { $0.price ?? "" > $1.price ?? "" } }
+            .map { $0.sorted { $0.doubleTypePrice > $1.doubleTypePrice } }
             .bind(to: input.askList)
             .disposed(by: disposeBag)
         
@@ -110,7 +112,7 @@ final class OrderBookViewModel: ViewModelType {
             .bind(to: output.askList)
             .disposed(by: disposeBag)
 
-        webSocketManager.requestRealtime(parameter: orderBookParameter, type: RealtimeOrderBook.self)
+        orderBookWebSocketManager.requestRealtime(parameter: orderBookParameter, type: RealtimeOrderBook.self)
             .bind(to: input.realtimeOrderBookData)
             .disposed(by: disposeBag)
         
@@ -118,11 +120,15 @@ final class OrderBookViewModel: ViewModelType {
             .bind(to: output.realtimeOrderBookData)
             .disposed(by: disposeBag)
         
+        input.realtimeOrderBookData
+            .subscribe(onNext: { print($0) })
+            .disposed(by: disposeBag)
+        
         output.realtimeOrderBookData
             .map { $0.list?.filter { $0.orderType == "bid" } }
             .withLatestFrom(output.bidList) {( $0, $1 )}
             .map { self.reflectRealtimeData(previousList: $0.1, realtimeList: $0.0.value ?? [] ) }
-            .map { $0.sorted { $0.price ?? "" > $1.price ?? "" }}
+            .map { $0.sorted { $0.doubleTypePrice > $1.doubleTypePrice } }
             .bind(to: input.bidList)
             .disposed(by: disposeBag)
         
@@ -130,7 +136,7 @@ final class OrderBookViewModel: ViewModelType {
             .map { $0.list?.filter { $0.orderType == "ask" } }
             .withLatestFrom(output.askList) {( $0, $1 )}
             .map { self.reflectRealtimeData(previousList: $0.1, realtimeList: $0.0.value ?? [] ) }
-            .map { $0.sorted { $0.price ?? "" > $1.price ?? "" }}
+            .map { $0.sorted { $0.doubleTypePrice > $1.doubleTypePrice } }
             .bind(to: input.askList)
             .disposed(by: disposeBag)
     }
