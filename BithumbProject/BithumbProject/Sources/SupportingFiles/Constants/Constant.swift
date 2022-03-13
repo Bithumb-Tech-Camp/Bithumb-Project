@@ -43,8 +43,10 @@ enum Constant {
     
     enum Color {
         static let clear = UIColor.clear
-        static let backgroundRed = UIColor.rgb(254, 247, 247)
-        static let backgroundBlue = UIColor.rgb(238, 242, 249)
+        static let backgroundRed = UIColor.rgb(254, 240, 238)
+        static let backgroundBlue = UIColor.rgb(237, 246, 255)
+        static let barBlue = UIColor.rgb(189, 212, 252)
+        static let barRed = UIColor.rgb(251, 195, 201)
     }
     
     enum URL {

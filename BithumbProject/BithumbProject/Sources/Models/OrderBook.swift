@@ -26,4 +26,8 @@ struct OrderBook: Codable {
 struct BidAsk: Codable {
     var quantity: String?
     var price: String?
+    
+    var doubleTypePrice: Double {
+        return Double(self.price ?? "0.0") ?? 0.0
+    }
 }
