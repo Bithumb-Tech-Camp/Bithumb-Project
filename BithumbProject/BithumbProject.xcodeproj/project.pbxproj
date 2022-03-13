@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0320AF2127D1066300B3B83B /* ChangeRatePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0320AF2027D1066300B3B83B /* ChangeRatePeriod.swift */; };
-		0320AF2327D11AC800B3B83B /* UIVIewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */; };
+		0320AF2327D11AC800B3B83B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0320AF2227D11AC800B3B83B /* UIViewController+Extension.swift */; };
 		03C4743127D18A1A002AC4D2 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4743027D18A1A002AC4D2 /* CoinCell.swift */; };
 		03C4743327D18A46002AC4D2 /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4743227D18A46002AC4D2 /* TitleCell.swift */; };
 		03C4743527D19184002AC4D2 /* ButtonBarCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4743427D19184002AC4D2 /* ButtonBarCollectionView.swift */; };
@@ -30,13 +30,12 @@
 		1C192EE627D34BF100BCDAA0 /* IntString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C192EE527D34BF100BCDAA0 /* IntString.swift */; };
 		1C192EED27D3C69200BCDAA0 /* UInt64+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C192EEC27D3C69200BCDAA0 /* UInt64+Extension.swift */; };
 		1C27C1E727DB50A900260174 /* CandlestickObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27C1E627DB50A900260174 /* CandlestickObject.swift */; };
-		1C27C1EB27DB50D800260174 /* BarObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27C1EA27DB50D800260174 /* BarObject.swift */; };
 		1C27C1ED27DBB9A300260174 /* RealtimeTickType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27C1EC27DBB9A300260174 /* RealtimeTickType.swift */; };
 		1C27C1EF27DBB9F400260174 /* UpDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27C1EE27DBB9F400260174 /* UpDown.swift */; };
 		1C27C1F127DBBFE100260174 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27C1F027DBBFE100260174 /* RealmManager.swift */; };
-		1C27C1F427DBD4EB00260174 /* BarChartObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27C1F227DBD4EB00260174 /* BarChartObject.swift */; };
 		1C27C1F527DBD4EB00260174 /* CandlestickChartObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27C1F327DBD4EB00260174 /* CandlestickChartObject.swift */; };
-		1C27C1F727DCBC4200260174 /* Date+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27C1F627DCBC4200260174 /* Date+Extenstion.swift */; };
+		1C27C1F727DCBC4200260174 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27C1F627DCBC4200260174 /* Date+Extension.swift */; };
+		1C27C1F927DD41BB00260174 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C27C1F827DD41BB00260174 /* RealmService.swift */; };
 		1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */; };
 		1C33CF9B27CF364F007E91F0 /* CoinDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */; };
 		1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */; };
@@ -112,7 +111,7 @@
 
 /* Begin PBXFileReference section */
 		0320AF2027D1066300B3B83B /* ChangeRatePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeRatePeriod.swift; sourceTree = "<group>"; };
-		0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+Extension.swift"; sourceTree = "<group>"; };
+		0320AF2227D11AC800B3B83B /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		03C4743027D18A1A002AC4D2 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinCell.swift; sourceTree = "<group>"; };
 		03C4743227D18A46002AC4D2 /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
 		03C4743427D19184002AC4D2 /* ButtonBarCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarCollectionView.swift; sourceTree = "<group>"; };
@@ -135,13 +134,12 @@
 		1C192EE527D34BF100BCDAA0 /* IntString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntString.swift; sourceTree = "<group>"; };
 		1C192EEC27D3C69200BCDAA0 /* UInt64+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UInt64+Extension.swift"; sourceTree = "<group>"; };
 		1C27C1E627DB50A900260174 /* CandlestickObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandlestickObject.swift; sourceTree = "<group>"; };
-		1C27C1EA27DB50D800260174 /* BarObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarObject.swift; sourceTree = "<group>"; };
 		1C27C1EC27DBB9A300260174 /* RealtimeTickType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeTickType.swift; sourceTree = "<group>"; };
 		1C27C1EE27DBB9F400260174 /* UpDown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpDown.swift; sourceTree = "<group>"; };
 		1C27C1F027DBBFE100260174 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
-		1C27C1F227DBD4EB00260174 /* BarChartObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarChartObject.swift; sourceTree = "<group>"; };
 		1C27C1F327DBD4EB00260174 /* CandlestickChartObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandlestickChartObject.swift; sourceTree = "<group>"; };
-		1C27C1F627DCBC4200260174 /* Date+Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extenstion.swift"; sourceTree = "<group>"; };
+		1C27C1F627DCBC4200260174 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		1C27C1F827DD41BB00260174 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		1C33CF9827CF3618007E91F0 /* CoinDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailViewController.swift; sourceTree = "<group>"; };
 		1C33CF9A27CF364F007E91F0 /* CoinDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailViewModel.swift; sourceTree = "<group>"; };
 		1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
@@ -257,9 +255,9 @@
 				1C33CF9C27CF4C0F007E91F0 /* Double+Extension.swift */,
 				E592A96927D5362A008BE814 /* Color+Extension.swift */,
 				1C192EEC27D3C69200BCDAA0 /* UInt64+Extension.swift */,
-				0320AF2227D11AC800B3B83B /* UIVIewController+Extension.swift */,
+				0320AF2227D11AC800B3B83B /* UIViewController+Extension.swift */,
 				24E4FAC527D3466300EEC4AC /* UINavigationBar+Extension.swift */,
-				1C27C1F627DCBC4200260174 /* Date+Extenstion.swift */,
+				1C27C1F627DCBC4200260174 /* Date+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -534,9 +532,8 @@
 			children = (
 				1C27C1F327DBD4EB00260174 /* CandlestickChartObject.swift */,
 				1C27C1E627DB50A900260174 /* CandlestickObject.swift */,
-				1C27C1F227DBD4EB00260174 /* BarChartObject.swift */,
-				1C27C1EA27DB50D800260174 /* BarObject.swift */,
 				1C27C1F027DBBFE100260174 /* RealmManager.swift */,
+				1C27C1F827DD41BB00260174 /* RealmService.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -838,7 +835,6 @@
 				1C27C1E727DB50A900260174 /* CandlestickObject.swift in Sources */,
 				1C9CFE2727C7C85D00647FCE /* String+Extension.swift in Sources */,
 				DA4E75BB27D7AFFA006A5C86 /* HoldingsViewController.swift in Sources */,
-				1C27C1EB27DB50D800260174 /* BarObject.swift in Sources */,
 				249C3E7B27D0ABDE0069E131 /* ChangeRateSettingHeaderView.swift in Sources */,
 				1C33CFA327D1E8F0007E91F0 /* ChartViewModel.swift in Sources */,
 				E592A93727C94741008BE814 /* OrderBookPriceCell.swift in Sources */,
@@ -848,7 +844,7 @@
 				03C4743727D1AE1B002AC4D2 /* ButtonBarCell.swift in Sources */,
 				1C9CFDFA27C75FCB00647FCE /* WebSocketService.swift in Sources */,
 				03D6C6BE27C91F620028A7E0 /* Coin.swift in Sources */,
-				1C27C1F427DBD4EB00260174 /* BarChartObject.swift in Sources */,
+				1C27C1F927DD41BB00260174 /* RealmService.swift in Sources */,
 				1C33CFA527D1F862007E91F0 /* SingleChartView.swift in Sources */,
 				1C192EED27D3C69200BCDAA0 /* UInt64+Extension.swift in Sources */,
 				1CDFFC8127C5266E0033B759 /* AppDelegate.swift in Sources */,
@@ -871,14 +867,14 @@
 				1C33CF9B27CF364F007E91F0 /* CoinDetailViewModel.swift in Sources */,
 				1C54520927D637B1002FF371 /* CALayer+Extension.swift in Sources */,
 				03C4744327D2DF39002AC4D2 /* TransactionCell.swift in Sources */,
-				1C27C1F727DCBC4200260174 /* Date+Extenstion.swift in Sources */,
+				1C27C1F727DCBC4200260174 /* Date+Extension.swift in Sources */,
 				249C3E7927D0A9250069E131 /* PeriodCell.swift in Sources */,
 				E592A92127C678E3008BE814 /* AssetsStatus.swift in Sources */,
 				1C33CF9927CF3618007E91F0 /* CoinDetailViewController.swift in Sources */,
 				03C4743F27D27462002AC4D2 /* TickerCell.swift in Sources */,
 				03C4744B27D39E73002AC4D2 /* StarCell.swift in Sources */,
 				1CDFFCBB27C52F7F0033B759 /* Constant.swift in Sources */,
-				0320AF2327D11AC800B3B83B /* UIVIewController+Extension.swift in Sources */,
+				0320AF2327D11AC800B3B83B /* UIViewController+Extension.swift in Sources */,
 				03D6C6BB27C91DE70028A7E0 /* HTTPManager.swift in Sources */,
 				1C33CF9D27CF4C0F007E91F0 /* Double+Extension.swift in Sources */,
 				E592A96327D335AE008BE814 /* TransactionSmallCell.swift in Sources */,
