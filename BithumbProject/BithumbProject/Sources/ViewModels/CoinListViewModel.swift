@@ -14,7 +14,7 @@ import RxSwift
 final class CoinListViewModel: ViewModelType {
     
     struct Input {
-        let inputQuery = PublishRelay<String>()
+        let inputQuery = BehaviorRelay<String>(value: "")
         let searchButtonClicked = PublishRelay<Void>()
         let coinList = PublishRelay<[Coin]>()
         let selectedSortedColumn = PublishRelay<SortedColumn>()
@@ -26,8 +26,6 @@ final class CoinListViewModel: ViewModelType {
         var coinListUpdate: (() -> Void)?
         var coinList = [Coin]()
         let currentSortedColumn = BehaviorRelay<SortedColumn>(value: .init(column: 1))
-        
-        // 이 두 가지 기본 옵션을 UserDefault에서 받아오기
         let currentCoinListType = BehaviorRelay<CoinListType>(value: .KRW)
         let currentChangeRatePeriod = BehaviorRelay<ChangeRatePeriod>(value: .day)
     }
@@ -49,9 +47,6 @@ final class CoinListViewModel: ViewModelType {
     }
     
     func connectionToManager() {
-        // HTTP는 ChangeRatePeriod에 대한 24H 값만 제공, 해당 데이터만 요청 받을 수 있음
-        // 변동률 기간에서는 처음 데이터를 불러오는 것 이외의 데이터 요청은 의미가 없다.
-        // 그래도 반응은 하게 만들었
         Observable.combineLatest(
             self.output.currentChangeRatePeriod,
             self.output.currentCoinListType,
@@ -64,8 +59,6 @@ final class CoinListViewModel: ViewModelType {
             })
             .disposed(by: self.disposeBag)
         
-        // WebSocket 데이터는 반대로 기간에만 영향을 받도록 구현
-        // 인기, 검색 내역, 관심, 원화 모두에 영향을 미치기 때문
         self.output.currentChangeRatePeriod
             .map { self.makeWebSocketParameters($0) }
             .flatMap {  self.webSocketManager.requestRealtime(parameter: $0, type: RealtimeTicker.self) }
@@ -98,7 +91,13 @@ final class CoinListViewModel: ViewModelType {
             .withLatestFrom(self.input.inputQuery)
             .compactMap { "\($0.uppercased())_KRW" }
             .flatMap { self.httpManager.request(httpServiceType: .ticker($0), model: Ticker.self) }
-            .map { [$0.toDomain()] }
+            .map { ticker in
+                let coin = ticker.toDomain()
+                let krName = self.input.inputQuery.value.uppercased()
+                coin.krName = krName
+                coin.acronyms = krName.components(separatedBy: "_").first ?? ""
+                return [coin]
+            }
             .subscribe(onNext: { coinlist in
                 self.input.coinList.accept(coinlist)
             })

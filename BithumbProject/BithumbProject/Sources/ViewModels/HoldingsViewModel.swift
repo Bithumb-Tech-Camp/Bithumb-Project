@@ -31,14 +31,6 @@ final class HoldingsViewModel: ViewModelType {
         self.output = Output()
         self.httpManager = httpManager
         
-        let user = User(
-            name: CommonUserDefault<String>.fetch(.username).first ?? "",
-            assets: Double(CommonUserDefault<String>.fetch(.holdings).first ?? "") ?? 0.0)
-        
-        Observable.just(user)
-            .bind(to: self.output.userInfo)
-            .disposed(by: self.disposeBag)
-        
         httpManager.request(httpServiceType: .assetsStatus("All"), model: [String: AssetsStatus].self)
             .map { $0.map { name, assetsStatus -> Holdings in
                 let holdings = assetsStatus.toDomain()
@@ -50,5 +42,4 @@ final class HoldingsViewModel: ViewModelType {
             })
             .disposed(by: self.disposeBag)
     }
-    
 }

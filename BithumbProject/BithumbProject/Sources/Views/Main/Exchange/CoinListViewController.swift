@@ -100,15 +100,9 @@ final class CoinListViewController: UIViewController, ViewModelBindable {
             .disposed(by: self.disposeBag)
         
         self.alarmBarButton.rx.tap
-            .bind(onNext: {
-                CommonUserDefault<String>.delete(.initialLaunchKey)
-                CommonUserDefault<String>.delete(.username)
-                CommonUserDefault<String>.delete(.holdings)
-                CommonUserDefault<String>.delete(.changeRatePeriod)
-                
-                CommonUserDefault<Bool>.fetch(.initialLaunchKey)
-                
-//                self.alertMessage(message: "알림이 설정되었습니다")
+            .withUnretained(self)
+            .bind(onNext: { owner, _ in
+                owner.alertMessage(message: "알림이 설정되었습니다")
             })
             .disposed(by: self.disposeBag)
         

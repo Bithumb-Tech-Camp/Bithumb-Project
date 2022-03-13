@@ -10,13 +10,7 @@ import Then
 
 final class StarButton: UIButton {
     
-    public var isActivated: Bool = false {
-        willSet {
-            DispatchQueue.main.async {
-                self.tintColor = newValue ? .systemYellow : .systemGray5
-            }
-        }
-    }
+    public var isActivated: Bool = false
     
     private let buttonImage: (CGFloat) -> UIImage? = { pointSize in
         UIImage(
@@ -39,6 +33,7 @@ final class StarButton: UIButton {
     
     public func setState(_ newValue: Bool) {
         self.isActivated = newValue
+        self.tintColor = self.isActivated ? .systemYellow : .systemGray5
     }
     
     @objc func buttonTapped() {
