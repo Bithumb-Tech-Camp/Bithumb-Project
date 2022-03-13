@@ -12,13 +12,12 @@ import RealmSwift
 final class RealmService {
     
     private let realm: Realm? = try? Realm()
-    private let realmQueue = DispatchQueue.init(label: "realmQueue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .inherit, target: nil)
     
     func findCandlestickChartObject(symbol: String) -> CandlestickChartObject? {
         guard let realm = realm,
               let object = realm.object(ofType: CandlestickChartObject.self, forPrimaryKey: symbol) else {
-            return nil
-        }
+                  return nil
+              }
         return object
     }
     
@@ -59,21 +58,44 @@ final class RealmService {
     }
     
     func addCandlestickObject(_ candlestickChartObject: CandlestickChartObject?, newDatas: [CandlestickObject]) {
-        guard let realm = realm,
-              let candlestickChartObject = candlestickChartObject else {
+        guard let candlestickChartObject = candlestickChartObject else {
             return
         }
-        var unsavedDatas: [CandlestickObject] = []
-        for newData in newDatas {
-            if nil != findCandlestickObject(candlestickChartObject, standardTime: newData.standardTime, symbol: newData.symbol) {
-                continue
+        ThreadSafeReference(to: candlestickChartObject).async(write: true) { _, obj in
+            var unsavedDatas: [CandlestickObject] = []
+            for newData in newDatas {
+                if nil != self.findCandlestickObject(obj, standardTime: newData.standardTime, symbol: newData.symbol) {
+                    continue
+                }
+                unsavedDatas.append(newData)
             }
-            unsavedDatas.append(newData)
+            obj.data.append(objectsIn: unsavedDatas)
         }
-        
-        realmQueue.sync {
-            try? realm.write {
-                candlestickChartObject.data.append(objectsIn: unsavedDatas)
+    }
+}
+
+extension DispatchQueue {
+    public static let realmBackgroundQueue = DispatchQueue(label: "io.realm.realm.background")
+}
+
+extension ThreadSafeReference {
+    func async(
+        write: Bool = false, queue: DispatchQueue = .realmBackgroundQueue,
+        errorHandler: ((Realm.Error) -> Void)? = nil,
+        block: @escaping (Realm, Confined) -> Void
+    ) {
+        queue.async {
+            do {
+                let realm = try Realm()
+                if let obj = realm.resolve(self) {
+                    if write { realm.beginWrite() }
+                    block(realm, obj)
+                    if write { try realm.commitWrite() }
+                } else {
+                    
+                }
+            } catch {
+                
             }
         }
     }

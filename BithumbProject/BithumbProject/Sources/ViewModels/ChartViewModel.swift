@@ -87,10 +87,10 @@ final class ChartViewModel: ViewModelType {
         
         Observable.combineLatest(input.fetchCandlestick, input.changeOption)
             .distinctUntilChanged({ $0.1 == $1.1 })
-            .flatMap {[weak self] _, option -> Observable<[Candlestick]> in
-                self?.output.isActivated.accept(true)
-                return realmManager.requestCandlesticks(option: option)
-            }
+             .flatMap {[weak self] _, option -> Observable<[Candlestick]> in
+                 self?.output.isActivated.accept(true)
+                 return realmManager.requestCandlesticks(option: option)
+             }
             .flatMap {[weak self] candlesticks -> Observable<[Candlestick]> in
                 if candlesticks.isEmpty {
                     self?.input.fetchRemoteCandlestick.onNext(())

@@ -18,79 +18,14 @@ final class RealmManager {
         return Observable.create {[weak self] observer in
             guard let self = self else { return Disposables.create() }
             switch option.interval {
-            case .minute(let val):
-                let currentMinute = date.currentMinute
-                let beforeMinute = date.beforeMinute(minute: val)
+            case .minute:
+                observer.onNext([])
+                observer.onCompleted()
+            case .hour(24), .day:
+                observer.onNext([])
+                observer.onCompleted()
+                return Disposables.create()
                 
-                if let recentCandlestickObject = self.realmService.findCandlestickObject(
-                    candlestickChartObject,
-                    standardTime: currentMinute.timeIntervalSince1970ms,
-                    symbol: option.orderCurrency
-                ), let nextCandlestickObject = self.realmService.findCandlestickObject(
-                    candlestickChartObject,
-                    standardTime: beforeMinute.timeIntervalSince1970ms,
-                    symbol: option.orderCurrency
-                ) {
-                    var result: [Candlestick] = [
-                        recentCandlestickObject.toCandlestick,
-                        nextCandlestickObject.toCandlestick
-                    ]
-                    var interval = 1
-                    while true {
-                        let nextMinute = date.minuteBefore(date: beforeMinute, interval: interval, nMinute: val)
-                        if let candlestickObject = self.realmService.findCandlestickObject(
-                            candlestickChartObject,
-                            standardTime: nextMinute.timeIntervalSince1970ms,
-                            symbol: option.orderCurrency
-                        ) {
-                            result.append(candlestickObject.toCandlestick)
-                        } else {
-                            break
-                        }
-                        interval += 1
-                    }
-                    observer.onNext(result.reversed())
-                    observer.onCompleted()
-                } else {
-                    observer.onNext([])
-                }
-            case .hour(let val):
-                let currentHour = date.currentHour
-                let beforeHour = date.beforeHour(hour: val)
-                
-                if let recentCandlestickObject = self.realmService.findCandlestickObject(
-                    candlestickChartObject,
-                    standardTime: currentHour.timeIntervalSince1970ms,
-                    symbol: option.orderCurrency
-                ), let nextCandlestickObject = self.realmService.findCandlestickObject(
-                    candlestickChartObject,
-                    standardTime: beforeHour.timeIntervalSince1970ms,
-                    symbol: option.orderCurrency
-                ) {
-                    var result: [Candlestick] = [
-                        recentCandlestickObject.toCandlestick,
-                        nextCandlestickObject.toCandlestick
-                    ]
-                    var interval = 1
-                    while true {
-                        let nextHour = date.hourBefore(date: beforeHour, interval: interval, nHour: val)
-                        if let candlestickObject = self.realmService.findCandlestickObject(
-                            candlestickChartObject,
-                            standardTime: nextHour.timeIntervalSince1970ms,
-                            symbol: option.orderCurrency
-                        ) {
-                            result.append(candlestickObject.toCandlestick)
-                        } else {
-                            break
-                        }
-                        interval += 1
-                    }
-                    observer.onNext(result.reversed())
-                    observer.onCompleted()
-                } else {
-                    observer.onNext([])
-                }
-            case .day:
                 let currentHour = date.currentHour
                 let beforeHour = date.beforeHour(hour: 24)
                 
@@ -125,13 +60,11 @@ final class RealmManager {
                     observer.onCompleted()
                 } else {
                     observer.onNext([])
+                    observer.onCompleted()
                 }
-            case .month:
-                return Disposables.create()
-            case .week:
+            default:
                 return Disposables.create()
             }
-            
             return Disposables.create()
         }
     }
