@@ -120,10 +120,6 @@ final class OrderBookViewModel: ViewModelType {
             .bind(to: output.realtimeOrderBookData)
             .disposed(by: disposeBag)
         
-        input.realtimeOrderBookData
-            .subscribe(onNext: { print($0) })
-            .disposed(by: disposeBag)
-        
         output.realtimeOrderBookData
             .map { $0.list?.filter { $0.orderType == "bid" } }
             .withLatestFrom(output.bidList) {( $0, $1 )}
