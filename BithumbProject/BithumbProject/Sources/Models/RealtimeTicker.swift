@@ -111,12 +111,13 @@ struct RealtimeTicker: Codable {
 extension RealtimeTicker {
     func toDomain() -> Coin {
         let acronyms = self.symbol?.components(separatedBy: "_").first ?? ""
+        let krName = acronyms + "코인"
         let ticker = Double(self.closePrice ?? "") ?? 0.0
         let rate = Double(self.changeRate ?? "") ?? 0.0
         let amount = Double(self.changeAmount ?? "") ?? 0
         let changeRate = ChangeRate(rate: rate, amount: amount)
         let transaction = Double(self.value ?? "") ?? 0.0
         let tickType = ChangeRatePeriod(rawValue: self.tickType ?? "") ?? .MID
-        return .init(acronyms: acronyms, currency: .KRW, ticker: ticker, changeRate: changeRate, transaction: transaction, tickType: tickType)
+        return .init(krName: krName, acronyms: acronyms, currency: .KRW, ticker: ticker, changeRate: changeRate, transaction: transaction, tickType: tickType)
     }
 }
