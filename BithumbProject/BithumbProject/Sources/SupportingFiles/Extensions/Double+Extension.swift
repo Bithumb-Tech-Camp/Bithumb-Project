@@ -47,4 +47,13 @@ extension Double {
         numberFormatter.maximumFractionDigits = 0
         return numberFormatter.string(from: NSNumber(value: self/1000000))! + "백만"
     }
+    
+    var userAssetsDecimal: String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.roundingMode = .halfUp
+        numberFormatter.minimumFractionDigits = 0
+        numberFormatter.maximumFractionDigits = 0
+        return numberFormatter.string(from: NSNumber(value: self))! + "원"
+    }
 }

@@ -17,22 +17,29 @@ final class HoldingsViewModel: ViewModelType {
     }
     
     struct Output {
-        
+        let userInfo = BehaviorRelay<User?>(value: nil)
+        let holdings = BehaviorRelay<[Holdings]>(value: [])
     }
     
     var input: Input
     var output: Output
     var disposeBag = DisposeBag()
     let httpManager: HTTPManager
-    let webSocketManager: WebSocketManager
     
-    init(httpManager: HTTPManager,
-         webSocketManager: WebSocketManager) {
+    init(httpManager: HTTPManager) {
         self.input = Input()
         self.output = Output()
         self.httpManager = httpManager
-        self.webSocketManager = webSocketManager
         
+        httpManager.request(httpServiceType: .assetsStatus("All"), model: [String: AssetsStatus].self)
+            .map { $0.map { name, assetsStatus -> Holdings in
+                let holdings = assetsStatus.toDomain()
+                holdings.coinName = "\(name)코인"
+                return holdings
+            }}
+            .subscribe(onNext: { [weak self] value in
+                self?.output.holdings.accept(value)
+            })
+            .disposed(by: self.disposeBag)
     }
-    
 }

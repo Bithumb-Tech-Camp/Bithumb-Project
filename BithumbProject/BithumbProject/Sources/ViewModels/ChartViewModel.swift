@@ -15,7 +15,9 @@ final class ChartViewModel: ViewModelType {
     
     struct Input {
         let fetchCandlestick: PublishSubject<Void> = PublishSubject<Void>()
+        let fetchRemoteCandlestick: PublishSubject<Void> = PublishSubject<Void>()
         let fetchRealtimeTicker: PublishSubject<Void> = PublishSubject<Void>()
+        let saveRemoteCandlestick: PublishSubject<[Candlestick]> = PublishSubject<[Candlestick]>()
         var changeOption: BehaviorSubject<ChartOption> = BehaviorSubject<ChartOption>(
             value: ChartOption(orderCurrency: "BTC_KRW", interval: .day, layout: .single)
         )
@@ -27,6 +29,8 @@ final class ChartViewModel: ViewModelType {
         var option: BehaviorRelay<ChartOption> = BehaviorRelay<ChartOption>(
             value: ChartOption(orderCurrency: "BTC_KRW", interval: .day, layout: .single)
         )
+        let isActivated: BehaviorRelay<Bool> = BehaviorRelay<Bool>(value: false)
+        
         let candlestickChartDataEntry: PublishRelay<[CandleChartDataEntry]> = PublishRelay<[CandleChartDataEntry]>()
         let candlestickMA5LineChartEntry: PublishRelay<[ChartDataEntry]> = PublishRelay<[ChartDataEntry]>()
         let candlestickMA10LineChartEntry: PublishRelay<[ChartDataEntry]> = PublishRelay<[ChartDataEntry]>()
@@ -64,6 +68,7 @@ final class ChartViewModel: ViewModelType {
     var disposeBag: DisposeBag = DisposeBag()
     
     init(coin: Coin, httpManager: HTTPManager, webSocketManager: WebSocketManager, realmManager: RealmManager) {
+
         self.input = Input()
         self.output = Output()
         
@@ -80,49 +85,54 @@ final class ChartViewModel: ViewModelType {
     
     private func setupInput(httpManager: HTTPManager, webSocketManager: WebSocketManager, realmManager: RealmManager) {
         
-        let candlestickChartObject = realmManager.findOrCreateIfNilCandlestickChartObject(
-            symbol: output.option.value.orderCurrency
-        )
-        let barChartObject = realmManager.findOrCreateIfNilBarChartObject(
-            symbol: output.option.value.orderCurrency
-        )
-        
         Observable.combineLatest(input.fetchCandlestick, input.changeOption)
-            .distinctUntilChanged({ old, new in
-                old.1 == new.1
+            .distinctUntilChanged({ $0.1 == $1.1 })
+            .flatMap {[weak self] _, option -> Observable<[Candlestick]> in
+                self?.output.isActivated.accept(true)
+                return realmManager.requestCandlesticks(option: option)
+            }
+            .flatMap {[weak self] candlesticks -> Observable<[Candlestick]> in
+                if candlesticks.isEmpty {
+                    self?.input.fetchRemoteCandlestick.onNext(())
+                }
+                return Observable.just(candlesticks)
+            }
+            .subscribe(onNext: {[weak self] candlesticks in
+                self?.output.isActivated.accept(false)
+                self?.output.candlesticks.accept(candlesticks)
+            }, onError: {[weak self] error in
+                self?.output.isActivated.accept(false)
+                self?.output.error.accept(error as NSError)
             })
-//            .map { _, option in
-//                var startTime =
-//                switch option.interval {
-//                case .minute(let val):
-//                    return
-//                case .hour(let val):
-//                    return
-//                case .month:
-//                    return
-//                case .day:
-//                    return
-//                case .month:
-//                    return
-//                }
-//            }
-            .flatMap { _, option -> Observable<[[IntString]]> in
+            .disposed(by: disposeBag)
+        
+        input.fetchRemoteCandlestick
+            .withLatestFrom(input.changeOption)
+            .flatMap { option -> Observable<[[IntString]]> in
                 httpManager.request(
                     httpServiceType: .candleStick(option.orderCurrency, option.interval.toAPI),
                     model: [[IntString]].self
                 )
             }
-            .map {
-                $0.map { array -> Candlestick in
-                    Candlestick(array: array)
-                }
-            }
+            .map { $0.map { Candlestick(array: $0) } }
+            .subscribe(onNext: {[weak self] candlesticks in
+                self?.output.candlesticks.accept(candlesticks)
+                self?.input.saveRemoteCandlestick.onNext(candlesticks)
+            }, onError: {[weak self] error in
+                self?.output.isActivated.accept(false)
+                self?.output.error.accept(error as NSError)
+            })
+            .disposed(by: disposeBag)
+        
+        input.saveRemoteCandlestick
+            .subscribe(on: SerialDispatchQueueScheduler.init(qos: .background))
             .subscribe(onNext: {[weak self] candlesticks in
                 guard let self = self else { return }
-                self.output.candlesticks.accept(candlesticks)
+                self.output.isActivated.accept(false)
+                realmManager.saveCandlesticks(option: self.output.option.value, candlesticks: candlesticks)
             }, onError: {[weak self] error in
-                guard let self = self else { return }
-                self.output.error.accept(error as NSError)
+                self?.output.isActivated.accept(false)
+                self?.output.error.accept(error as NSError)
             })
             .disposed(by: disposeBag)
         
@@ -147,8 +157,7 @@ final class ChartViewModel: ViewModelType {
         
         input.changeOption
             .subscribe(onNext: {[weak self] option in
-                guard let self = self else { return }
-                self.output.option.accept(option)
+                self?.output.option.accept(option)
             })
             .disposed(by: disposeBag)
     }

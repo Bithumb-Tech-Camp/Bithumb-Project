@@ -7,20 +7,19 @@
 
 import Foundation
 
-enum CoinListType: String, CaseIterable {
+enum CoinListType: String, CaseIterable, Hashable {
     case KRW = "원화"
     case popularity = "인기"
     case favorite = "관심"
     
-    // 필요한 쿼리를 만들자.
-    var query: String {
+    var param: String {
         switch self {
         case .KRW:
             return "All"
-        case .favorite:
-            return "All"
         case .popularity:
-            return "BTC_KRW"// UserDefault로 변경
+            return "All"
+        case .favorite:
+            return "BTC_KRW" // UserDefault로 변경
         }
     }
     
@@ -35,17 +34,3 @@ enum CoinListType: String, CaseIterable {
         }
     }
 }
-
-extension CoinListType: Equatable {
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        switch (lhs, rhs) {
-        case (.KRW, .KRW),
-            (.popularity, .popularity),
-            (.favorite, .favorite):
-            return true
-        default:
-            return false
-        }
-    }
-}
-

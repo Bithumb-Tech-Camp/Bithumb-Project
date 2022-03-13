@@ -31,3 +31,14 @@ enum TickerString: Codable {
         case notFound
     }
 }
+
+extension TickerString {
+    func toDomain() -> Coin? {
+        switch self {
+        case .ticker(let ticker):
+            return ticker.toDomain()
+        case .string:
+            return nil
+        }
+    }
+}

@@ -368,6 +368,14 @@ final class ChartViewController: UIViewController, ViewModelBindable {
                 }
             })
             .disposed(by: disposeBag)
+        
+        viewModel.output.error
+            .map { $0.localizedDescription }
+            .observe(on: MainScheduler.instance)
+            .bind(onNext: {[weak self] error in
+                self?.showAlert(title: "Error", message: error)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func removeChartView() {
